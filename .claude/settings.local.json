@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.allencompany.com)",
+      "WebFetch(domain:www.allancompany.com)"
+    ]
+  }
+}
