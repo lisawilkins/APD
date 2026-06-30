@@ -210,30 +210,99 @@ function Btn({ children, variant = 'primary', size = 'md', style: xStyle = {} }:
   size?: 'sm' | 'md' | 'lg'
   style?: React.CSSProperties
 }) {
+  const [hovered, setHovered] = useState(false)
   const sizes = {
     sm: { padding: '8px 14px',  fontSize: 14, height: 36 },
     md: { padding: '10px 20px', fontSize: 16, height: 44 },
     lg: { padding: '14px 28px', fontSize: 18, height: 54 },
   }
   const variants = {
-    primary:   { bg: 'var(--apd-steel-blue)',  fg: '#fff', bd: 'transparent' },
-    secondary: { bg: 'var(--apd-olive-green)', fg: '#fff', bd: 'transparent' },
-    accent:    { bg: 'var(--apd-clay-red)',     fg: '#fff', bd: 'transparent' },
-    outline:   { bg: 'transparent', fg: 'var(--apd-steel-blue)', bd: 'var(--apd-steel-blue)' },
+    primary:   { bg: 'var(--apd-steel-blue)',  hover: 'var(--color-primary-hover)', fg: '#fff', bd: 'transparent' },
+    secondary: { bg: 'var(--apd-olive-green)', hover: 'var(--color-primary-hover)', fg: '#fff', bd: 'transparent' },
+    accent:    { bg: 'var(--apd-clay-red)',     hover: 'var(--color-accent-hover)',  fg: '#fff', bd: 'transparent' },
+    outline:   { bg: 'transparent', hover: 'var(--apd-blue-subtle)', fg: 'var(--apd-steel-blue)', bd: 'var(--apd-steel-blue)' },
   }
   const s = sizes[size]
   const v = variants[variant]
   return (
-    <button type="button" style={{
-      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-      fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: s.fontSize,
-      lineHeight: 1.5, padding: s.padding, minHeight: s.height,
-      color: v.fg, background: v.bg, border: `1.5px solid ${v.bd}`,
-      borderRadius: 0, cursor: 'default', whiteSpace: 'nowrap',
-      ...xStyle,
-    }}>
+    <button
+      type="button"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: s.fontSize,
+        lineHeight: 1.5, padding: s.padding, minHeight: s.height,
+        color: v.fg, background: hovered ? v.hover : v.bg,
+        border: `1.5px solid ${v.bd}`,
+        borderRadius: 0, cursor: 'pointer', whiteSpace: 'nowrap',
+        transition: 'background 150ms ease-out',
+        ...xStyle,
+      }}
+    >
       {children}
     </button>
+  )
+}
+
+function NavLink({ label, active = false }: { label: string; active?: boolean }) {
+  const [hovered, setHovered] = useState(false)
+  const on = active || hovered
+  return (
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600,
+        padding: '8px 9px', whiteSpace: 'nowrap', cursor: 'pointer',
+        color: on ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+        borderBottom: active ? '2px solid var(--apd-steel-blue)' : hovered ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
+        transition: 'color 150ms ease-out, border-color 150ms ease-out',
+      }}
+    >
+      {label}
+    </span>
+  )
+}
+
+function TextLink({ children, color = 'var(--apd-steel-blue)' }: { children: React.ReactNode; color?: string }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        color, fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600,
+        cursor: 'pointer',
+        borderBottom: `1.5px solid ${hovered ? color : 'transparent'}`,
+        paddingBottom: 2,
+        transition: 'border-color 150ms ease-out',
+      }}
+    >
+      <span>{children}</span>
+      <span style={{ transform: hovered ? 'translateX(3px)' : 'translateX(0)', transition: 'transform 150ms ease-out', display: 'inline-flex' }}>
+        <Icon name="arrow-right" size={15} color={color} strokeWidth={2} />
+      </span>
+    </span>
+  )
+}
+
+function FooterLink({ children }: { children: React.ReactNode }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        color: hovered ? '#fff' : 'rgba(255,255,255,0.8)',
+        fontSize: 14, fontFamily: 'var(--font-prose)',
+        cursor: 'pointer',
+        transition: 'color 150ms ease-out',
+      }}
+    >
+      {children}
+    </span>
   )
 }
 
@@ -320,14 +389,7 @@ function SampleHeader() {
         </div>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {navLinks.map((label, i) => (
-            <span key={label} style={{
-              fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600,
-              padding: '8px 9px', whiteSpace: 'nowrap', cursor: 'default',
-              color: i === 0 ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
-              borderBottom: i === 0 ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
-            }}>
-              {label}
-            </span>
+            <NavLink key={label} label={label} active={i === 0} />
           ))}
           <div style={{ marginLeft: 14 }}>
             <Btn variant="primary" size="sm">Request a quote</Btn>
@@ -478,9 +540,7 @@ function ServicesSection() {
             <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 21, color: s.fg, margin: '18px 0 10px' }}>{s.title}</h3>
             <p style={{ fontFamily: 'var(--font-prose)', fontSize: 15, lineHeight: 1.6, color: s.sub, margin: 0, flex: 1 }}>{s.desc}</p>
             <div style={{ marginTop: 20 }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: s.link, fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600, cursor: 'default' }}>
-                Learn more <Icon name="arrow-right" size={15} color={s.link} strokeWidth={2} />
-              </span>
+              <TextLink color={s.link}>Learn more</TextLink>
             </div>
           </div>
         ))}
@@ -526,9 +586,7 @@ function CertSection() {
             Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
           </p>
           <div style={{ marginTop: 22 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#fff', fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600, cursor: 'default' }}>
-              About our Certificate of Destruction <Icon name="arrow-right" size={15} color="#fff" strokeWidth={2} />
-            </span>
+            <TextLink color="#fff">About our Certificate of Destruction</TextLink>
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
@@ -622,7 +680,7 @@ function SampleFooter() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {items.map((it) => (
-            <span key={it} style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14, fontFamily: 'var(--font-prose)', cursor: 'default' }}>{it}</span>
+            <FooterLink key={it}>{it}</FooterLink>
           ))}
         </div>
       </div>
