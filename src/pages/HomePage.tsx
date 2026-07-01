@@ -1,353 +1,331 @@
 import { Link } from 'react-router-dom'
+import {
+  CupSoda, PackageX, Recycle, Check,
+  BadgeCheck, ShieldCheck, Video, Camera, Eye, Quote,
+} from 'lucide-react'
+import { Badge } from '../components/ui/Badge'
+import { Eyebrow } from '../components/ui/Eyebrow'
+import { Button } from '../components/ui/Button'
+
+import heroBuildingImg from '../assets/hero-building.jpg'
+import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
+import warehouseWideImg from '../assets/warehouse-wide-real.jpg'
+import warehouseExteriorImg from '../assets/warehouse-exterior.jpg'
+import forkliftImg from '../assets/forklift-real.png'
+
+// ── Layout helpers ────────────────────────────────────────────────────────────
+
+function Container({ children, style = {} }: { children: React.ReactNode; style?: React.CSSProperties }) {
+  return (
+    <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 var(--container-pad)', ...style }}>
+      {children}
+    </div>
+  )
+}
+
+function SectionHead({ eyebrow, title, intro, align = 'left' }: {
+  eyebrow?: string; title: string; intro?: string; align?: 'left' | 'center'
+}) {
+  return (
+    <div style={{ textAlign: align, maxWidth: align === 'center' ? 720 : 'none', margin: align === 'center' ? '0 auto' : 0 }}>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.6vw, 38px)', lineHeight: 1.1, letterSpacing: '-0.5px', color: 'var(--apd-heading)', margin: '12px 0 0' }}>
+        {title}
+      </h2>
+      {intro && (
+        <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'var(--apd-text-muted)', margin: align === 'center' ? '16px auto 0' : '16px 0 0', maxWidth: 600 }}>
+          {intro}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function TextLink({ children, to, color = 'var(--apd-steel-blue)' }: { children: React.ReactNode; to: string; color?: string }) {
+  return (
+    <Link
+      to={to}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        color,
+        fontFamily: 'var(--font-ui)',
+        fontSize: 14,
+        fontWeight: 600,
+        textDecoration: 'none',
+        borderBottom: '1.5px solid transparent',
+        paddingBottom: 2,
+        transition: 'border-color 150ms ease-out',
+      }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderBottomColor = color }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderBottomColor = 'transparent' }}
+    >
+      {children} →
+    </Link>
+  )
+}
+
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const SERVICES = [
+  { icon: CupSoda,  title: 'Beverage Destruction', desc: "Cans and bottles destroyed on proprietary equipment with a zero-sewer commitment — roughly 80% of Arizona's beverage market." },
+  { icon: PackageX, title: 'Liquidation Pallets',  desc: 'Retail returns, overstock and damaged goods, destroyed to spec and documented.' },
+  { icon: Recycle,  title: 'OCC & Packaging',      desc: 'Baled or loose corrugated cardboard, shrink wrap, film and mixed packaging — recovered at scale.' },
+]
+
+const MATERIALS = ['Beverages', 'OCC / Cardboard', 'Liquidation Pallets', 'Textiles & Apparel', 'Footwear & Accessories', 'Electronic Waste', 'Aluminum & Metals', 'General Consumer Goods', 'Packaging Materials', 'Psyllium']
 
 const STATS = [
-  { value: '80%', label: 'of Arizona Beverages Processed' },
-  { value: '2', label: 'Phoenix Warehouse Locations' },
-  { value: '$0', label: 'Broker Fees — Ever' },
-  { value: '100%', label: 'Destruction Verified' },
+  { v: '~80%',    l: "of Arizona's beverage destruction market" },
+  { v: '72%+',    l: 'downstream second use, not landfill' },
+  { v: '40',      l: 'employees across 2 warehouses' },
+  { v: '20+ yrs', l: 'of service from our core team' },
 ]
 
-const VALUE_PROPS = [
-  {
-    title: 'Lower Cost',
-    body: 'No broker markup. You work directly with the company doing the work — and the price reflects it.',
-  },
-  {
-    title: 'Direct Communication',
-    body: 'Talk to the team handling your product — not a sales intermediary. Faster answers, fewer surprises.',
-  },
-  {
-    title: 'Verified Proof',
-    body: 'Video documentation, photo records, or in-person warehouse viewing — your choice, every job.',
-  },
-  {
-    title: 'Confidential & Compliant',
-    body: 'Zero-tolerance policy for mishandling. Your product and brand information are treated with full discretion.',
-  },
+const CERTS = [
+  { icon: BadgeCheck, t: 'Coca-Cola Certified — the only certified destruction company for Coca-Cola in Arizona' },
+  { icon: ShieldCheck, t: 'SBA Certified Woman-Owned Business' },
 ]
 
-const PRODUCT_TILES = [
-  { label: 'Beverages', sub: 'Recalled, expired, or discontinued' },
-  { label: 'Food Products', sub: 'Perishable and packaged goods' },
-  { label: 'Nutritional Supplements', sub: 'Vitamins, proteins, formulas' },
-  { label: 'Apparel & Fabrics', sub: 'Textiles of all types' },
-  { label: 'Home Goods', sub: 'Consumer household products' },
-  { label: 'Appliances', sub: 'Small and large appliances' },
-  { label: 'Cosmetics', sub: 'Beauty and hygiene products' },
-  { label: 'Industrial', sub: 'Equipment, tools, materials' },
+const PROOF_OPTS = [
+  { icon: Video,  t: 'Video proof' },
+  { icon: Camera, t: 'Photo documentation' },
+  { icon: Eye,    t: 'Live in-person viewing' },
 ]
 
-const PROOF_OPTIONS = [
-  {
-    num: '01',
-    title: 'Video Documentation',
-    body: 'Recorded footage of the full destruction process, delivered to you as verifiable proof of completion.',
-  },
-  {
-    num: '02',
-    title: 'Photo Records',
-    body: 'Timestamped photos at each stage — before, during, and after destruction — for your records.',
-  },
-  {
-    num: '03',
-    title: 'Live Warehouse Viewing',
-    body: 'Manufacturers are welcome to witness the destruction in person at our Phoenix facility.',
-  },
+const SUSTAINABILITY_STATS = [
+  { v: '72%+',        l: 'downstream second use' },
+  { v: '0%',          l: 'product to the public sewer' },
+  { v: '26,000 tons', l: 'OCC recycled in 2025' },
+  { v: '800+ tons',   l: 'metals diverted in 2025' },
 ]
 
-const INTEGRITY_POINTS = [
-  'Strict confidentiality protocols for every client and every job',
-  'Environmentally responsible — we recycle and find downstream uses where possible',
-  'Serving manufacturers shipping from Texas and across the Southwest',
-  'Sister companies in California and Utah for regional manufacturer coverage',
-]
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
   return (
     <>
-      {/* ── Hero: full-viewport, video/image background ready ──────────────────
-          To activate: add a <video> or <img> as the first child of the
-          absolute-positioned media container below, with className="absolute
-          inset-0 w-full h-full object-cover". The gradient overlay will
-          composite on top automatically.
-      ── */}
-      <section
-        className="relative min-h-screen flex items-end overflow-hidden"
-        aria-labelledby="hero-heading"
-      >
-        {/* Media slot */}
-        <div className="img-texture-dark absolute inset-0" aria-hidden="true" />
-        {/* Gradient overlay — keeps text legible over any photo or video */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-32 pb-24 lg:pb-40">
-          <p className="text-apd-sage text-xs font-semibold uppercase tracking-[0.2em] mb-6">
-            Phoenix, Arizona
-          </p>
-          <h1
-            id="hero-heading"
-            className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-[0.88] tracking-tight mb-8 max-w-5xl">
-            Welcome to<br />
-            <span className="text-apd-clay">Arizona Product Destruction</span>
-          </h1>
-          <p className="text-white/65 text-lg lg:text-xl max-w-xl leading-relaxed mb-10">
-            The southwest's leading and most trusted product destruction company.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              to="/contact"
-              className="bg-apd-olive hover:bg-apd-olive-dark text-white font-bold text-base px-8 py-4 rounded transition-colors text-center outline-none focus-visible:ring-2 focus-visible:ring-white"
-            >
-              Request Service
-            </Link>
-            <Link
-              to="/how-it-works"
-              className="border border-white/30 text-white font-semibold text-base px-8 py-4 rounded hover:bg-white/10 transition-colors text-center outline-none focus-visible:ring-2 focus-visible:ring-apd-clay"
-            >
-              How It Works →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Stats belt ── */}
-      <section className="bg-apd-steel" aria-label="Key statistics">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-white/25">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="text-center lg:px-8">
-                <p className="text-white font-black text-4xl lg:text-5xl tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-white/75 text-sm mt-2 font-medium leading-snug">
-                  {stat.label}
-                </p>
+      {/* Hero ──────────────────────────────────────────────────────────────── */}
+      <section style={{ position: 'relative' }} aria-labelledby="hero-heading">
+        <div style={{ height: 560, position: 'relative' }}>
+          {/* Photo */}
+          <img
+            src={heroBuildingImg}
+            alt=""
+            aria-hidden="true"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '72% 18%' }}
+          />
+          {/* Scrim */}
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(20,24,30,0.92) 0%, rgba(20,24,30,0.75) 48%, rgba(20,24,30,0.70) 100%)' }} />
+          <div className="px-6 md:px-10 lg:px-12" style={{ maxWidth: 'var(--container-max)', margin: '0 auto', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ maxWidth: 620 }}>
+              <Badge tone="red" solid>Not a broker</Badge>
+              <h1
+                id="hero-heading"
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(38px, 5.4vw, 60px)', lineHeight: 1.02, letterSpacing: '-1px', color: '#fff', margin: '16px 0 0' }}
+              >
+                Protecting your brand<br />through sustainability.
+              </h1>
+              <p style={{ fontFamily: 'var(--font-prose)', fontSize: 19, lineHeight: 1.6, color: 'rgba(255,255,255,0.9)', margin: '18px 0 0', maxWidth: 500 }}>
+                We're a full service product destruction and waste management company based in Phoenix, AZ. Direct contact, lower cost &amp; verifiable proof.
+              </p>
+              <div style={{ display: 'flex', gap: 12, marginTop: 26, flexWrap: 'wrap' }}>
+                <Button variant="primary" size="lg" onClick={() => window.location.href = '/contact'}>Get a quote</Button>
+                <Button variant="outline" size="lg" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.6)' }} onClick={() => window.location.href = '/services'}>Explore services</Button>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Why Direct: 50/50 image-left + content-right split ─────────────────
-          Image slot: warehouse operations / forklift / destruction equipment
-      ── */}
-      <section className="lg:grid lg:grid-cols-2 min-h-[80vh]" aria-labelledby="why-heading">
-        {/* Media slot */}
-        <div
-          className="relative min-h-[50vw] lg:min-h-0 overflow-hidden"
-          aria-hidden="true"
-        >
-          <div className="img-texture-dark absolute inset-0" />
-        </div>
-
-        <div className="bg-white flex items-center">
-          <div className="px-10 py-16 lg:px-16 lg:py-24 max-w-lg">
-            <p className="text-apd-sage font-semibold text-xs uppercase tracking-[0.2em] mb-4">
-              The APD Difference
-            </p>
-            <h2
-              id="why-heading"
-              className="text-4xl lg:text-5xl font-black text-apd-forest leading-tight tracking-tight mb-6"
-            >
-              Not a Broker.<br />
-              A Destruction Partner.
-            </h2>
-            <p className="text-slate-600 text-lg leading-relaxed mb-10">
-              When you contact APD, you're speaking with the people who handle your product —
-              from the first call to the final proof. No subcontracting. No mystery. No middleman
-              taking a cut.
-            </p>
-            <div className="space-y-7">
-              {VALUE_PROPS.map((prop) => (
-                <div key={prop.title} className="flex gap-5">
-                  <div className="w-0.5 shrink-0 bg-apd-olive rounded-full self-stretch" aria-hidden="true" />
-                  <div>
-                    <p className="font-bold text-apd-forest text-sm mb-1">{prop.title}</p>
-                    <p className="text-slate-500 text-sm leading-relaxed">{prop.body}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── What We Process: full-bleed image tile grid ─────────────────────────
-          Each tile: swap the placeholder <div> for an <img> or <picture>
-          with className="absolute inset-0 w-full h-full object-cover"
-      ── */}
-      <section aria-labelledby="products-heading">
-        <div className="bg-[#748292] px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
-          <p className="text-white/65 font-semibold text-xs uppercase tracking-[0.2em] mb-3">
-            What We Handle
-          </p>
-          <h2
-            id="products-heading"
-            className="text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight"
-          >
-            Products We Process
-          </h2>
-        </div>
+      {/* Statement ─────────────────────────────────────────────────────────── */}
+      <section style={{ padding: '84px var(--container-pad)', textAlign: 'center', background: 'var(--apd-surface)' }}>
+        <p style={{ margin: '0 auto', maxWidth: 760, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.9vw, 32px)', lineHeight: 1.32, letterSpacing: '-0.4px', color: 'var(--apd-heading)' }}>
+          From beverages to supplements to home goods — when product must be destroyed securely, APD is your destruction solution.
+        </p>
+      </section>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4">
-          {PRODUCT_TILES.map((product) => (
-            <div key={product.label} className="relative aspect-square overflow-hidden group">
-              {/* Media slot */}
-              <div className="img-texture-steel absolute inset-0" />
-              <div className="absolute inset-0 bg-[#748292]/50 group-hover:bg-[#748292]/30 transition-colors duration-300" />
-              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/60 to-transparent">
-                <p className="text-white font-bold text-base leading-tight">{product.label}</p>
-                <p className="text-white/60 text-xs mt-1">{product.sub}</p>
-              </div>
+      {/* Stats bar ─────────────────────────────────────────────────────────── */}
+      <section style={{ background: 'var(--apd-blue-deep)' }} aria-label="Key statistics">
+        <Container style={{ padding: '48px var(--container-pad)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          {STATS.map((s, i) => (
+            <div key={s.l} style={{ padding: '0 28px', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.16)' }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.5px', color: '#fff' }}>{s.v}</div>
+              <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, color: 'rgba(255,255,255,0.72)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
             </div>
           ))}
+        </Container>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}>
+          <Container style={{ padding: '18px var(--container-pad)', display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
+            {CERTS.map(({ icon: Icon, t }) => (
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Icon size={18} color="var(--apd-green-mid)" strokeWidth={2} />
+                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,0.86)' }}>{t}</span>
+              </div>
+            ))}
+          </Container>
         </div>
       </section>
 
-      {/* ── Proof of Destruction: full-bleed image with content overlay ──────────
-          Image slot: dramatic processing / shredding / baling equipment photo
-      ── */}
-      <section
-        className="relative min-h-[85vh] flex items-center overflow-hidden"
-        aria-labelledby="proof-heading"
-      >
-        {/* Media slot */}
-        <div className="img-texture-dark absolute inset-0" aria-hidden="true" />
-        <div className="absolute inset-0 bg-apd-forest/80" aria-hidden="true" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="max-w-2xl mb-14">
-            <p className="text-apd-sage font-semibold text-xs uppercase tracking-[0.2em] mb-4">
-              Full Documentation
-            </p>
-            <h2
-              id="proof-heading"
-              className="text-5xl lg:text-6xl font-black text-white leading-[0.92] tracking-tight"
-            >
-              Complete Proof.<br />
-              Total Peace of Mind.
-            </h2>
-            <p className="text-white/60 text-lg mt-6 leading-relaxed">
-              Every job includes your choice of documentation. We provide verified proof so
-              manufacturers can satisfy recall requirements, audits, and brand protection needs.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-            {PROOF_OPTIONS.map((option) => (
-              <div
-                key={option.title}
-                className="bg-apd-forest/50 backdrop-blur-sm p-8 lg:p-10"
-              >
-                <div className="text-apd-clay font-black text-3xl tracking-tight mb-5 leading-none">
-                  {option.num}
-                </div>
-                <h3 className="font-bold text-white text-lg mb-3">{option.title}</h3>
-                <p className="text-white/55 text-sm leading-relaxed">{option.body}</p>
+      {/* Why APD ────────────────────────────────────────────────────────────── */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} aria-labelledby="why-heading">
+        <div style={{ background: 'var(--apd-steel-blue)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Eyebrow color="rgba(255,255,255,0.7)">Why APD</Eyebrow>
+          <h2 id="why-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
+            We do it ourselves.<br />That's the whole point.
+          </h2>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 460 }}>
+            Most destruction companies are brokers — they take your product and hand it to someone else, adding markup and removing visibility. We destroy it in our own Phoenix warehouses. Direct contact, lower cost, verifiable proof.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 24 }}>
+            {['No middlemen — you work directly with APD', 'A single point of contact for all your waste needs', 'Integrity, confidentiality, efficiency'].map((t) => (
+              <div key={t} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <Check size={20} color="var(--apd-green-mid)" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
+                <span style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.5, color: '#fff' }}>{t}</span>
               </div>
             ))}
           </div>
-
-          <div className="mt-10">
-            <Link
-              to="/proof-of-destruction"
-              className="inline-block border border-white/30 text-white font-semibold text-sm px-7 py-3.5 rounded hover:bg-white/10 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-apd-clay"
-            >
-              Learn About Our Proof Process →
-            </Link>
-          </div>
+        </div>
+        <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
+          <div className="img-texture-dark" style={{ position: 'absolute', inset: 0 }} />
+          <img src={baledCardboardImg} alt="Baled product ready for processing" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
       </section>
 
-      {/* ── Integrity: content-left + 50/50 image-right split ───────────────────
-          Image slot: team at work / compliance documentation / facility exterior
-      ── */}
-      <section className="lg:grid lg:grid-cols-2 min-h-[75vh]" aria-labelledby="integrity-heading">
-        <div className="bg-white flex items-center">
-          <div className="px-10 py-16 lg:px-16 lg:py-24 max-w-lg">
-            <p className="text-apd-sage font-semibold text-xs uppercase tracking-[0.2em] mb-4">
-              Our Standard
-            </p>
-            <h2
-              id="integrity-heading"
-              className="text-4xl lg:text-5xl font-black text-apd-forest leading-tight tracking-tight mb-6"
-            >
-              Zero Tolerance.<br />
-              Complete Integrity.
+      {/* Services teaser ────────────────────────────────────────────────────── */}
+      <section>
+        <Container style={{ padding: '72px var(--container-pad) 36px' }}>
+          <SectionHead
+            align="center"
+            eyebrow="Services"
+            title="One processor for every kind of product"
+            intro="We destroy and recover material across ten categories — leading with destruction, backed by certified documentation."
+          />
+        </Container>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          {[
+            { ...SERVICES[0], bg: 'var(--apd-surface-panel)', fg: 'var(--apd-heading)', sub: 'var(--apd-text-muted)', link: 'var(--apd-steel-blue)' },
+            { ...SERVICES[1], bg: 'var(--apd-ink)',           fg: '#fff',               sub: 'rgba(255,255,255,0.74)', link: '#fff' },
+            { ...SERVICES[2], bg: 'var(--apd-steel-blue)',    fg: '#fff',               sub: 'rgba(255,255,255,0.82)', link: '#fff' },
+          ].map((s) => {
+            const Icon = s.icon
+            return (
+              <div key={s.title} style={{ background: s.bg, color: s.fg, padding: '48px clamp(24px, 3vw, 40px)', minHeight: 280, display: 'flex', flexDirection: 'column' }}>
+                <Icon size={26} color={s.fg} strokeWidth={1.75} />
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 21, color: s.fg, margin: '18px 0 10px' }}>{s.title}</h3>
+                <p style={{ fontFamily: 'var(--font-prose)', fontSize: 15, lineHeight: 1.6, color: s.sub, margin: 0, flex: 1 }}>{s.desc}</p>
+                <div style={{ marginTop: 20 }}>
+                  <TextLink to="/services" color={s.link}>Learn more</TextLink>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <Container style={{ padding: '36px var(--container-pad) 8px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+            {MATERIALS.map((m) => (
+              <span key={m} style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'var(--apd-body)', border: '1px solid var(--apd-border-strong)', padding: '8px 14px' }}>
+                {m}
+              </span>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Photo mosaic ──────────────────────────────────────────────────────── */}
+      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', height: 260, marginTop: 36 }}>
+        {[
+          { src: warehouseWideImg,  alt: 'Warehouse — intake and sorting' },
+          { src: forkliftImg,       alt: 'Forklift at loading dock' },
+          { src: warehouseExteriorImg, alt: 'Facility exterior' },
+        ].map(({ src, alt }) => (
+          <div key={alt} style={{ position: 'relative', overflow: 'hidden' }}>
+            <div className="img-texture-dark" style={{ position: 'absolute', inset: 0 }} />
+            <img src={src} alt={alt} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,24,30,0.3)' }} />
+          </div>
+        ))}
+      </section>
+
+      {/* Certificate of Destruction ─────────────────────────────────────────── */}
+      <section style={{ background: 'var(--apd-ink)', color: '#fff' }} aria-labelledby="cert-heading">
+        <Container style={{ padding: '64px var(--container-pad)', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 48, alignItems: 'center' }}>
+          <div>
+            <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
+            <h2 id="cert-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.2vw, 34px)', color: '#fff', margin: '12px 0 0', lineHeight: 1.12 }}>
+              Proof you can show your stakeholders
             </h2>
-            <p className="text-slate-600 text-lg leading-relaxed mb-8">
-              APD employees operate with integrity, confidentiality, and efficiency — full stop.
-              Manufacturer product is handled exactly as required, with zero tolerance for
-              shenanigans.
+            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', margin: '14px 0 0', maxWidth: 460 }}>
+              Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
             </p>
-            <ul className="space-y-4 mb-10" role="list">
-              {INTEGRITY_POINTS.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <svg
-                    className="w-5 h-5 text-apd-olive mt-0.5 shrink-0"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span className="text-slate-600 text-sm leading-relaxed">{item}</span>
-                </li>
-              ))}
-            </ul>
-            <Link
-              to="/about"
-              className="inline-block bg-apd-olive hover:bg-apd-olive-dark text-white font-bold text-sm px-7 py-3.5 rounded transition-colors outline-none focus-visible:ring-2 focus-visible:ring-apd-olive"
-            >
-              About APD →
-            </Link>
+            <div style={{ marginTop: 22 }}>
+              <TextLink to="/proof-of-destruction" color="#fff">About our Certificate of Destruction</TextLink>
+            </div>
           </div>
-        </div>
-
-        {/* Media slot */}
-        <div
-          className="relative min-h-[50vw] lg:min-h-0 overflow-hidden"
-          aria-hidden="true"
-        >
-          <div className="img-texture-dark absolute inset-0" />
-        </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
+            {PROOF_OPTS.map(({ icon: Icon, t }) => (
+              <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
+                <Icon size={24} color="var(--apd-green-mid)" />
+                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{t}</div>
+              </div>
+            ))}
+          </div>
+        </Container>
       </section>
 
-      {/* ── Final CTA ── */}
-      <section className="bg-[#F8F8EF] py-28 lg:py-36" aria-labelledby="cta-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2
-            id="cta-heading"
-            className="text-5xl lg:text-7xl font-black text-apd-forest leading-[0.92] tracking-tight mb-6"
-          >
-            Ready to Get Started?
-          </h2>
-          <p className="text-apd-mist text-xl max-w-xl mx-auto mb-12 leading-relaxed">
-            Tell us about your product and we'll respond with a direct quote. No brokers,
-            no runaround — just straight answers and fast service.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/contact"
-              className="bg-apd-olive hover:bg-apd-olive-dark text-white font-bold text-base px-10 py-5 rounded transition-colors text-center outline-none focus-visible:ring-2 focus-visible:ring-apd-olive focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F8EF]"
-            >
-              Request Service
-            </Link>
-            <a
-              href="tel:+10000000000"
-              className="border border-apd-forest/25 text-apd-forest font-semibold text-base px-10 py-5 rounded hover:bg-apd-forest/6 transition-colors text-center outline-none focus-visible:ring-2 focus-visible:ring-apd-forest"
-            >
-              Call Us Directly
-            </a>
+      {/* Sustainability ─────────────────────────────────────────────────────── */}
+      <section aria-labelledby="sustainability-heading">
+        <Container style={{ padding: '72px var(--container-pad) 40px' }}>
+          <SectionHead
+            align="center"
+            eyebrow="Sustainability"
+            title="Destroyed, not just dumped"
+            intro="Where we can, we recover materials and find downstream second-uses — keeping product out of landfill and giving you a cleaner story to tell."
+          />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderTop: '1px solid var(--apd-border)', borderLeft: '1px solid var(--apd-border)', marginTop: 40 }}>
+            {SUSTAINABILITY_STATS.map((s) => (
+              <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', borderRight: '1px solid var(--apd-border)', borderBottom: '1px solid var(--apd-border)', background: '#fff' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, lineHeight: 1.05, color: 'var(--apd-olive-green)' }}>{s.v}</div>
+                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--apd-text-muted)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
+              </div>
+            ))}
           </div>
-        </div>
+          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 12.5, color: 'var(--apd-text-sage)', textAlign: 'center', marginTop: 16 }}>
+            193 tons of shrink wrap recovered · 180+ loads to waste-to-energy · hundreds of tons of food-grade product to animal-feed programs.
+          </p>
+        </Container>
+      </section>
+
+      {/* Testimonial placeholder ────────────────────────────────────────────── */}
+      <section style={{ background: 'var(--apd-surface-panel)' }}>
+        <Container style={{ padding: '72px var(--container-pad)', textAlign: 'center' }}>
+          <Quote size={30} color="var(--apd-clay-red)" />
+          <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.8vw, 30px)', lineHeight: 1.34, letterSpacing: '-0.3px', color: 'var(--apd-heading)', margin: '20px auto 0', maxWidth: 760 }}>
+            "Placeholder testimonial — a client pull-quote about working with APD directly will go here once final copy is approved."
+          </p>
+          <div style={{ fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600, color: 'var(--apd-text-muted)', marginTop: 20 }}>
+            — Client name, Title · Company <span style={{ color: 'var(--apd-text-sage)', fontWeight: 500 }}>(placeholder)</span>
+          </div>
+        </Container>
+      </section>
+
+      {/* CTA band ───────────────────────────────────────────────────────────── */}
+      <section style={{ background: 'var(--apd-olive-green)' }} aria-labelledby="cta-heading">
+        <Container style={{ padding: '60px var(--container-pad)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
+          <div>
+            <h2 id="cta-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', color: '#fff', margin: 0, lineHeight: 1.1 }}>
+              Ready to destroy it right?
+            </h2>
+            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 18, color: 'rgba(255,255,255,0.9)', margin: '12px 0 0', maxWidth: 540 }}>
+              Talk to APD directly. We contact every lead — and reply to new inquiries within 24 hours.
+            </p>
+            <p style={{ fontFamily: 'var(--font-ui)', fontSize: 14, color: 'rgba(255,255,255,0.82)', margin: '14px 0 0' }}>
+              South Phoenix, AZ <span style={{ opacity: 0.6 }}>(address TBD)</span> · info@azproductdestruction.com <span style={{ opacity: 0.6 }}>(TBD)</span>
+            </p>
+          </div>
+          <Button variant="accent" size="lg" onClick={() => window.location.href = '/contact'}>Get a quote</Button>
+        </Container>
       </section>
     </>
   )
