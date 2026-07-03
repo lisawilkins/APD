@@ -1,0 +1,11 @@
+{
+  "projectId": "8a160b98-ec61-4065-b80b-a91d9df6fc06",
+  "shape": "package",
+  "pkg": "apd-ui",
+  "globalName": "APDUI",
+  "srcDir": "src/components/ui",
+  "cssEntry": "dist/assets/index-CPDZIm0W.css",
+  "tokensGlob": "dist/assets/index-CPDZIm0W.css",
+  "buildCmd": "npm run build",
+  "readmeHeader": ".design-sync/conventions.md"
+}
