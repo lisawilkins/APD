@@ -270,8 +270,8 @@ export default function HomePage() {
             </div>
             <div className="proof-grid" style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
               {PROOF_OPTS.map(({ icon: Icon, t }) => (
-                <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
-                  <Icon size={24} color="var(--apd-green-mid)" />
+                <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                  <Icon size={48} color="var(--apd-green-mid)" />
                   <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{t}</div>
                 </div>
               ))}

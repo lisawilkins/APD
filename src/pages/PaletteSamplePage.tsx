@@ -596,8 +596,8 @@ function CertSection() {
           </div>
           <div className="proof-grid" style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
             {proofOpts.map((p) => (
-              <div key={p.t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
-                <Icon name={p.icon} size={24} color="var(--apd-green-mid)" />
+              <div key={p.t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <Icon name={p.icon} size={48} color="var(--apd-green-mid)" />
                 <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{p.t}</div>
               </div>
             ))}
