@@ -77,15 +77,15 @@ const SERVICES = [
 const MATERIALS = ['Beverages', 'OCC / Cardboard', 'Liquidation Pallets', 'Textiles & Apparel', 'Footwear & Accessories', 'Electronic Waste', 'Aluminum & Metals', 'General Consumer Goods', 'Packaging Materials', 'Psyllium']
 
 const STATS = [
-  { v: '~80%',    l: "of Arizona's beverage destruction market" },
-  { v: '72%+',    l: 'downstream second use, not landfill' },
-  { v: '40',      l: 'employees across 2 warehouses' },
-  { v: '20+ yrs', l: 'of service from our core team' },
+  { v: '+80%', l: 'of materials are processed at our warehouses.' },
+  { v: '+72%', l: 'of materials received have a downstream second use.' },
+  { v: '+23',  l: 'years of service in product destruction.' },
+  { v: '+180', l: 'loads diverted to approved waste-to-energy facilities.' },
 ]
 
 const CERTS = [
-  { icon: BadgeCheck, t: 'Coca-Cola Certified — the only certified destruction company for Coca-Cola in Arizona' },
-  { icon: ShieldCheck, t: 'SBA Certified Woman-Owned Business' },
+  { icon: BadgeCheck, t: 'Small Business Administration Certified Woman-Owned Business' },
+  { icon: ShieldCheck, t: 'The only Coca-Cola Certified destruction company in Arizona' },
 ]
 
 const PROOF_OPTS = [
@@ -148,28 +148,32 @@ export default function HomePage() {
 
       {/* Stats bar ─────────────────────────────────────────────────────────── */}
       <section id="stats-bar" style={{ background: 'var(--apd-blue-deep)' }} aria-label="Key statistics">
-        <Container style={{ padding: '48px var(--container-pad)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-          {STATS.map((s, i) => (
-            <div key={s.l} style={{ padding: '0 28px', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.16)' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.5px', color: '#fff' }}>{s.v}</div>
-              <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, color: 'rgba(255,255,255,0.72)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
-            </div>
-          ))}
-        </Container>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}>
-          <Container style={{ padding: '18px var(--container-pad)', display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
-            {CERTS.map(({ icon: Icon, t }) => (
-              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <Icon size={18} color="var(--apd-green-mid)" strokeWidth={2} />
-                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,0.86)' }}>{t}</span>
+        <Container style={{ padding: '40px var(--container-pad)' }}>
+          <div className="stats-grid">
+            {STATS.map((s) => (
+              <div key={s.l} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(38px, 5vw, 60px)', lineHeight: 1.05, color: '#fff' }}>{s.v}</div>
+                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 18, color: '#DDECFC', opacity: 0.75, marginTop: 8, lineHeight: 1.25, letterSpacing: '0.25px' }}>{s.l}</div>
               </div>
             ))}
+          </div>
+        </Container>
+        <div style={{ borderTop: '1px solid #305B89' }}>
+          <Container style={{ padding: '20px var(--container-pad)' }}>
+            <div className="certs-row">
+              {CERTS.map(({ icon: Icon, t }) => (
+                <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 12, flex: '1 0 0', minWidth: 240 }}>
+                  <Icon size={32} color="var(--apd-green-mid)" strokeWidth={1.75} />
+                  <span style={{ fontFamily: 'var(--font-ui)', fontSize: 16, fontWeight: 400, color: 'rgba(255,255,255,0.86)' }}>{t}</span>
+                </div>
+              ))}
+            </div>
           </Container>
         </div>
       </section>
 
       {/* Why APD ────────────────────────────────────────────────────────────── */}
-      <section id="why-apd" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} aria-labelledby="why-heading">
+      <section id="why-apd" className="why-grid" aria-labelledby="why-heading">
         <div style={{ background: 'var(--apd-steel-blue)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Eyebrow color="rgba(255,255,255,0.7)">Why APD</Eyebrow>
           <h2 id="why-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
@@ -203,7 +207,7 @@ export default function HomePage() {
             intro="We destroy and recover material across ten categories — leading with destruction, backed by certified documentation."
           />
         </Container>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+        <div className="services-grid">
           {[
             { ...SERVICES[0], bg: 'var(--apd-surface-panel)', fg: 'var(--apd-heading)', sub: 'var(--apd-text-muted)', link: 'var(--apd-steel-blue)' },
             { ...SERVICES[1], bg: 'var(--apd-ink)',           fg: '#fff',               sub: 'rgba(255,255,255,0.74)', link: '#fff' },
@@ -234,7 +238,7 @@ export default function HomePage() {
       </section>
 
       {/* Photo mosaic ──────────────────────────────────────────────────────── */}
-      <section id="photo-mosaic" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', height: 260, marginTop: 36 }}>
+      <section id="photo-mosaic" className="photo-mosaic-grid" style={{ marginTop: 36 }}>
         {[
           { src: warehouseWideImg,  alt: 'Warehouse — intake and sorting' },
           { src: forkliftImg,       alt: 'Forklift at loading dock' },
@@ -250,26 +254,28 @@ export default function HomePage() {
 
       {/* Certificate of Destruction ─────────────────────────────────────────── */}
       <section id="certificate-of-destruction" style={{ background: 'var(--apd-ink)', color: '#fff' }} aria-labelledby="cert-heading">
-        <Container style={{ padding: '64px var(--container-pad)', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 48, alignItems: 'center' }}>
-          <div>
-            <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
-            <h2 id="cert-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.2vw, 34px)', color: '#fff', margin: '12px 0 0', lineHeight: 1.12 }}>
-              Proof you can show your stakeholders
-            </h2>
-            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', margin: '14px 0 0', maxWidth: 460 }}>
-              Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
-            </p>
-            <div style={{ marginTop: 22 }}>
-              <TextLink to="/proof-of-destruction" color="#fff">About our Certificate of Destruction</TextLink>
-            </div>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
-            {PROOF_OPTS.map(({ icon: Icon, t }) => (
-              <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
-                <Icon size={24} color="var(--apd-green-mid)" />
-                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{t}</div>
+        <Container style={{ padding: '64px var(--container-pad)' }}>
+          <div className="cert-grid">
+            <div>
+              <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
+              <h2 id="cert-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.2vw, 34px)', color: '#fff', margin: '12px 0 0', lineHeight: 1.12 }}>
+                Proof you can show your stakeholders
+              </h2>
+              <p style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', margin: '14px 0 0', maxWidth: 460 }}>
+                Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
+              </p>
+              <div style={{ marginTop: 22 }}>
+                <TextLink to="/proof-of-destruction" color="#fff">About our Certificate of Destruction</TextLink>
               </div>
-            ))}
+            </div>
+            <div className="proof-grid" style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
+              {PROOF_OPTS.map(({ icon: Icon, t }) => (
+                <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
+                  <Icon size={24} color="var(--apd-green-mid)" />
+                  <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{t}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
@@ -283,9 +289,9 @@ export default function HomePage() {
             title="Destroyed, not just dumped"
             intro="Where we can, we recover materials and find downstream second-uses — keeping product out of landfill and giving you a cleaner story to tell."
           />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderTop: '1px solid var(--apd-border)', borderLeft: '1px solid var(--apd-border)', marginTop: 40 }}>
+          <div className="sustainability-grid">
             {SUSTAINABILITY_STATS.map((s) => (
-              <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', borderRight: '1px solid var(--apd-border)', borderBottom: '1px solid var(--apd-border)', background: '#fff' }}>
+              <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', background: '#fff' }}>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, lineHeight: 1.05, color: 'var(--apd-olive-green)' }}>{s.v}</div>
                 <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--apd-text-muted)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
               </div>

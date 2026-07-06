@@ -10,7 +10,9 @@
       "Bash(npx playwright *)",
       "Bash(node .ds-sync/package-build.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)",
       "Bash(node .ds-sync/package-validate.mjs ./ds-bundle)",
-      "Bash(node .ds-sync/resync.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)"
+      "Bash(node .ds-sync/resync.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)",
+      "Bash(lsof -ti:5174)",
+      "Bash(xargs kill)"
     ]
   }
 }

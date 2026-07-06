@@ -463,22 +463,26 @@ function StatsBar() {
   ]
   return (
     <section style={{ background: 'var(--apd-blue-deep)' }}>
-      <Container style={{ padding: '48px var(--container-pad)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-        {stats.map((s, i) => (
-          <div key={s.l} style={{ padding: '0 28px', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.16)' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.5px', color: '#fff' }}>{s.v}</div>
-            <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, color: 'rgba(255,255,255,0.72)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
-          </div>
-        ))}
-      </Container>
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}>
-        <Container style={{ padding: '18px var(--container-pad)', display: 'flex', alignItems: 'center', gap: 28, flexWrap: 'wrap' }}>
-          {certs.map((c) => (
-            <div key={c.t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <Icon name={c.icon} size={18} color="var(--apd-green-mid)" strokeWidth={2} />
-              <span style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,0.86)' }}>{c.t}</span>
+      <Container style={{ padding: '48px var(--container-pad)' }}>
+        <div className="stats-grid">
+          {stats.map((s) => (
+            <div key={s.l} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.5px', color: '#fff' }}>{s.v}</div>
+              <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, color: 'rgba(255,255,255,0.72)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
             </div>
           ))}
+        </div>
+      </Container>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.14)' }}>
+        <Container style={{ padding: '18px var(--container-pad)' }}>
+          <div className="certs-row">
+            {certs.map((c) => (
+              <div key={c.t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Icon name={c.icon} size={18} color="var(--apd-green-mid)" strokeWidth={2} />
+                <span style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,0.86)' }}>{c.t}</span>
+              </div>
+            ))}
+          </div>
         </Container>
       </div>
     </section>
@@ -492,7 +496,7 @@ function WhyAPD() {
     'Integrity, confidentiality, efficiency',
   ]
   return (
-    <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+    <section className="why-grid">
       <div style={{ background: 'var(--apd-steel-blue)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Eyebrow color="rgba(255,255,255,0.7)">Why APD</Eyebrow>
         <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
@@ -533,7 +537,7 @@ function ServicesSection() {
           intro="We destroy and recover material across ten categories — leading with destruction, backed by certified documentation."
         />
       </Container>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+      <div className="services-grid">
         {cols.map((s) => (
           <div key={s.title} style={{ background: s.bg, color: s.fg, padding: '48px clamp(24px, 3vw, 40px)', minHeight: 280, display: 'flex', flexDirection: 'column' }}>
             <Icon name={s.icon} size={26} color={s.fg} strokeWidth={1.75} />
@@ -560,7 +564,7 @@ function ServicesSection() {
 
 function PhotoStrip() {
   return (
-    <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', height: 240, marginTop: 36 }}>
+    <section className="photo-mosaic-grid" style={{ marginTop: 36 }}>
       <Photo label="Intake & sorting"      tone="olive" src="/palette-sample/warehouse-wide.jpg" scrim />
       <Photo label="Forklift loading dock" tone="sand"  src="/palette-sample/forklift.jpg"        scrim />
       <Photo label="Secure transport fleet" tone="slate" src="/palette-sample/transport-fleet.jpg" scrim />
@@ -576,26 +580,28 @@ function CertSection() {
   ]
   return (
     <section style={{ background: 'var(--apd-ink)', color: '#fff' }}>
-      <Container style={{ padding: '64px var(--container-pad)', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 48, alignItems: 'center' }}>
-        <div>
-          <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.2vw, 34px)', color: '#fff', margin: '12px 0 0', lineHeight: 1.12 }}>
-            Proof you can show your stakeholders
-          </h2>
-          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', margin: '14px 0 0', maxWidth: 460 }}>
-            Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
-          </p>
-          <div style={{ marginTop: 22 }}>
-            <TextLink color="#fff">About our Certificate of Destruction</TextLink>
-          </div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
-          {proofOpts.map((p) => (
-            <div key={p.t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
-              <Icon name={p.icon} size={24} color="var(--apd-green-mid)" />
-              <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{p.t}</div>
+      <Container style={{ padding: '64px var(--container-pad)' }}>
+        <div className="cert-grid">
+          <div>
+            <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.2vw, 34px)', color: '#fff', margin: '12px 0 0', lineHeight: 1.12 }}>
+              Proof you can show your stakeholders
+            </h2>
+            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', margin: '14px 0 0', maxWidth: 460 }}>
+              Every job closes with a certified record that your product was destroyed — customizable with your SKU numbers, batch numbers and the fields your team requires.
+            </p>
+            <div style={{ marginTop: 22 }}>
+              <TextLink color="#fff">About our Certificate of Destruction</TextLink>
             </div>
-          ))}
+          </div>
+          <div className="proof-grid" style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
+            {proofOpts.map((p) => (
+              <div key={p.t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', textAlign: 'center' }}>
+                <Icon name={p.icon} size={24} color="var(--apd-green-mid)" />
+                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: '#fff', marginTop: 12, lineHeight: 1.35 }}>{p.t}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>
@@ -618,9 +624,9 @@ function SustainabilitySection() {
           title="Destroyed, not just dumped"
           intro="Where we can, we recover materials and find downstream second-uses — keeping product out of landfill and giving you a cleaner story to tell."
         />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderTop: '1px solid var(--apd-border)', borderLeft: '1px solid var(--apd-border)', marginTop: 40 }}>
+        <div className="sustainability-grid">
           {stats.map((s) => (
-            <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', borderRight: '1px solid var(--apd-border)', borderBottom: '1px solid var(--apd-border)', background: '#fff' }}>
+            <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', background: '#fff' }}>
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, lineHeight: 1.05, color: 'var(--apd-olive-green)' }}>{s.v}</div>
               <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--apd-text-muted)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
             </div>
@@ -697,7 +703,7 @@ function SampleFooter() {
         </div>
       </div>
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '48px var(--container-pad) 28px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 40 }}>
+        <div className="footer-grid">
           <div>
             <div style={{ background: '#fff', display: 'inline-block', padding: '10px 12px' }}>
               <img src="/palette-sample/logo-apd.svg" alt="Arizona Product Destruction" style={{ height: 38, width: 'auto', display: 'block' }} />

@@ -191,6 +191,160 @@ body {
   background-size: 40px 40px;
 }
 
+/* Stats bar — 1-col stack below 600px, 2x2 grid below 1024px, 1x4 at and above */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  column-gap: 32px;
+  row-gap: 32px;
+}
+.stats-grid > div {
+  border-color: #315B88;
+}
+.stats-grid > div:nth-child(odd) {
+  border-right: 1px solid #315B88;
+  padding-right: 20px;
+}
+@media (max-width: 599px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+  .stats-grid > div:nth-child(odd) {
+    border-right: none;
+    padding-right: 0;
+  }
+  .stats-grid > div:not(:last-child) {
+    border-bottom: 1px solid #315B88;
+    padding-bottom: 24px;
+  }
+}
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    row-gap: 0;
+  }
+  .stats-grid > div:nth-child(odd) {
+    border-right: none;
+  }
+  .stats-grid > div:not(:last-child) {
+    border-right: 1px solid #315B88;
+  }
+}
+
+/* Services teaser — 1 col below 600px, 3 cols at and above */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 599px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Certification statements row — tight stack on phone, spaced row above */
+.certs-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 70px;
+}
+@media (max-width: 599px) {
+  .certs-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* Why-APD split (text + photo) — 1 col below 600px, 2 cols at and above */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 599px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Photo mosaic — 1 col below 600px, 3 cols at and above */
+.photo-mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 260px;
+}
+@media (max-width: 599px) {
+  .photo-mosaic-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .photo-mosaic-grid > div {
+    height: 220px;
+  }
+}
+
+/* Certificate of Destruction split (copy + proof tiles) — 1 col below 600px, 2 cols at and above */
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 599px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Proof-of-destruction option tiles — 1 col below 600px, 3 cols at and above */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+}
+@media (max-width: 599px) {
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sustainability stat tiles — 1 col below 600px, 4 cols at and above */
+.sustainability-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--apd-border);
+  border-left: 1px solid var(--apd-border);
+  margin-top: 40px;
+}
+.sustainability-grid > div {
+  border-right: 1px solid var(--apd-border);
+  border-bottom: 1px solid var(--apd-border);
+}
+@media (max-width: 599px) {
+  .sustainability-grid {
+    grid-template-columns: 1fr;
+    border-left: none;
+  }
+  .sustainability-grid > div {
+    border-right: none;
+  }
+}
+
+/* Footer main grid — 1 col below 600px, 4 cols at and above */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 599px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 @layer base {
   h1, h2 {
     font-family: var(--font-display);

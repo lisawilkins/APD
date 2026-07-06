@@ -70,7 +70,7 @@ export default function Footer() {
 
       {/* Main footer grid */}
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '48px var(--container-pad) 28px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: 40 }}>
+        <div className="footer-grid">
 
           {/* Brand column */}
           <div>
