@@ -107,7 +107,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero ──────────────────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative' }} aria-labelledby="hero-heading">
+      <section id="hero" style={{ position: 'relative' }} aria-labelledby="hero-heading">
         <div style={{ height: 560, position: 'relative' }}>
           {/* Photo */}
           <img
@@ -140,14 +140,14 @@ export default function HomePage() {
       </section>
 
       {/* Statement ─────────────────────────────────────────────────────────── */}
-      <section style={{ padding: '84px var(--container-pad)', textAlign: 'center', background: 'var(--apd-surface)' }}>
+      <section id="statement" style={{ padding: '84px var(--container-pad)', textAlign: 'center', background: 'var(--apd-surface)' }}>
         <p style={{ margin: '0 auto', maxWidth: 760, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.9vw, 32px)', lineHeight: 1.32, letterSpacing: '-0.4px', color: 'var(--apd-heading)' }}>
           From beverages to supplements to home goods — when product must be destroyed securely, APD is your destruction solution.
         </p>
       </section>
 
       {/* Stats bar ─────────────────────────────────────────────────────────── */}
-      <section style={{ background: 'var(--apd-blue-deep)' }} aria-label="Key statistics">
+      <section id="stats-bar" style={{ background: 'var(--apd-blue-deep)' }} aria-label="Key statistics">
         <Container style={{ padding: '48px var(--container-pad)', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
           {STATS.map((s, i) => (
             <div key={s.l} style={{ padding: '0 28px', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.16)' }}>
@@ -169,11 +169,11 @@ export default function HomePage() {
       </section>
 
       {/* Why APD ────────────────────────────────────────────────────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} aria-labelledby="why-heading">
+      <section id="why-apd" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }} aria-labelledby="why-heading">
         <div style={{ background: 'var(--apd-steel-blue)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Eyebrow color="rgba(255,255,255,0.7)">Why APD</Eyebrow>
           <h2 id="why-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
-            We do it ourselves.<br />That's the whole point.
+            We eliminate the middleman passing the savings on to you.
           </h2>
           <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 460 }}>
             Most destruction companies are brokers — they take your product and hand it to someone else, adding markup and removing visibility. We destroy it in our own Phoenix warehouses. Direct contact, lower cost, verifiable proof.
@@ -194,7 +194,7 @@ export default function HomePage() {
       </section>
 
       {/* Services teaser ────────────────────────────────────────────────────── */}
-      <section>
+      <section id="services-teaser">
         <Container style={{ padding: '72px var(--container-pad) 36px' }}>
           <SectionHead
             align="center"
@@ -234,7 +234,7 @@ export default function HomePage() {
       </section>
 
       {/* Photo mosaic ──────────────────────────────────────────────────────── */}
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', height: 260, marginTop: 36 }}>
+      <section id="photo-mosaic" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', height: 260, marginTop: 36 }}>
         {[
           { src: warehouseWideImg,  alt: 'Warehouse — intake and sorting' },
           { src: forkliftImg,       alt: 'Forklift at loading dock' },
@@ -249,7 +249,7 @@ export default function HomePage() {
       </section>
 
       {/* Certificate of Destruction ─────────────────────────────────────────── */}
-      <section style={{ background: 'var(--apd-ink)', color: '#fff' }} aria-labelledby="cert-heading">
+      <section id="certificate-of-destruction" style={{ background: 'var(--apd-ink)', color: '#fff' }} aria-labelledby="cert-heading">
         <Container style={{ padding: '64px var(--container-pad)', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 48, alignItems: 'center' }}>
           <div>
             <Eyebrow color="var(--apd-green-mid)">Certificate of Destruction</Eyebrow>
@@ -275,7 +275,7 @@ export default function HomePage() {
       </section>
 
       {/* Sustainability ─────────────────────────────────────────────────────── */}
-      <section aria-labelledby="sustainability-heading">
+      <section id="sustainability" aria-labelledby="sustainability-heading">
         <Container style={{ padding: '72px var(--container-pad) 40px' }}>
           <SectionHead
             align="center"
@@ -298,7 +298,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonial placeholder ────────────────────────────────────────────── */}
-      <section style={{ background: 'var(--apd-surface-panel)' }}>
+      <section id="testimonial" style={{ background: 'var(--apd-surface-panel)' }}>
         <Container style={{ padding: '72px var(--container-pad)', textAlign: 'center' }}>
           <Quote size={30} color="var(--apd-clay-red)" />
           <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.8vw, 30px)', lineHeight: 1.34, letterSpacing: '-0.3px', color: 'var(--apd-heading)', margin: '20px auto 0', maxWidth: 760 }}>
@@ -311,7 +311,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA band ───────────────────────────────────────────────────────────── */}
-      <section style={{ background: 'var(--apd-olive-green)' }} aria-labelledby="cta-heading">
+      <section id="cta-band" style={{ background: 'var(--apd-olive-green)' }} aria-labelledby="cta-heading">
         <Container style={{ padding: '60px var(--container-pad)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
           <div>
             <h2 id="cta-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', color: '#fff', margin: 0, lineHeight: 1.1 }}>

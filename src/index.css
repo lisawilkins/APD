@@ -1,19 +1,156 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@1,800&display=swap");
+@import "tailwindcss";
 
+/* ── Tailwind v4 design tokens ──────────────────────────────────────────────
+   Color names mirror the DS CSS var names (minus --color- prefix) so both
+   Tailwind utilities (bg-apd-steel-blue) and raw CSS vars (var(--apd-steel-blue))
+   are available throughout the codebase.                                      */
 @theme {
-  --font-sans: "Archivo", system-ui, -apple-system, sans-serif;   /* headings, subheads, labels, UI */
-  --font-body: "Merriweather", Georgia, serif;                     /* prose body copy */
-  --color-apd-olive: #5A6C3A;       /* Primary — buttons, H3, checkmarks */
-  --color-apd-olive-dark: #4A5830;  /* Olive hover state */
-  --color-apd-forest: #2E3822;      /* Deep dark — nav/footer bg, hero bg, H1/H2 text */
-  --color-apd-steel: #3B5A85;       /* Secondary — stats bar bg, links */
-  --color-apd-steel-dark: #2C4563;  /* Steel hover */
-  --color-apd-clay: #B42E2E;        /* Accent — logo badge, hero accent span */
-  --color-apd-clay-dark: #8A2222;   /* Clay hover */
-  --color-apd-ink: #2B2F24;         /* Primary body text */
-  --color-apd-mist: #6B7864;        /* Secondary/supporting body text */
-  --color-apd-sage: #7A8A5F;        /* Eyebrow/label uppercase text */
+  /* Fonts */
+  --font-sans:    "Archivo", system-ui, -apple-system, sans-serif;
+  --font-display: "Archivo", system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter",   system-ui, -apple-system, sans-serif;
+  --font-body:    "Archivo", system-ui, -apple-system, sans-serif;
+  --font-ui:      "Inter",   system-ui, -apple-system, sans-serif;
+  --font-prose:   "Merriweather", Georgia, serif;
+  --font-mono:    "Menlo", ui-monospace, "SF Mono", Consolas, monospace;
+
+  /* ── Brand core ─────────────────────────────────────────────────────────── */
+  --color-apd-steel-blue:  #3B5A85;  /* PRIMARY  — trust, headers, primary actions */
+  --color-apd-olive-green: #5A6C3A;  /* SECONDARY — sustainability, success, eco */
+  --color-apd-clay-red:    #B4402E;  /* TERTIARY — industrial accent, destructive */
+
+  /* Blue scale */
+  --color-apd-blue-mid:    #748292;
+  --color-apd-blue-subtle: #EDF1F6;
+  --color-apd-blue-deep:   #2A3869;
+  --color-apd-blue-bright: #2862A9;
+
+  /* Green scale */
+  --color-apd-green-mid:    #B6BFB0;
+  --color-apd-green-subtle: #F8F7EF;
+  --color-apd-green-bright: #789E47;
+  --color-apd-green-deep:   #364427;
+
+  /* Red scale */
+  --color-apd-red-mid:    #D39C92;
+  --color-apd-red-subtle: #FAEBE8;
+
+  /* Neutrals (warm) */
+  --color-apd-ink:          #0A0A0A;
+  --color-apd-body:         #2B2F24;
+  --color-apd-heading:      #2E3822;
+  --color-apd-text-muted:   #4A5565;
+  --color-apd-text-sage:    #6B7864;
+  --color-apd-eyebrow:      #7A8A5F;
+  --color-apd-border:       #E5E7EB;
+  --color-apd-border-strong:#D4D8CF;
+  --color-apd-surface:      #FFFFFF;
+  --color-apd-surface-panel:#F7F8F5;
+  --color-apd-surface-app:  #F9FAFB;
+  --color-apd-warm-paper:   #F8F7EF;
+
+  /* Semantic feedback */
+  --color-apd-info-bg:     #E8EFF7;
+  --color-apd-info-fg:     #2C4563;
+  --color-apd-success-bg:  #E8F0E4;
+  --color-apd-success-fg:  #3A4C28;
+  --color-apd-warning-bg:  #FFF4E6;
+  --color-apd-warning-fg:  #8F5C1E;
+  --color-apd-warning-edge:#D78A2E;
+  --color-apd-error-bg:    #FAEBE8;
+  --color-apd-error-fg:    #8A3922;
+
+  /* Legacy aliases (keep for any code still using old names) */
+  --color-apd-olive:      #5A6C3A;
+  --color-apd-olive-dark: #4A5830;
+  --color-apd-forest:     #2E3822;
+  --color-apd-steel:      #3B5A85;
+  --color-apd-steel-dark: #2C4563;
+  --color-apd-clay:       #B4402E;
+  --color-apd-clay-dark:  #8A2222;
+  --color-apd-mist:       #6B7864;
+  --color-apd-sage:       #7A8A5F;
+}
+
+/* ── Raw DS CSS custom properties (for inline-style / var() usage) ───────── */
+:root {
+  /* Brand core */
+  --apd-steel-blue:  #3B5A85;
+  --apd-olive-green: #5A6C3A;
+  --apd-clay-red:    #B4402E;
+
+  /* Blue scale */
+  --apd-blue-mid:    #748292;
+  --apd-blue-subtle: #EDF1F6;
+  --apd-blue-deep:   #2A3869;
+  --apd-blue-bright: #2862A9;
+
+  /* Green scale */
+  --apd-green-mid:    #B6BFB0;
+  --apd-green-subtle: #F8F7EF;
+  --apd-green-bright: #789E47;
+  --apd-green-deep:   #364427;
+
+  /* Red scale */
+  --apd-red-mid:    #D39C92;
+  --apd-red-subtle: #FAEBE8;
+  --apd-red-bolt:   #D52635;
+  --apd-red-edge:   #C72B41;
+
+  /* Neutrals */
+  --apd-ink:          #0A0A0A;
+  --apd-body:         #2B2F24;
+  --apd-heading:      #2E3822;
+  --apd-text-muted:   #4A5565;
+  --apd-text-sage:    #6B7864;
+  --apd-eyebrow:      #7A8A5F;
+  --apd-border:       #E5E7EB;
+  --apd-border-strong:#D4D8CF;
+  --apd-surface:      #FFFFFF;
+  --apd-surface-panel:#F7F8F5;
+  --apd-surface-app:  #F9FAFB;
+  --apd-warm-paper:   #F8F7EF;
+
+  /* Semantic aliases */
+  --color-primary:       var(--apd-steel-blue);
+  --color-primary-hover: #324E73;
+  --color-secondary:     var(--apd-olive-green);
+  --color-accent:        var(--apd-clay-red);
+  --color-accent-hover:  #9A3526;
+
+  /* Semantic feedback */
+  --apd-info-bg:      #E8EFF7;  --apd-info-fg:      #2C4563;
+  --apd-success-bg:   #E8F0E4;  --apd-success-fg:   #3A4C28;
+  --apd-warning-bg:   #FFF4E6;  --apd-warning-fg:   #8F5C1E;  --apd-warning-edge: #D78A2E;
+  --apd-error-bg:     #FAEBE8;  --apd-error-fg:     #8A3922;
+  --apd-highlight-bg: #FEF7DC;  --apd-highlight-fg: #5A6C3A;
+
+  /* Font families */
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-heading: "Inter",   system-ui, sans-serif;
+  --font-body:    "Archivo", system-ui, sans-serif;
+  --font-prose:   "Merriweather", Georgia, serif;
+  --font-ui:      "Inter",   system-ui, sans-serif;
+  --font-mono:    "Menlo", ui-monospace, "SF Mono", Consolas, monospace;
+  --font-logo:    "Montserrat", "Archivo", sans-serif;
+
+  /* Spacing */
+  --container-max: 1200px;
+  --container-pad: 24px;
+
+  /* Shadows */
+  --shadow-xs: 0px 1px 2px -1px rgba(0,0,0,0.1);
+  --shadow-sm: 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1);
+  --shadow-md: 0px 4px 8px -2px rgba(0,0,0,0.10), 0px 2px 4px -2px rgba(0,0,0,0.06);
+  --shadow-lg: 0px 12px 24px -6px rgba(0,0,0,0.12), 0px 4px 8px -4px rgba(0,0,0,0.08);
+
+  /* Radii — sharp-edged by default on marketing surfaces */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   10px;
+  --radius-xl:   16px;
+  --radius-pill: 999px;
 }
 
 *,
@@ -24,18 +161,11 @@
 
 body {
   margin: 0;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
+  color: var(--apd-body);
+  background: var(--apd-surface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-@layer base {
-  h1, h2 {
-    font-weight: 900;   /* Archivo Black */
-  }
-  h3, h4, h5, h6 {
-    font-weight: 400;   /* Archivo Regular */
-  }
 }
 
 #root {
@@ -44,7 +174,7 @@ body {
   min-height: 100svh;
 }
 
-/* Textured placeholders for image/video slots */
+/* Textured placeholder for image/video slots */
 .img-texture-dark {
   background-color: #2B2F24;
   background-image:
@@ -59,4 +189,15 @@ body {
     linear-gradient(rgba(255 255 255 / 0.10) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255 255 255 / 0.10) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+@layer base {
+  h1, h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+  h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
 }

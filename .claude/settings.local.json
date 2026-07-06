@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.allencompany.com)",
-      "WebFetch(domain:www.allancompany.com)"
+      "WebFetch(domain:www.allancompany.com)",
+      "Bash(python3:*)",
+      "Bash(claude mcp:*)",
+      "Bash(claude:*)",
+      "Bash(npm i *)",
+      "Bash(npx playwright *)",
+      "Bash(node .ds-sync/package-build.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)",
+      "Bash(node .ds-sync/package-validate.mjs ./ds-bundle)",
+      "Bash(node .ds-sync/resync.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)"
     ]
   }
 }

@@ -46,6 +46,7 @@ Defined in `src/index.css` via Tailwind v4 `@theme`. Palette: **Industrial Earth
 - One file per route in `src/pages/`
 - Shared layout in `src/components/layout/` (Nav, Footer)
 - Shared UI primitives go in `src/components/ui/`
+- Every top-level `<section>` on a page gets a unique kebab-case `id` (e.g. `id="hero"`, `id="why-apd"`) so sections can be targeted directly when making edits
 
 ## Project Structure
 

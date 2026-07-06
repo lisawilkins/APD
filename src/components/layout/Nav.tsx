@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import logoSvg from '../../assets/logo-apd.svg'
 
 const NAV_LINKS = [
-  { label: 'Services', to: '/services' },
-  { label: 'How It Works', to: '/how-it-works' },
-  { label: 'Proof of Destruction', to: '/proof-of-destruction' },
-  { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Home',                 to: '/' },
+  { label: 'About',                to: '/about' },
+  { label: 'Services',             to: '/services' },
+  { label: 'Cert of Destruction',  to: '/proof-of-destruction' },
+  { label: 'Sustainability',       to: '/sustainability' },
+  { label: 'Giving Back',          to: '/giving-back' },
 ]
 
 export default function Nav() {
@@ -14,16 +16,14 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    const onScroll = () => setScrolled(window.scrollY > 4)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
     if (!mobileOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileOpen(false)
-    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMobileOpen(false) }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [mobileOpen])
@@ -35,99 +35,131 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 bg-apd-forest transition-shadow duration-200 ${
-        scrolled ? 'shadow-xl shadow-black/30' : ''
-      }`}
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        background: '#fff',
+        borderBottom: `1px solid ${scrolled ? 'var(--apd-border)' : 'var(--apd-border)'}`,
+        boxShadow: scrolled ? 'var(--shadow-sm)' : 'none',
+        transition: 'box-shadow 200ms ease-out',
+      }}
       role="banner"
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 bg-apd-clay text-white text-sm font-semibold px-4 py-2 rounded z-[100] outline-none ring-2 ring-white"
+        style={{
+          position: 'absolute',
+          left: -9999,
+          top: 'auto',
+          width: 1,
+          height: 1,
+          overflow: 'hidden',
+        }}
+        onFocus={(e) => {
+          const el = e.currentTarget
+          el.style.position = 'absolute'
+          el.style.left = '16px'
+          el.style.top = '12px'
+          el.style.width = 'auto'
+          el.style.height = 'auto'
+          el.style.overflow = 'visible'
+        }}
+        onBlur={(e) => {
+          const el = e.currentTarget
+          el.style.position = 'absolute'
+          el.style.left = '-9999px'
+        }}
       >
         Skip to main content
       </a>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 var(--container-pad)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
 
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-3 shrink-0 rounded outline-none focus-visible:ring-2 focus-visible:ring-apd-clay"
+            style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', outline: 'none' }}
             aria-label="Arizona Product Destruction — Home"
           >
-            <div className="bg-apd-clay text-white font-black text-base px-3 py-1.5 tracking-[0.15em] leading-none select-none">
-              APD
-            </div>
-            <div className="hidden sm:block leading-tight">
-              <span className="block text-white font-semibold text-sm tracking-wide">
-                Arizona Product
-              </span>
-              <span className="block text-white/50 text-xs uppercase tracking-[0.18em]">
-                Destruction
-              </span>
-            </div>
+            <img src={logoSvg} alt="APD" style={{ height: 40, width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+          <nav
+            style={{ alignItems: 'center', gap: 2 }}
+            aria-label="Main navigation"
+            className="hidden lg:flex"
+          >
             {NAV_LINKS.map(({ label, to }) => (
               <NavLink
                 key={to}
                 to={to}
-                className={({ isActive }) =>
-                  `px-4 py-2 text-sm font-medium rounded transition-colors outline-none focus-visible:ring-2 focus-visible:ring-apd-clay ${
-                    isActive
-                      ? 'text-apd-clay'
-                      : 'text-white/75 hover:text-white hover:bg-white/8'
-                  }`
-                }
+                end={to === '/'}
+                style={({ isActive }) => ({
+                  fontFamily: 'var(--font-ui)',
+                  fontSize: 13.5,
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  padding: '8px 9px',
+                  whiteSpace: 'nowrap',
+                  color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                  borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
+                  transition: 'color 150ms ease-out, border-color 150ms ease-out',
+                  outline: 'none',
+                })}
               >
                 {label}
               </NavLink>
             ))}
+            <div style={{ marginLeft: 14 }}>
+              <Link
+                to="/contact"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 500,
+                  fontSize: 14,
+                  padding: '8px 16px',
+                  background: 'var(--apd-steel-blue)',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  borderRadius: 0,
+                  transition: 'background 150ms ease-out',
+                  outline: 'none',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--color-primary-hover)' }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--apd-steel-blue)' }}
+              >
+                Request a quote
+              </Link>
+            </div>
           </nav>
-
-          {/* Desktop CTA */}
-          <div className="hidden lg:block">
-            <Link
-              to="/contact"
-              className="bg-apd-olive hover:bg-apd-olive-dark text-white font-semibold text-sm px-5 py-2.5 rounded transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-apd-forest"
-            >
-              Request Service
-            </Link>
-          </div>
 
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="lg:hidden text-white p-2 rounded hover:bg-white/10 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-apd-clay"
+            className="lg:hidden"
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 8,
+              cursor: 'pointer',
+              color: 'var(--apd-body)',
+              outline: 'none',
+            }}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               {mobileOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
@@ -138,35 +170,51 @@ export default function Nav() {
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="lg:hidden bg-apd-forest border-t border-white/10"
+          style={{ borderTop: '1px solid var(--apd-border)', background: '#fff' }}
         >
           <nav
-            className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1"
+            style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '12px var(--container-pad)', display: 'flex', flexDirection: 'column', gap: 2 }}
             aria-label="Mobile navigation"
           >
             {NAV_LINKS.map(({ label, to }) => (
               <NavLink
                 key={to}
                 to={to}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-sm font-medium rounded transition-colors outline-none focus-visible:ring-2 focus-visible:ring-apd-clay ${
-                    isActive
-                      ? 'text-apd-clay bg-white/5'
-                      : 'text-white/75 hover:text-white hover:bg-white/8'
-                  }`
-                }
+                end={to === '/'}
+                style={({ isActive }) => ({
+                  display: 'block',
+                  padding: '10px 12px',
+                  fontFamily: 'var(--font-ui)',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                  background: isActive ? 'var(--apd-blue-subtle)' : 'transparent',
+                  outline: 'none',
+                })}
                 onClick={() => setMobileOpen(false)}
               >
                 {label}
               </NavLink>
             ))}
-            <div className="pt-3 mt-2 border-t border-white/10">
+            <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid var(--apd-border)' }}>
               <Link
                 to="/contact"
-                className="block bg-apd-olive hover:bg-apd-olive-dark text-white font-semibold text-sm px-4 py-3 rounded text-center transition-colors"
+                style={{
+                  display: 'block',
+                  padding: '12px 16px',
+                  background: 'var(--apd-steel-blue)',
+                  color: '#fff',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 500,
+                  fontSize: 15,
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  outline: 'none',
+                }}
                 onClick={() => setMobileOpen(false)}
               >
-                Request Service
+                Request a quote
               </Link>
             </div>
           </nav>
