@@ -9,7 +9,7 @@ import { Button } from '../components/ui/Button'
 
 import heroBuildingImg from '../assets/hero-building.jpg'
 import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
-import warehouseWideImg from '../assets/warehouse-wide-real.jpg'
+import baledCardboardAltImg from '../assets/baled-cardboard.jpg'
 import warehouseExteriorImg from '../assets/warehouse-exterior.jpg'
 import forkliftImg from '../assets/forklift-real.png'
 
@@ -240,7 +240,7 @@ export default function HomePage() {
       {/* Photo mosaic ──────────────────────────────────────────────────────── */}
       <section id="photo-mosaic" className="photo-mosaic-grid" style={{ marginTop: 36 }}>
         {[
-          { src: warehouseWideImg,  alt: 'Warehouse — intake and sorting' },
+          { src: baledCardboardAltImg, alt: 'Baled cardboard ready for processing' },
           { src: forkliftImg,       alt: 'Forklift at loading dock' },
           { src: warehouseExteriorImg, alt: 'Facility exterior' },
         ].map(({ src, alt }) => (
@@ -268,7 +268,7 @@ export default function HomePage() {
                 <TextLink to="/proof-of-destruction" color="#fff">About our Certificate of Destruction</TextLink>
               </div>
             </div>
-            <div className="proof-grid" style={{ background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.14)' }}>
+            <div className="proof-grid">
               {PROOF_OPTS.map(({ icon: Icon, t }) => (
                 <div key={t} style={{ background: 'var(--apd-ink)', padding: '28px 18px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                   <Icon size={48} color="var(--apd-green-mid)" />
@@ -289,6 +289,9 @@ export default function HomePage() {
             title="Destroyed, not just dumped"
             intro="Where we can, we recover materials and find downstream second-uses — keeping product out of landfill and giving you a cleaner story to tell."
           />
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+            <TextLink to="/sustainability">About our environmental commitment</TextLink>
+          </div>
           <div className="sustainability-grid">
             {SUSTAINABILITY_STATS.map((s) => (
               <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', background: '#fff' }}>
@@ -297,9 +300,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 12.5, color: 'var(--apd-text-sage)', textAlign: 'center', marginTop: 16 }}>
-            193 tons of shrink wrap recovered · 180+ loads to waste-to-energy · hundreds of tons of food-grade product to animal-feed programs.
-          </p>
         </Container>
       </section>
 

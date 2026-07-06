@@ -302,11 +302,20 @@ body {
 .proof-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+.proof-grid > div {
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
 @media (max-width: 599px) {
   .proof-grid {
     grid-template-columns: 1fr;
+    border-left: none;
+  }
+  .proof-grid > div {
+    border-right: none;
   }
 }
 
