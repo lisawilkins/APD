@@ -341,6 +341,19 @@ body {
   }
 }
 
+/* CTA band — stacks on mobile, 2-col (text | form) on desktop */
+.cta-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+@media (max-width: 767px) {
+  .cta-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Footer main grid — 1 col below 600px, 4 cols at and above */
 .footer-grid {
   display: grid;

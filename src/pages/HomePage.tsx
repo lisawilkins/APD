@@ -3,10 +3,11 @@ import {
   CupSoda, PackageX, Recycle, Check,
   BadgeCheck, ShieldCheck, Video, Camera, Eye, Quote,
 } from 'lucide-react'
-import { Badge } from '../components/ui/Badge'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { Button } from '../components/ui/Button'
+import { ContactForm } from '../components/ui/ContactForm'
 
+import logoSvg from '../assets/logo-apd.svg'
 import heroBuildingImg from '../assets/hero-building.jpg'
 import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
 import baledCardboardAltImg from '../assets/baled-cardboard.jpg'
@@ -120,10 +121,10 @@ export default function HomePage() {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(20,24,30,0.92) 0%, rgba(20,24,30,0.75) 48%, rgba(20,24,30,0.70) 100%)' }} />
           <div className="px-6 md:px-10 lg:px-12" style={{ maxWidth: 'var(--container-max)', margin: '0 auto', position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div style={{ maxWidth: 620 }}>
-              <Badge tone="red" solid>Not a broker</Badge>
+              <img src={logoSvg} alt="Arizona Product Destruction" className="hidden lg:block" style={{ height: 56, width: 'auto', marginBottom: 20 }} />
               <h1
                 id="hero-heading"
-                style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(38px, 5.4vw, 60px)', lineHeight: 1.02, letterSpacing: '-1px', color: '#fff', margin: '16px 0 0' }}
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(32px, 4.4vw, 50px)', lineHeight: 1.05, letterSpacing: '-0.75px', color: '#fff', margin: 0 }}
               >
                 Protecting your brand<br />through sustainability.
               </h1>
@@ -318,19 +319,36 @@ export default function HomePage() {
 
       {/* CTA band ───────────────────────────────────────────────────────────── */}
       <section id="cta-band" style={{ background: 'var(--apd-olive-green)' }} aria-labelledby="cta-heading">
-        <Container style={{ padding: '60px var(--container-pad)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
-          <div>
-            <h2 id="cta-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', color: '#fff', margin: 0, lineHeight: 1.1 }}>
-              Ready to destroy it right?
-            </h2>
-            <p style={{ fontFamily: 'var(--font-prose)', fontSize: 18, color: 'rgba(255,255,255,0.9)', margin: '12px 0 0', maxWidth: 540 }}>
-              Talk to APD directly. We contact every lead — and reply to new inquiries within 24 hours.
-            </p>
-            <p style={{ fontFamily: 'var(--font-ui)', fontSize: 14, color: 'rgba(255,255,255,0.82)', margin: '14px 0 0' }}>
-              South Phoenix, AZ <span style={{ opacity: 0.6 }}>(address TBD)</span> · info@azproductdestruction.com <span style={{ opacity: 0.6 }}>(TBD)</span>
-            </p>
+        <Container style={{ padding: '72px var(--container-pad)' }}>
+          <div className="cta-form-grid">
+
+            {/* Left — headline + contact info */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <h2 id="cta-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 40px)', color: '#fff', margin: 0, lineHeight: 1.1 }}>
+                Ready to destroy it right?
+              </h2>
+              <p style={{ fontFamily: 'var(--font-prose)', fontSize: 18, color: 'rgba(255,255,255,0.9)', margin: '16px 0 0', maxWidth: 400 }}>
+                Talk to APD directly. We contact every lead and reply to new inquiries within 24 hours.
+              </p>
+              <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {['Direct contact — no broker in the middle', 'Reply within 24 hours', 'Proof of destruction included'].map((t) => (
+                  <div key={t} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <Check size={17} color="rgba(255,255,255,0.7)" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
+                    <span style={{ fontFamily: 'var(--font-prose)', fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: '28px 0 0' }}>
+                South Phoenix, AZ · info@azproductdestruction.com
+              </p>
+            </div>
+
+            {/* Right — contact form */}
+            <div>
+              <ContactForm />
+            </div>
+
           </div>
-          <Button variant="accent" size="lg" onClick={() => window.location.href = '/contact'}>Get a quote</Button>
         </Container>
       </section>
     </>

@@ -75,15 +75,16 @@ export default function Nav() {
       </a>
 
       <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '0 var(--container-pad)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
+        <div className="justify-between lg:justify-center" style={{ display: 'flex', alignItems: 'center', height: 68 }}>
 
-          {/* Logo */}
+          {/* Logo — mobile only */}
           <Link
             to="/"
-            style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', outline: 'none' }}
+            className="flex items-center lg:hidden"
+            style={{ textDecoration: 'none', outline: 'none' }}
             aria-label="Arizona Product Destruction — Home"
           >
-            <img src={logoSvg} alt="APD" style={{ height: 40, width: 'auto', display: 'block' }} />
+            <img src={logoSvg} alt="APD" style={{ height: 36, width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop nav */}
