@@ -89,7 +89,7 @@ export function ContactForm() {
   useEffect(() => {
     const render = () => {
       if (!widgetContainerRef.current || widgetIdRef.current != null) return
-      const ts = (window as Record<string, unknown>).turnstile as {
+      const ts = (window as unknown as Record<string, unknown>).turnstile as {
         render: (el: HTMLElement, opts: Record<string, unknown>) => string
       } | undefined
       if (!ts) return
@@ -102,7 +102,7 @@ export function ContactForm() {
       })
     }
 
-    if ((window as Record<string, unknown>).turnstile) {
+    if ((window as unknown as Record<string, unknown>).turnstile) {
       render()
     } else {
       const script = document.getElementById('cf-turnstile-script')
