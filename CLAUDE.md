@@ -81,6 +81,16 @@ src/
 - Confidentiality, integrity, zero tolerance for shenanigans
 - Proof options: video / photos / live viewing
 
+## Security Review Cadence
+
+Run the `security-review` skill (or an equivalent manual pass) in these situations:
+
+- Before any production deploy.
+- After a commit or batch of commits introduces a new dynamic/user-input surface — a new form, a new route with params, a new third-party script, or any backend/API code.
+- After several smaller commits accumulate without a review in between (a batch of copy/layout commits doesn't need one; a batch that touches routing, forms, or scripts does).
+
+Routine content, copy, and styling-only commits don't need a review.
+
 ## Data Still Needed
 
 - Actual phone number and address(es)
