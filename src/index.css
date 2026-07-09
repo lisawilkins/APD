@@ -192,6 +192,9 @@ body {
 }
 
 /* Stats bar — 1-col stack below 600px, 2x2 grid below 1024px, 1x4 at and above */
+/* Shared big-number stat row (StatsRow component) — divider color themed via
+   --stat-divider (defaults to the original stats-bar blue for callers that
+   don't set it, e.g. legacy markup). */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
@@ -199,10 +202,10 @@ body {
   row-gap: 32px;
 }
 .stats-grid > div {
-  border-color: #315B88;
+  border-color: var(--stat-divider, #315B88);
 }
 .stats-grid > div:nth-child(odd) {
-  border-right: 1px solid #315B88;
+  border-right: 1px solid var(--stat-divider, #315B88);
   padding-right: 20px;
 }
 @media (max-width: 599px) {
@@ -215,7 +218,7 @@ body {
     padding-right: 0;
   }
   .stats-grid > div:not(:last-child) {
-    border-bottom: 1px solid #315B88;
+    border-bottom: 1px solid var(--stat-divider, #315B88);
     padding-bottom: 24px;
   }
 }
@@ -228,7 +231,7 @@ body {
     border-right: none;
   }
   .stats-grid > div:not(:last-child) {
-    border-right: 1px solid #315B88;
+    border-right: 1px solid var(--stat-divider, #315B88);
   }
 }
 

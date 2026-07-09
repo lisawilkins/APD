@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
 import {
   CupSoda, PackageX, Recycle, Check,
-  BadgeCheck, ShieldCheck, Video, Camera, Eye, Quote,
+  BadgeCheck, ShieldCheck, Video, Camera, Eye,
 } from 'lucide-react'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { Button } from '../components/ui/Button'
 import { ContactForm } from '../components/ui/ContactForm'
+import { StatsRow } from '../components/ui/StatsRow'
+import { QuoteFilled } from '../components/ui/QuoteFilled'
 
 import logoSvg from '../assets/logo-apd.svg'
 import heroBuildingImg from '../assets/hero-building.jpg'
+import bundledVideo from '../assets/APD-bundled-02.mp4'
 import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
 import baledCardboardAltImg from '../assets/baled-cardboard.jpg'
 import warehouseExteriorImg from '../assets/warehouse-exterior.jpg'
@@ -128,7 +131,7 @@ export default function HomePage() {
               >
                 Protecting your brand<br />through sustainability.
               </h1>
-              <p style={{ fontFamily: 'var(--font-prose)', fontSize: 19, lineHeight: 1.6, color: 'rgba(255,255,255,0.9)', margin: '18px 0 0', maxWidth: 500 }}>
+              <p style={{ fontFamily: 'var(--font-prose)', fontSize: 'clamp(15px, 2.5vw, 19px)', lineHeight: 1.6, color: 'rgba(255,255,255,0.9)', margin: '18px 0 0', maxWidth: 500 }}>
                 We're a full service product destruction and waste management company based in Phoenix, AZ. Direct contact, lower cost &amp; verifiable proof.
               </p>
               <div style={{ display: 'flex', gap: 12, marginTop: 26, flexWrap: 'wrap' }}>
@@ -150,14 +153,7 @@ export default function HomePage() {
       {/* Stats bar ─────────────────────────────────────────────────────────── */}
       <section id="stats-bar" style={{ background: 'var(--apd-blue-deep)' }} aria-label="Key statistics">
         <Container style={{ padding: '40px var(--container-pad)' }}>
-          <div className="stats-grid">
-            {STATS.map((s) => (
-              <div key={s.l} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(38px, 5vw, 60px)', lineHeight: 1.05, color: '#fff' }}>{s.v}</div>
-                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 18, color: '#DDECFC', opacity: 0.75, marginTop: 8, lineHeight: 1.25, letterSpacing: '0.25px' }}>{s.l}</div>
-              </div>
-            ))}
-          </div>
+          <StatsRow stats={STATS} variant="dark" />
         </Container>
         <div style={{ borderTop: '1px solid #305B89' }}>
           <Container style={{ padding: '20px var(--container-pad)' }}>
@@ -193,8 +189,16 @@ export default function HomePage() {
           </div>
         </div>
         <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
-          <div className="img-texture-dark" style={{ position: 'absolute', inset: 0 }} />
-          <img src={baledCardboardImg} alt="Baled product ready for processing" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={baledCardboardImg}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          >
+            <source src={bundledVideo} type="video/mp4" />
+          </video>
         </div>
       </section>
 
@@ -293,13 +297,8 @@ export default function HomePage() {
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
             <TextLink to="/sustainability">About our environmental commitment</TextLink>
           </div>
-          <div className="sustainability-grid">
-            {SUSTAINABILITY_STATS.map((s) => (
-              <div key={s.l} style={{ padding: '28px clamp(18px, 2.2vw, 28px)', background: '#fff' }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, lineHeight: 1.05, color: 'var(--apd-olive-green)' }}>{s.v}</div>
-                <div style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'var(--apd-text-muted)', marginTop: 8, lineHeight: 1.4 }}>{s.l}</div>
-              </div>
-            ))}
+          <div style={{ marginTop: 40 }}>
+            <StatsRow stats={SUSTAINABILITY_STATS} variant="light" />
           </div>
         </Container>
       </section>
@@ -307,7 +306,7 @@ export default function HomePage() {
       {/* Testimonial placeholder ────────────────────────────────────────────── */}
       <section id="testimonial" style={{ background: 'var(--apd-surface-panel)' }}>
         <Container style={{ padding: '72px var(--container-pad)', textAlign: 'center' }}>
-          <Quote size={30} color="var(--apd-clay-red)" />
+          <QuoteFilled size={30} color="var(--apd-clay-red)" />
           <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.8vw, 30px)', lineHeight: 1.34, letterSpacing: '-0.3px', color: 'var(--apd-heading)', margin: '20px auto 0', maxWidth: 760 }}>
             "Placeholder testimonial — a client pull-quote about working with APD directly will go here once final copy is approved."
           </p>
