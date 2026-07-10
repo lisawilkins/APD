@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { CaretDownIcon } from '@phosphor-icons/react'
 import logoSvg from '../../assets/logo-apd.svg'
+import { SERVICES } from '../../data/services'
 
 const NAV_LINKS = [
   { label: 'Home',                 to: '/' },
@@ -11,8 +13,12 @@ const NAV_LINKS = [
   { label: 'Giving Back',          to: '/giving-back' },
 ]
 
+const SERVICE_LINKS = SERVICES.map(({ slug, title }) => ({ label: title, to: `/services/${slug}` }))
+
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [desktopServicesOpen, setDesktopServicesOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -20,6 +26,13 @@ export default function Nav() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    if (!desktopServicesOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setDesktopServicesOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [desktopServicesOpen])
 
   useEffect(() => {
     if (!mobileOpen) return
@@ -31,6 +44,10 @@ export default function Nav() {
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
+  useEffect(() => {
+    if (!mobileOpen) setMobileServicesOpen(false)
   }, [mobileOpen])
 
   return (
@@ -94,25 +111,107 @@ export default function Nav() {
             className="hidden lg:flex"
           >
             {NAV_LINKS.map(({ label, to }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === '/'}
-                style={({ isActive }) => ({
-                  fontFamily: 'var(--font-ui)',
-                  fontSize: 13.5,
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  padding: '8px 9px',
-                  whiteSpace: 'nowrap',
-                  color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
-                  borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
-                  transition: 'color 150ms ease-out, border-color 150ms ease-out',
-                  outline: 'none',
-                })}
-              >
-                {label}
-              </NavLink>
+              label === 'Services' ? (
+                <div
+                  key={to}
+                  style={{ position: 'relative' }}
+                  onMouseEnter={() => setDesktopServicesOpen(true)}
+                  onMouseLeave={() => setDesktopServicesOpen(false)}
+                  onFocus={() => setDesktopServicesOpen(true)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                      setDesktopServicesOpen(false)
+                    }
+                  }}
+                >
+                  <NavLink
+                    to={to}
+                    onClick={() => setDesktopServicesOpen(false)}
+                    style={({ isActive }) => ({
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      fontFamily: 'var(--font-ui)',
+                      fontSize: 13.5,
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      padding: '8px 9px',
+                      whiteSpace: 'nowrap',
+                      color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                      borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
+                      transition: 'color 150ms ease-out, border-color 150ms ease-out',
+                      outline: 'none',
+                    })}
+                  >
+                    {label}
+                    <CaretDownIcon
+                      size={12}
+                      weight="bold"
+                      style={{ transform: desktopServicesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease-out' }}
+                    />
+                  </NavLink>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      marginTop: 4,
+                      minWidth: 240,
+                      background: '#fff',
+                      border: '1px solid var(--apd-border)',
+                      boxShadow: 'var(--shadow-md)',
+                      padding: 6,
+                      zIndex: 60,
+                      opacity: desktopServicesOpen ? 1 : 0,
+                      visibility: desktopServicesOpen ? 'visible' : 'hidden',
+                      transition: 'opacity 150ms ease-out',
+                    }}
+                  >
+                    {SERVICE_LINKS.map(({ label: sLabel, to: sTo }) => (
+                      <NavLink
+                        key={sTo}
+                        to={sTo}
+                        className="nav-dropdown-link"
+                        onClick={() => setDesktopServicesOpen(false)}
+                        style={({ isActive }) => ({
+                          display: 'block',
+                          padding: '9px 12px',
+                          fontFamily: 'var(--font-ui)',
+                          fontSize: 13.5,
+                          fontWeight: 500,
+                          textDecoration: 'none',
+                          whiteSpace: 'nowrap',
+                          color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                          background: isActive ? 'var(--apd-blue-subtle)' : undefined,
+                          outline: 'none',
+                        })}
+                      >
+                        {sLabel}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  style={({ isActive }) => ({
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: 13.5,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    padding: '8px 9px',
+                    whiteSpace: 'nowrap',
+                    color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                    borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
+                    transition: 'color 150ms ease-out, border-color 150ms ease-out',
+                    outline: 'none',
+                  })}
+                >
+                  {label}
+                </NavLink>
+              )
             ))}
             <div style={{ marginLeft: 14 }}>
               <Link
@@ -178,25 +277,90 @@ export default function Nav() {
             aria-label="Mobile navigation"
           >
             {NAV_LINKS.map(({ label, to }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === '/'}
-                style={({ isActive }) => ({
-                  display: 'block',
-                  padding: '10px 12px',
-                  fontFamily: 'var(--font-ui)',
-                  fontSize: 14,
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
-                  background: isActive ? 'var(--apd-blue-subtle)' : 'transparent',
-                  outline: 'none',
-                })}
-                onClick={() => setMobileOpen(false)}
-              >
-                {label}
-              </NavLink>
+              label === 'Services' ? (
+                <div key={to}>
+                  <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                    <NavLink
+                      to={to}
+                      style={({ isActive }) => ({
+                        flex: 1,
+                        display: 'block',
+                        padding: '10px 12px',
+                        fontFamily: 'var(--font-ui)',
+                        fontSize: 14,
+                        fontWeight: 600,
+                        textDecoration: 'none',
+                        color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                        background: isActive ? 'var(--apd-blue-subtle)' : 'transparent',
+                        outline: 'none',
+                      })}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      aria-label={mobileServicesOpen ? 'Collapse services list' : 'Expand services list'}
+                      aria-expanded={mobileServicesOpen}
+                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        padding: '10px 12px',
+                        cursor: 'pointer',
+                        color: 'var(--apd-body)',
+                        outline: 'none',
+                      }}
+                    >
+                      <CaretDownIcon size={16} weight="bold" style={{ transform: mobileServicesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease-out' }} />
+                    </button>
+                  </div>
+                  {mobileServicesOpen && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 1, paddingLeft: 12 }}>
+                      {SERVICE_LINKS.map(({ label: sLabel, to: sTo }) => (
+                        <NavLink
+                          key={sTo}
+                          to={sTo}
+                          style={({ isActive }) => ({
+                            display: 'block',
+                            padding: '9px 12px',
+                            fontFamily: 'var(--font-ui)',
+                            fontSize: 13.5,
+                            fontWeight: 500,
+                            textDecoration: 'none',
+                            color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-text-muted)',
+                            background: isActive ? 'var(--apd-blue-subtle)' : 'transparent',
+                            outline: 'none',
+                          })}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {sLabel}
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  style={({ isActive }) => ({
+                    display: 'block',
+                    padding: '10px 12px',
+                    fontFamily: 'var(--font-ui)',
+                    fontSize: 14,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                    background: isActive ? 'var(--apd-blue-subtle)' : 'transparent',
+                    outline: 'none',
+                  })}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {label}
+                </NavLink>
+              )
             ))}
             <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid var(--apd-border)' }}>
               <Link

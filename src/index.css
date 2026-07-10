@@ -380,6 +380,11 @@ body {
   }
 }
 
+/* Nav "Services" dropdown — hover background for non-active items (active state is set inline) */
+.nav-dropdown-link:hover {
+  background: var(--apd-surface-panel);
+}
+
 /* Footer main grid — 1 col below 600px, 4 cols at and above */
 .footer-grid {
   display: grid;
