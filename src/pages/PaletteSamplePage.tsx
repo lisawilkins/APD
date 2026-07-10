@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import type { IconWeight } from '@phosphor-icons/react'
 import {
-  CupSoda, PackageX, Recycle, ClipboardList, Hammer,
-  BadgeCheck as BadgeCheckIcon, Check, ArrowRight, Image as ImageIcon,
-  Quote, Leaf, ShieldCheck, Video, Camera, Eye,
-} from 'lucide-react'
+  BeerBottleIcon, PackageIcon, RecycleIcon, ClipboardTextIcon, HammerIcon,
+  SealCheckIcon, CheckIcon, ArrowRightIcon, ImageIcon,
+  QuotesIcon, LeafIcon, ShieldCheckIcon, VideoIcon, CameraIcon, EyeIcon,
+} from '@phosphor-icons/react'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 type PaletteKey = 'original' | 'eco' | 'desert'
@@ -131,35 +132,35 @@ const BASE_VARS: CssVarMap = {
   '--apd-error-fg': '#8A3922',
 }
 
-// ── Lucide icon map ──────────────────────────────────────────────────────────
+// ── Phosphor icon map ────────────────────────────────────────────────────────
 const ICON_MAP = {
-  'cup-soda':       CupSoda,
-  'package-x':      PackageX,
-  'recycle':        Recycle,
-  'clipboard-list': ClipboardList,
-  'hammer':         Hammer,
-  'badge-check':    BadgeCheckIcon,
-  'check':          Check,
-  'arrow-right':    ArrowRight,
+  'cup-soda':       BeerBottleIcon,
+  'package-x':      PackageIcon,
+  'recycle':        RecycleIcon,
+  'clipboard-list': ClipboardTextIcon,
+  'hammer':         HammerIcon,
+  'badge-check':    SealCheckIcon,
+  'check':          CheckIcon,
+  'arrow-right':    ArrowRightIcon,
   'image':          ImageIcon,
-  'quote':          Quote,
-  'leaf':           Leaf,
-  'shield-check':   ShieldCheck,
-  'video':          Video,
-  'camera':         Camera,
-  'eye':            Eye,
+  'quote':          QuotesIcon,
+  'leaf':           LeafIcon,
+  'shield-check':   ShieldCheckIcon,
+  'video':          VideoIcon,
+  'camera':         CameraIcon,
+  'eye':            EyeIcon,
 } as const
 
 type IconName = keyof typeof ICON_MAP
 
-function Icon({ name, size = 24, color = 'currentColor', strokeWidth = 1.75 }: {
+function Icon({ name, size = 24, color = 'currentColor', weight = 'regular' }: {
   name: IconName
   size?: number
   color?: string
-  strokeWidth?: number
+  weight?: IconWeight
 }) {
   const Comp = ICON_MAP[name]
-  return <Comp size={size} color={color} strokeWidth={strokeWidth} style={{ display: 'inline-block', flexShrink: 0 }} />
+  return <Comp size={size} color={color} weight={weight} style={{ display: 'inline-block', flexShrink: 0 }} />
 }
 
 // ── Primitive DS components ──────────────────────────────────────────────────
@@ -282,7 +283,7 @@ function TextLink({ children, color = 'var(--apd-steel-blue)' }: { children: Rea
     >
       <span>{children}</span>
       <span style={{ transform: hovered ? 'translateX(3px)' : 'translateX(0)', transition: 'transform 150ms ease-out', display: 'inline-flex' }}>
-        <Icon name="arrow-right" size={15} color={color} strokeWidth={2} />
+        <Icon name="arrow-right" size={15} color={color} />
       </span>
     </span>
   )
@@ -358,7 +359,7 @@ function Photo({ label, tone = 'steel', style: xStyle = {}, src, scrim = false }
       )}
       {!src && (
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8, padding: '12px 14px', color: t.fg, fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 600, letterSpacing: '0.4px' }}>
-          <Icon name="image" size={15} color={t.fg} strokeWidth={2} />
+          <Icon name="image" size={15} color={t.fg} />
           <span>{label}</span>
         </div>
       )}
@@ -478,7 +479,7 @@ function StatsBar() {
           <div className="certs-row">
             {certs.map((c) => (
               <div key={c.t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <Icon name={c.icon} size={18} color="var(--apd-green-mid)" strokeWidth={2} />
+                <Icon name={c.icon} size={18} color="var(--apd-green-mid)" />
                 <span style={{ fontFamily: 'var(--font-ui)', fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,0.86)' }}>{c.t}</span>
               </div>
             ))}
@@ -508,7 +509,7 @@ function WhyAPD() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 24 }}>
           {bullets.map((t) => (
             <div key={t} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-              <Icon name="check" size={20} color="var(--apd-green-mid)" strokeWidth={2.5} />
+              <Icon name="check" size={20} color="var(--apd-green-mid)" weight="bold" />
               <span style={{ fontFamily: 'var(--font-prose)', fontSize: 16, lineHeight: 1.5, color: '#fff' }}>{t}</span>
             </div>
           ))}
@@ -540,7 +541,7 @@ function ServicesSection() {
       <div className="services-grid">
         {cols.map((s) => (
           <div key={s.title} style={{ background: s.bg, color: s.fg, padding: '48px clamp(24px, 3vw, 40px)', minHeight: 280, display: 'flex', flexDirection: 'column' }}>
-            <Icon name={s.icon} size={26} color={s.fg} strokeWidth={1.75} />
+            <Icon name={s.icon} size={26} color={s.fg} />
             <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 21, color: s.fg, margin: '18px 0 10px' }}>{s.title}</h3>
             <p style={{ fontFamily: 'var(--font-prose)', fontSize: 15, lineHeight: 1.6, color: s.sub, margin: 0, flex: 1 }}>{s.desc}</p>
             <div style={{ marginTop: 20 }}>

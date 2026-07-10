@@ -246,6 +246,17 @@ body {
   }
 }
 
+/* Services index — 2 cols, stacking to 1 col below 700px */
+.services-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 699px) {
+  .services-index-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Certification statements row — tight stack on phone, spaced row above */
 .certs-row {
   display: flex;
@@ -341,6 +352,18 @@ body {
   }
   .sustainability-grid > div {
     border-right: none;
+  }
+}
+
+/* Testimonial quote mark — centered at all breakpoints, larger on desktop */
+.testimonial-quote-icon {
+  display: block;
+  margin: 0 auto;
+}
+@media (min-width: 1024px) {
+  .testimonial-quote-icon {
+    width: 48px;
+    height: 48px;
   }
 }
 

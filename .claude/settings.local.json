@@ -12,7 +12,13 @@
       "Bash(node .ds-sync/package-validate.mjs ./ds-bundle)",
       "Bash(node .ds-sync/resync.mjs --config .design-sync/config.json --node-modules ./node_modules --entry ./dist/index.js --out ./ds-bundle)",
       "Bash(lsof -ti:5174)",
-      "Bash(xargs kill)"
+      "Bash(xargs kill)",
+      "Bash(xargs -n1 basename)",
+      "Bash(npm run *)",
+      "Bash(npm --version)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/services)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/services)"
     ]
   }
 }

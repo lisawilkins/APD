@@ -26,26 +26,29 @@ Defined in `src/index.css` via Tailwind v4 `@theme`. Palette: **Industrial Earth
 
 | Token | Value | Usage |
 |---|---|---|
-| `apd-olive` | `#5A6C3A` | Primary — buttons, H3, checkmark icons |
-| `apd-olive-dark` | `#4A5830` | Olive hover state |
-| `apd-forest` | `#2E3822` | Deep dark — nav/footer bg, hero bg, H1/H2 text |
-| `apd-steel` | `#3B5A85` | Secondary — stats bar bg, links |
-| `apd-steel-dark` | `#2C4563` | Steel hover |
-| `apd-clay` | `#B42E2E` | Accent — logo badge, hero accent span |
-| `apd-clay-dark` | `#8A2222` | Clay hover |
-| `apd-ink` | `#2B2F24` | Primary body text |
-| `apd-mist` | `#6B7864` | Secondary/supporting body text |
-| `apd-sage` | `#7A8A5F` | Eyebrow/label uppercase text |
+| `apd-steel-blue` | `#3B5A85` | Primary — trust, headers, primary actions |
+| `apd-olive-green` | `#5A6C3A` | Secondary — sustainability, success, eco, CTA bands |
+| `apd-clay-red` | `#B4402E` | Tertiary — industrial accent, destructive |
+| `apd-ink` | `#0A0A0A` | Deep dark — dark section backgrounds |
+| `apd-body` | `#2B2F24` | Primary body text |
+| `apd-heading` | `#2E3822` | Heading text |
+| `apd-text-muted` | `#4A5565` | Secondary/supporting body text |
+| `apd-eyebrow` | `#7A8A5F` | Eyebrow/label uppercase text |
+| `apd-surface-panel` | `#F7F8F5` | Light panel backgrounds |
+| `apd-blue-deep` | `#2A3869` | Dark stat-band backgrounds |
+
+Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, `apd-mist`) still exist in `src/index.css` for any code written before the rename — prefer the names above for new work.
 
 ## Project Conventions
 
 - TypeScript + TSX throughout — no plain JS files
 - Tailwind v4 utility-first inline classes — no CSS modules or styled-components
 - Theme colors live in `src/index.css` `@theme` block
-- Page copy is co-located in each page file (no separate content.ts yet — add when pages scale)
+- Page copy is co-located in each page file, except structured/repeated data (e.g. the 10 service entries), which lives in `src/data/` as typed arrays with a `getXBySlug` lookup
 - One file per route in `src/pages/`
-- Shared layout in `src/components/layout/` (Nav, Footer)
-- Shared UI primitives go in `src/components/ui/`
+- Shared layout in `src/components/layout/` (Nav, Footer, CtaBand — full page sections with their own background/Container)
+- Shared UI primitives go in `src/components/ui/` (Button, Eyebrow, Badge, StatsRow, ContactForm, PageHero, ServiceCard, Container, SectionHead, TextLink)
+- Internal secondary pages use `PageHero` (solid-color eyebrow/title/intro block) rather than the homepage's full-bleed photo hero
 - Every top-level `<section>` on a page gets a unique kebab-case `id` (e.g. `id="hero"`, `id="why-apd"`) so sections can be targeted directly when making edits
 
 ## Project Structure
@@ -55,10 +58,23 @@ src/
 ├── components/
 │   ├── layout/
 │   │   ├── Nav.tsx        — sticky nav, mobile hamburger, skip link
-│   │   └── Footer.tsx     — 4-col footer grid
-│   └── ui/                — shared primitives (Button etc., TBD)
+│   │   ├── Footer.tsx     — 4-col footer grid
+│   │   └── CtaBand.tsx    — contact-form CTA section, reused on Home + all service pages
+│   └── ui/
+│       ├── Button.tsx, Eyebrow.tsx, Badge.tsx
+│       ├── StatsRow.tsx   — animated count-up stat grid
+│       ├── ContactForm.tsx
+│       ├── PageHero.tsx   — solid-bg internal-page hero (eyebrow/title/intro)
+│       ├── ServiceCard.tsx
+│       └── Container.tsx, SectionHead.tsx, TextLink.tsx — shared page layout helpers
+├── data/
+│   └── services.ts        — Service interface + SERVICES array + getServiceBySlug
 ├── pages/
-│   └── HomePage.tsx       — 7-section home page
+│   ├── HomePage.tsx
+│   ├── ServicesPage.tsx       — /services index (10 ServiceCards)
+│   ├── ServiceDetailPage.tsx  — /services/:slug (hero, description, stats, CtaBand)
+│   ├── NotFoundPage.tsx       — router catch-all
+│   └── PaletteSamplePage.tsx
 ├── App.tsx                — router config + Layout wrapper
 ├── main.tsx               — entry point
 └── index.css              — Tailwind import + @theme brand tokens
@@ -67,7 +83,8 @@ src/
 ## Planned Pages
 
 - `/` — Home (built)
-- `/services` — Services detail
+- `/services` — Services index (built)
+- `/services/:slug` — Service detail, 10 categories (built; placeholder copy pending review)
 - `/how-it-works` — Process walkthrough
 - `/proof-of-destruction` — Documentation options
 - `/about` — Company, team, sister companies

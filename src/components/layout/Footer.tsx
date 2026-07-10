@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
-import { Leaf } from 'lucide-react'
+import { LeafIcon } from '@phosphor-icons/react'
 import logoSvg from '../../assets/logo-apd.svg'
 
 const SERVICES = [
-  { label: 'Beverages',            to: '/services#beverages' },
-  { label: 'OCC / Cardboard',      to: '/services#occ' },
-  { label: 'Liquidation Pallets',  to: '/services#pallets' },
-  { label: 'Aluminum & Metals',    to: '/services#metals' },
-  { label: 'Packaging Materials',  to: '/services#packaging' },
+  { label: 'Beverages',            to: '/services/beverages' },
+  { label: 'OCC / Cardboard',      to: '/services/occ-cardboard' },
+  { label: 'Liquidation Pallets',  to: '/services/liquidation-pallets' },
+  { label: 'Aluminum & Metals',    to: '/services/aluminum-metals' },
+  { label: 'Packaging Materials',  to: '/services/packaging-materials' },
+  { label: 'View all services →', to: '/services' },
 ]
 
 const COMPANY = [
@@ -61,7 +62,7 @@ export default function Footer() {
       {/* Tagline strip */}
       <div style={{ borderBottom: '1px solid rgba(255,255,255,0.14)' }}>
         <div style={{ maxWidth: 'var(--container-max)', margin: '0 auto', padding: '22px var(--container-pad)', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-          <Leaf size={20} color="var(--apd-green-mid)" />
+          <LeafIcon size={20} color="var(--apd-green-mid)" />
           <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, color: '#fff' }}>
             Protecting your brand through sustainability.
           </span>
