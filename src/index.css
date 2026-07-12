@@ -380,6 +380,16 @@ body {
   }
 }
 
+/* Service detail hero image — shrink to fit under copy on mobile */
+@media (max-width: 599px) {
+  .page-hero-image {
+    max-width: 100% !important;
+  }
+  .page-hero-image img {
+    height: 200px !important;
+  }
+}
+
 /* Nav "Services" dropdown — hover background for non-active items (active state is set inline) */
 .nav-dropdown-link:hover {
   background: var(--apd-surface-panel);

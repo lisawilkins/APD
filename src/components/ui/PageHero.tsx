@@ -6,13 +6,23 @@ interface PageHeroProps {
   title: string
   intro?: string
   background?: string
+  image?: string
+  imageAlt?: string
 }
 
-export function PageHero({ eyebrow, title, intro, background = 'var(--apd-steel-blue)' }: PageHeroProps) {
+export function PageHero({ eyebrow, title, intro, background = 'var(--apd-steel-blue)', image, imageAlt = '' }: PageHeroProps) {
   return (
     <section style={{ background }} aria-labelledby="page-hero-heading">
-      <Container style={{ padding: '96px var(--container-pad) 64px' }}>
-        <div style={{ maxWidth: 680 }}>
+      <Container
+        style={{
+          padding: '96px var(--container-pad) 64px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 40,
+          flexWrap: 'wrap',
+        }}
+      >
+        <div style={{ maxWidth: 680, flex: '1 1 420px' }}>
           {eyebrow && <Eyebrow color="rgba(255,255,255,0.75)">{eyebrow}</Eyebrow>}
           <h1
             id="page-hero-heading"
@@ -26,6 +36,24 @@ export function PageHero({ eyebrow, title, intro, background = 'var(--apd-steel-
             </p>
           )}
         </div>
+        {image && (
+          <div
+            className="page-hero-image"
+            style={{
+              flex: '1 1 320px',
+              maxWidth: 460,
+              borderRadius: 12,
+              overflow: 'hidden',
+              boxShadow: '0 20px 48px rgba(0,0,0,0.28)',
+            }}
+          >
+            <img
+              src={image}
+              alt={imageAlt}
+              style={{ display: 'block', width: '100%', height: 280, objectFit: 'cover' }}
+            />
+          </div>
+        )}
       </Container>
     </section>
   )

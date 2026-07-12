@@ -13,7 +13,13 @@ export default function ServiceDetailPage() {
 
   return (
     <>
-      <PageHero eyebrow="Services" title={service.title} intro={service.heroIntro} />
+      <PageHero
+        eyebrow="Services"
+        title={service.title}
+        intro={service.heroIntro}
+        image={service.heroImage}
+        imageAlt={service.title}
+      />
       <section id="service-description">
         <Container style={{ padding: '64px var(--container-pad) 40px' }}>
           {service.description.map((paragraph, i) => (
