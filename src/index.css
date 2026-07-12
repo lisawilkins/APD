@@ -395,6 +395,15 @@ body {
   background: var(--apd-surface-panel);
 }
 
+/* Desktop nav top-level links + Services dropdown links — visible keyboard focus
+   indicator (WCAG 2.4.7). Mouse/touch clicks don't trigger :focus-visible in
+   modern browsers, so this only shows for keyboard (and similar) interaction. */
+.nav-link:focus-visible,
+.nav-dropdown-link:focus-visible {
+  outline: 2px solid var(--apd-steel-blue);
+  outline-offset: 2px;
+}
+
 /* Footer main grid — 1 col below 600px, 4 cols at and above */
 .footer-grid {
   display: grid;

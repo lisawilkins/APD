@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { CaretDownIcon } from '@phosphor-icons/react'
 import logoSvg from '../../assets/logo-apd.svg'
@@ -21,17 +21,65 @@ export default function Nav() {
   const [desktopServicesOpen, setDesktopServicesOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
+  const desktopServicesWrapperRef = useRef<HTMLDivElement>(null)
+  const desktopServicesTriggerRef = useRef<HTMLAnchorElement>(null)
+  const desktopServicesCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Captures whether the menu was closed at the moment a touch gesture began,
+  // before the browser's synthetic mouseenter/click sequence can flip it open —
+  // lets the very first tap open the menu without also firing its navigation.
+  const desktopServicesTouchOpenedRef = useRef(false)
+
+  const clearDesktopServicesCloseTimeout = () => {
+    if (desktopServicesCloseTimeoutRef.current) {
+      clearTimeout(desktopServicesCloseTimeoutRef.current)
+      desktopServicesCloseTimeoutRef.current = null
+    }
+  }
+
+  const openDesktopServices = () => {
+    clearDesktopServicesCloseTimeout()
+    setDesktopServicesOpen(true)
+  }
+
+  const scheduleDesktopServicesClose = () => {
+    clearDesktopServicesCloseTimeout()
+    desktopServicesCloseTimeoutRef.current = setTimeout(() => setDesktopServicesOpen(false), 200)
+  }
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => () => clearDesktopServicesCloseTimeout(), [])
+
   useEffect(() => {
     if (!desktopServicesOpen) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setDesktopServicesOpen(false) }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        clearDesktopServicesCloseTimeout()
+        setDesktopServicesOpen(false)
+        desktopServicesTriggerRef.current?.focus()
+      }
+    }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
+  }, [desktopServicesOpen])
+
+  useEffect(() => {
+    if (!desktopServicesOpen) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (
+        desktopServicesWrapperRef.current &&
+        !desktopServicesWrapperRef.current.contains(e.target as Node)
+      ) {
+        clearDesktopServicesCloseTimeout()
+        setDesktopServicesOpen(false)
+      }
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [desktopServicesOpen])
 
   useEffect(() => {
@@ -114,19 +162,43 @@ export default function Nav() {
               label === 'Services' ? (
                 <div
                   key={to}
+                  ref={desktopServicesWrapperRef}
                   style={{ position: 'relative' }}
-                  onMouseEnter={() => setDesktopServicesOpen(true)}
-                  onMouseLeave={() => setDesktopServicesOpen(false)}
-                  onFocus={() => setDesktopServicesOpen(true)}
+                  onMouseEnter={openDesktopServices}
+                  onMouseLeave={scheduleDesktopServicesClose}
+                  onFocus={openDesktopServices}
                   onBlur={(e) => {
                     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                      clearDesktopServicesCloseTimeout()
                       setDesktopServicesOpen(false)
                     }
                   }}
                 >
                   <NavLink
                     to={to}
-                    onClick={() => setDesktopServicesOpen(false)}
+                    ref={desktopServicesTriggerRef}
+                    className="nav-link"
+                    aria-haspopup="true"
+                    aria-expanded={desktopServicesOpen}
+                    aria-controls="desktop-services-menu"
+                    onTouchStart={() => {
+                      desktopServicesTouchOpenedRef.current = !desktopServicesOpen
+                    }}
+                    onClick={(e) => {
+                      // If this tap gesture started while the menu was closed, let it
+                      // open the menu without navigating — the browser's synthetic
+                      // mouseenter (fired between touchstart and click) would otherwise
+                      // have already flipped desktopServicesOpen to true by now, so we
+                      // rely on the ref captured at touchstart instead of that state.
+                      if (desktopServicesTouchOpenedRef.current) {
+                        desktopServicesTouchOpenedRef.current = false
+                        e.preventDefault()
+                        openDesktopServices()
+                        return
+                      }
+                      clearDesktopServicesCloseTimeout()
+                      setDesktopServicesOpen(false)
+                    }}
                     style={({ isActive }) => ({
                       display: 'inline-flex',
                       alignItems: 'center',
@@ -140,7 +212,6 @@ export default function Nav() {
                       color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
                       borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
                       transition: 'color 150ms ease-out, border-color 150ms ease-out',
-                      outline: 'none',
                     })}
                   >
                     {label}
@@ -151,44 +222,52 @@ export default function Nav() {
                     />
                   </NavLink>
                   <div
+                    id="desktop-services-menu"
                     style={{
                       position: 'absolute',
                       top: '100%',
                       left: 0,
-                      marginTop: 4,
+                      marginTop: 0,
                       minWidth: 240,
                       background: '#fff',
                       border: '1px solid var(--apd-border)',
                       boxShadow: 'var(--shadow-md)',
-                      padding: 6,
+                      padding: '10px 6px 6px',
                       zIndex: 60,
                       opacity: desktopServicesOpen ? 1 : 0,
                       visibility: desktopServicesOpen ? 'visible' : 'hidden',
                       transition: 'opacity 150ms ease-out',
                     }}
+                    onMouseEnter={openDesktopServices}
+                    onMouseLeave={scheduleDesktopServicesClose}
                   >
-                    {SERVICE_LINKS.map(({ label: sLabel, to: sTo }) => (
-                      <NavLink
-                        key={sTo}
-                        to={sTo}
-                        className="nav-dropdown-link"
-                        onClick={() => setDesktopServicesOpen(false)}
-                        style={({ isActive }) => ({
-                          display: 'block',
-                          padding: '9px 12px',
-                          fontFamily: 'var(--font-ui)',
-                          fontSize: 13.5,
-                          fontWeight: 500,
-                          textDecoration: 'none',
-                          whiteSpace: 'nowrap',
-                          color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
-                          background: isActive ? 'var(--apd-blue-subtle)' : undefined,
-                          outline: 'none',
-                        })}
-                      >
-                        {sLabel}
-                      </NavLink>
-                    ))}
+                    <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                      {SERVICE_LINKS.map(({ label: sLabel, to: sTo }) => (
+                        <li key={sTo}>
+                          <NavLink
+                            to={sTo}
+                            className="nav-dropdown-link"
+                            onClick={() => {
+                              clearDesktopServicesCloseTimeout()
+                              setDesktopServicesOpen(false)
+                            }}
+                            style={({ isActive }) => ({
+                              display: 'block',
+                              padding: '9px 12px',
+                              fontFamily: 'var(--font-ui)',
+                              fontSize: 13.5,
+                              fontWeight: 500,
+                              textDecoration: 'none',
+                              whiteSpace: 'nowrap',
+                              color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
+                              background: isActive ? 'var(--apd-blue-subtle)' : undefined,
+                            })}
+                          >
+                            {sLabel}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               ) : (
@@ -196,6 +275,7 @@ export default function Nav() {
                   key={to}
                   to={to}
                   end={to === '/'}
+                  className="nav-link"
                   style={({ isActive }) => ({
                     fontFamily: 'var(--font-ui)',
                     fontSize: 13.5,
@@ -206,7 +286,6 @@ export default function Nav() {
                     color: isActive ? 'var(--apd-steel-blue)' : 'var(--apd-body)',
                     borderBottom: isActive ? '2px solid var(--apd-steel-blue)' : '2px solid transparent',
                     transition: 'color 150ms ease-out, border-color 150ms ease-out',
-                    outline: 'none',
                   })}
                 >
                   {label}
