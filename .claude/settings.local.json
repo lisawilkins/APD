@@ -18,7 +18,10 @@
       "Bash(npm --version)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/services)",
       "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/)",
-      "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/services)"
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/services)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
