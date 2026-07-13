@@ -100,7 +100,7 @@ function AnimatedStatValue({ value, delay, isDark }: { value: string; delay: num
  * Each number counts up from 0 the first time it scrolls into view, with
  * each subsequent item in the row starting 300ms after the previous one.
  */
-export function StatsRow({ stats, variant = 'dark', paddingX = 40 }: StatsRowProps) {
+export function StatsRow({ stats, variant = 'dark', paddingX = 'var(--stats-row-inset-x)' }: StatsRowProps) {
   const isDark = variant === 'dark'
 
   return (

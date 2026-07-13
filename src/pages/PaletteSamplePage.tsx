@@ -465,7 +465,10 @@ function StatsBar() {
   return (
     <section style={{ background: 'var(--apd-blue-deep)' }}>
       <Container style={{ padding: '48px var(--container-pad)' }}>
-        <div className="stats-grid">
+        <div
+          className="stats-grid"
+          style={{ paddingLeft: 'var(--stats-row-inset-x)', paddingRight: 'var(--stats-row-inset-x)' }}
+        >
           {stats.map((s) => (
             <div key={s.l} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.5px', color: '#fff' }}>{s.v}</div>

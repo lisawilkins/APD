@@ -82,7 +82,7 @@ export default function HomePage() {
                 Protecting your brand<br />through sustainability.
               </h1>
               <p style={{ fontFamily: 'var(--font-prose)', fontSize: 'clamp(15px, 2.5vw, 19px)', lineHeight: 1.6, color: 'rgba(255,255,255,0.9)', margin: '18px 0 0', maxWidth: 500 }}>
-                We're a full service product destruction and waste management company based in Phoenix, AZ. Direct contact, lower cost &amp; verifiable proof.
+                We're a full service product destruction and waste management company based in Phoenix, AZ. Custom destruction solutions, direct contact, lower cost &amp; verifiable proof.
               </p>
               <div style={{ display: 'flex', gap: 12, marginTop: 26, flexWrap: 'wrap' }}>
                 <Button variant="primary" size="lg" onClick={() => window.location.href = '/contact'}>Get a quote</Button>
@@ -159,7 +159,7 @@ export default function HomePage() {
             align="center"
             eyebrow="Services"
             title="One processor for every kind of product"
-            intro="We destroy and recover material across ten categories — leading with destruction, backed by certified documentation."
+            intro="We destroy and recover material across +10 categories — leading with destruction, backed by certified documentation."
           />
         </Container>
         <div className="services-grid">

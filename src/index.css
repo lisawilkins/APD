@@ -138,6 +138,8 @@
   /* Spacing */
   --container-max: 1200px;
   --container-pad: 24px;
+  /* Extra inset applied inside Container on stats rows and matching cert rows */
+  --stats-row-inset-x: 40px;
 
   /* Shadows */
   --shadow-xs: 0px 1px 2px -1px rgba(0,0,0,0.1);
@@ -263,6 +265,8 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 70px;
+  padding-left: var(--stats-row-inset-x);
+  padding-right: var(--stats-row-inset-x);
 }
 @media (max-width: 599px) {
   .certs-row {
