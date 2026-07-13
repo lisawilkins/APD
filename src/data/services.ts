@@ -49,7 +49,7 @@ export const SERVICES: Service[] = [
       "Every load closes with a Certificate of Destruction documenting volume, SKU, and disposition. We are the only company in Arizona holding Coca-Cola destruction certification.",
     ],
     stats: [
-      { v: '+80%', l: "of Arizona's beverage destruction market handled by APD (placeholder)" },
+      { v: '724K', l: "gallons processed every year" },
       { v: '0%', l: 'product to the public sewer' },
       { v: '+23', l: 'years destroying beverage product' },
       { v: '100%', l: 'loads closed with a Certificate of Destruction' },
