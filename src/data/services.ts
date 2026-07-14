@@ -25,7 +25,7 @@ export interface Service {
   slug: string
   title: string
   icon: Icon
-  /** Category-specific where we have it; falls back to generic warehouse/logistics photography otherwise (see AGENTS.md "Data Still Needed"). */
+  /** Category-specific where we have it; falls back to generic warehouse/logistics photography otherwise (see STATUS.md "Data Still Needed"). */
   image: string
   /** Larger photo shown on the right side of the service detail page hero. */
   heroImage: string

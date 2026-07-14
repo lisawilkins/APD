@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Button } from './Button'
 
 // Set VITE_TURNSTILE_SITE_KEY in your .env file.
 // Use '1x00000000000000000000AA' for local testing (always passes).
@@ -189,27 +190,14 @@ export function ContactForm() {
         {/* Turnstile + submit row */}
         <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
           <div ref={widgetContainerRef} />
-          <button
+          <Button
             type="submit"
+            variant="accent"
+            size="sm"
             disabled={!turnstileToken || status === 'submitting'}
-            style={{
-              fontFamily: 'var(--font-ui)',
-              fontSize: 14,
-              fontWeight: 700,
-              padding: '11px 28px',
-              background: turnstileToken && status !== 'submitting' ? 'var(--apd-clay)' : 'rgba(255,255,255,0.25)',
-              color: '#fff',
-              border: 'none',
-              cursor: turnstileToken && status !== 'submitting' ? 'pointer' : 'not-allowed',
-              transition: 'background 150ms ease-out',
-              letterSpacing: '0.03em',
-              whiteSpace: 'nowrap',
-            }}
-            onMouseEnter={(e) => { if (turnstileToken) (e.currentTarget as HTMLButtonElement).style.background = 'var(--apd-clay-dark)' }}
-            onMouseLeave={(e) => { if (turnstileToken) (e.currentTarget as HTMLButtonElement).style.background = 'var(--apd-clay)' }}
           >
             {status === 'submitting' ? 'Sending…' : 'Send message'}
-          </button>
+          </Button>
         </div>
 
         {status === 'error' && (

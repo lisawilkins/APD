@@ -62,7 +62,7 @@ Loaded from Google Fonts in `src/index.css`. Eyebrows: Inter, uppercase, `letter
 | `apd-surface-panel` | `#F7F8F5` | Light panel backgrounds |
 | `apd-blue-deep` | `#2A3869` | Dark stat-band backgrounds |
 
-Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, `apd-mist`) still exist in `src/index.css` for any code written before the rename — prefer the names above for new work.
+Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, `apd-mist`) still exist in `src/index.css` for code written before the rename — prefer the names above for new work. *(Cleanup of these aliases is tracked in STATUS.md.)*
 
 ### Palette sample page (`/palette-sample`)
 
@@ -83,44 +83,19 @@ Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, 
 
 ## Project Structure
 
+High-level map only — check the actual file system for current contents rather than treating this as a manifest.
+
 ```
 src/
 ├── components/
-│   ├── layout/
-│   │   ├── Nav.tsx        — sticky nav, mobile hamburger, skip link
-│   │   ├── Footer.tsx     — 4-col footer grid
-│   │   └── CtaBand.tsx    — contact-form CTA section, reused on Home + all service pages
-│   └── ui/
-│       ├── Button.tsx, Eyebrow.tsx, Badge.tsx
-│       ├── StatsRow.tsx   — animated count-up stat grid
-│       ├── ContactForm.tsx
-│       ├── PageHero.tsx   — solid-bg internal-page hero; optional right-side image on service detail pages
-│       ├── ServiceCard.tsx — copy left, thumbnail right; used on /services index
-│       └── Container.tsx, SectionHead.tsx, TextLink.tsx — shared page layout helpers
-├── data/
-│   └── services.ts        — Service interface (`image`, `heroImage`, stats, copy) + SERVICES array + getServiceBySlug
-├── pages/
-│   ├── HomePage.tsx
-│   ├── ServicesPage.tsx       — /services index (10 ServiceCards)
-│   ├── ServiceDetailPage.tsx  — /services/:slug (hero, description, stats, CtaBand)
-│   ├── NotFoundPage.tsx       — router catch-all
-│   └── PaletteSamplePage.tsx
-├── App.tsx                — router config + Layout wrapper
-├── main.tsx               — entry point
-└── index.css              — Tailwind import + @theme brand tokens
+│   ├── layout/   — full-page section components (Nav, Footer, CtaBand)
+│   └── ui/       — shared UI primitives (Button, PageHero, StatsRow, ServiceCard, etc.)
+├── data/         — typed content arrays (e.g. services.ts + getServiceBySlug)
+├── pages/        — one file per route
+├── App.tsx       — router config + Layout wrapper
+├── main.tsx      — entry point
+└── index.css     — Tailwind import + brand tokens
 ```
-
-## Planned Pages
-
-- `/` — Home (built)
-- `/services` — Services index (built)
-- `/services/:slug` — Service detail, 10 categories (built; placeholder copy pending review)
-- `/how-it-works` — Process walkthrough
-- `/proof-of-destruction` — Documentation options
-- `/about` — Company, team, sister companies
-- `/contact` — Lead gen form (Cloudflare Turnstile)
-- `/sustainability` — Environmental commitment (linked from homepage; page not yet built)
-- `/privacy` — Privacy policy
 
 ## UI Patterns & Reusable Components
 
@@ -131,14 +106,13 @@ Shared action button for marketing surfaces. Edit this component — not individ
 - **Radius:** `0px` on marketing surfaces (sharp-edged per DS). Form inputs keep `4px` (`--radius-sm`).
 - **Variants:** `primary` = steel blue, `secondary` = olive green, `accent` / `destructive` = clay red, `outline` / `ghost` = transparent with steel-blue border/text.
 - **Outline/ghost hover:** uses `rgba(59,90,133,0.10)` — **not** `var(--apd-blue-subtle)`. The subtle blue tint is nearly white and breaks white-text overrides on dark backgrounds (e.g. the hero). The rgba tint works on both light and dark sections.
-- **Pending:** dark-mode button variants (for use on photo/dark scrim backgrounds) are being added to the design system — update `Button.tsx` once the DS export is refreshed.
 
 ### StatsRow (`src/components/ui/StatsRow.tsx`)
 
 Shared animated stat grid used on the homepage stats bar, sustainability section, and every service detail page. Keeps typography, spacing, and divider treatment consistent — only the color theme changes.
 
 - **`variant`:** `'dark'` (white numbers, for `apd-blue-deep` bands) or `'light'` (olive numbers, for light backgrounds)
-- **Default horizontal inset:** `40px` via CSS token `--stats-row-inset-x` in `src/index.css` (applied through `StatsRow`'s default `paddingX`). Override per instance with the `paddingX` prop only when needed.
+- **Horizontal inset:** controlled by the `--stats-row-inset-x` token in `src/index.css` via `StatsRow`'s default `paddingX`. Override per instance with the `paddingX` prop only when needed — don't hand-tune padding elsewhere.
 - **Layout CSS:** `.stats-grid` in `src/index.css` — 2×2 on mobile, 4 columns at `min-width: 1024px`
 - **Data shape:** `Stat[]` with `{ v, l }` — defined in `StatsRow.tsx`, reused by `services.ts`
 
@@ -146,7 +120,7 @@ Shared animated stat grid used on the homepage stats bar, sustainability section
 
 Homepage stats band pairs `StatsRow` with a certification strip below (SBA Woman-Owned, Coca-Cola Certified, etc.).
 
-- **Alignment:** `.certs-row` in `src/index.css` uses the same `--stats-row-inset-x` horizontal inset as `StatsRow`. Do not hand-tune padding on either row — if the inset changes, update the token once.
+- **Alignment:** `.certs-row` in `src/index.css` uses the same `--stats-row-inset-x` token as `StatsRow` — if the inset changes, update the token once, not both rows.
 - **Layout:** `.certs-row` — flex row with wrap on desktop, stacks on mobile (`max-width: 599px`). Lives inside a `Container` below a `border-top` divider within `#stats-bar`.
 - **When adding cert copy elsewhere:** reuse `.certs-row` inside the same `Container` + inset pattern so cert lines stay aligned with stats above.
 
@@ -195,7 +169,7 @@ Material tags are `Link` components (not plain spans), mapped from `SERVICES` vi
 Uses the **disclosure pattern** — plain `NavLink`s in normal Tab order, not an ARIA `menu` widget (no arrow-key navigation, no `role="menu"` / `role="menuitem"`).
 
 - **ARIA on trigger:** `aria-haspopup="true"`, `aria-expanded`, `aria-controls` pointing at the panel `id`
-- **Hover (WCAG 1.4.13):** no dead zone between trigger and panel — panel sits flush below trigger (`marginTop: 0`; spacing via panel padding). Debounced close (~200ms) on mouse leave, cancelled on re-enter. Panel must remain hoverable while open.
+- **Hover (WCAG 1.4.13):** no dead zone between trigger and panel — panel sits flush below trigger. Debounced close (~200ms) on mouse leave, cancelled on re-enter. Panel must remain hoverable while open.
 - **Keyboard:** Tab through trigger → each submenu link. `Escape` closes the panel and returns focus to the trigger.
 - **Touch:** first tap opens without navigating; second tap on trigger navigates to `/services`.
 - **Focus styling:** `:focus-visible` on `.nav-link` and `.nav-dropdown-link` in `src/index.css`. Do not set `outline: none` on nav links without a replacement.
@@ -204,13 +178,13 @@ Uses the **disclosure pattern** — plain `NavLink`s in normal Tab order, not an
 ### Homepage hero (`#hero`)
 
 - Full-bleed photo hero with scrim — not `PageHero` (internal pages only).
-- **No grid texture** behind the hero photo — no `img-texture-dark` overlay; the photo shows through cleanly with only the scrim for legibility.
-- **Photo:** `hero-building.jpg`, `object-fit: cover`, focal point `object-position: 72% 18%` (building pinnacle, upper-right).
-- **Scrim:** `linear-gradient(90deg, rgba(20,24,30,0.92) 0%, rgba(20,24,30,0.75) 48%, rgba(20,24,30,0.70) 100%)` — right edge at 70% opacity.
-- **No "Not a broker" badge** in the hero (broker positioning lives in copy elsewhere; badge appears on `/palette-sample` only).
-- **Headline:** "Protecting your brand through sustainability." — sized `clamp(32px, 4.4vw, 50px)` to fit below the logo.
-- **Intro paragraph:** Merriweather prose, `clamp(15px, 2.5vw, 19px)` — scales down 1–2 steps on small breakpoints.
-- **Logo:** `logo-apd.svg` at 56px tall, `hidden lg:block` — desktop only, above the headline.
+- **No grid texture** behind the hero photo — intentional. The photo shows through cleanly; the scrim alone handles legibility. Don't reintroduce a texture overlay here.
+- **Photo:** `hero-building.jpg` — focal point is tuned to keep the building's pinnacle in frame (upper-right). If the photo changes, re-check the crop rather than assuming the old position still works.
+- **Scrim:** dark gradient, denser over the text side and lighter toward the right edge. Current exact gradient values live in the hero component — adjust there, not here.
+- **No "Not a broker" badge** in the hero — that positioning lives in copy elsewhere; the badge is reserved for `/palette-sample` only.
+- **Headline:** "Protecting your brand through sustainability." — sized responsively to fit below the logo; check the component's current `clamp()` values before changing breakpoint behavior.
+- **Intro paragraph:** Merriweather prose, scales down on small breakpoints — see component for exact sizes.
+- **Logo:** `logo-apd.svg`, desktop-only, above the headline (mobile nav logo takes over instead — see Navigation above).
 - CTAs: "Get a quote" (primary) + "Explore services" (outline).
 
 ### Why APD split panel (`#why-apd`)
@@ -223,11 +197,9 @@ Uses the **disclosure pattern** — plain `NavLink`s in normal Tab order, not an
 
 ### Proof-of-destruction grid (`#certificate-of-destruction`)
 
-`.proof-grid` in `src/index.css` uses the same hairline border-grid technique as `.sustainability-grid`:
+`.proof-grid` in `src/index.css` uses the same hairline border-grid technique as `.sustainability-grid` (container gets `border-top` + `border-left`, each tile gets `border-right` + `border-bottom`).
 
-- Container: `border-top` + `border-left`
-- Each tile: `border-right` + `border-bottom`
-- On the dark `apd-ink` background, borders use `rgba(255,255,255,0.14)` instead of `var(--apd-border)` — no opaque container fill or `gap: 1px` trick. Tiles sit on `var(--apd-ink)`.
+- On the dark `apd-ink` background, the border color is intentionally overridden to a light semi-transparent white rather than the standard `var(--apd-border)` token, so hairlines stay visible against dark. The exact value lives in `index.css` — don't reintroduce the light-mode border token here.
 - Layout: 3 columns at `min-width: 600px`, 1 column below.
 
 ### Homepage photo mosaic (`#photo-mosaic`)
@@ -239,7 +211,7 @@ Uses the **disclosure pattern** — plain `NavLink`s in normal Tab order, not an
 
 - Centered `TextLink` to `/sustainability` — **"About our environmental commitment"** — sits between the section intro and the stats grid (same pattern as the Certificate of Destruction link).
 - Stats use shared `StatsRow` with `variant="light"`.
-- **Removed:** the small footnote paragraph below the stats (shrink wrap / waste-to-energy / animal-feed copy).
+- **Removed:** the small footnote paragraph below the stats (shrink wrap / waste-to-energy / animal-feed copy) — don't re-add without a reason; it was a deliberate cut.
 
 ### CTA band & contact form (`src/components/layout/CtaBand.tsx`)
 
@@ -289,15 +261,10 @@ Ongoing effort — nav Services submenu was the first pass. When adding or chang
 - Hover-revealed content must stay open while the pointer moves to it (WCAG 1.4.13) — no gaps between trigger and panel
 - Prefer disclosure patterns (expand/collapse with plain links) over ARIA menu widgets unless app-like menu behavior is explicitly required
 
-**Known gap:** `:focus-visible` styling exists on desktop nav links only. A sitewide focus-visible pass (buttons, form fields, footer links, etc.) is still pending — extend the nav pattern when touching those components.
-
 Routine copy and static layout commits don't need an accessibility review unless they introduce new interactive elements.
 
-## Data Still Needed
+*(Known gaps and outstanding accessibility work are tracked in STATUS.md, not here.)*
 
-- Actual phone number and address(es)
-- Tonnage processed (stat placeholder)
-- Customer/manufacturer list
-- Real photos for homepage hero and warehouse sections (service card thumbnails and service detail hero images are in place; many assets are large/unoptimized — compress before production). Key homepage assets from the DS export: `hero-building.jpg`, `baled-cardboard-real.jpg`, `warehouse-wide-real.jpg`, `APD-bundled-02.mp4` (~9 MB).
-- GA4 Measurement ID
-- Cloudflare Turnstile site key — set as `VITE_TURNSTILE_SITE_KEY` in `.env` for production (local dev uses the always-pass test key)
+---
+
+**See also:** `STATUS.md` for planned pages, outstanding data/assets, and pending design decisions — that file changes often and is reviewed each session; this file should stay stable between reviews.
