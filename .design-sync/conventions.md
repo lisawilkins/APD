@@ -1,6 +1,17 @@
 ## Wrapping and setup
 
-No provider or root wrapper is required — every component (`Button`, `Badge`, `Eyebrow`) is a plain, self-contained function component with no context reads. Just load `styles.css` then `_ds_bundle.js` and render from `window.APDUI.*`.
+Most components (`Button`, `Badge`, `Eyebrow`, `PageHero`, `SectionHead`, `StatsRow`, `ContactForm`) are plain, self-contained function components with no context reads — load `styles.css` then `_ds_bundle.js` and render from `window.APDUI.*`.
+
+**Exception: `TextLink` and `ServiceCard`** render a react-router `<Link>` internally and throw if mounted without a router. Wrap any composition using either of them in `window.APDUI.MemoryRouter`:
+
+```jsx
+const { MemoryRouter, TextLink } = window.APDUI;
+<MemoryRouter><TextLink to="/services">Learn more</TextLink></MemoryRouter>
+```
+
+## Components added since last sync
+
+`PageHero` (internal-page hero — eyebrow/title/intro on a solid brand-color background, optional right-side `image`), `SectionHead` (eyebrow/title/intro block for in-page section headers, `align="left"|"center"`), `ServiceCard` (icon/title/teaser/thumbnail card linking via `TextLink` — needs `MemoryRouter`, see above), `StatsRow` (animated count-up stat grid, `variant="dark"|"light"`), `TextLink` (arrow-suffixed link, needs `MemoryRouter`), `ContactForm` (lead-gen form — styled only for a dark/olive background, e.g. `var(--apd-olive-green)`; unreadable on light surfaces).
 
 ## Styling idiom
 

@@ -4,8 +4,16 @@
   "pkg": "apd-ui",
   "globalName": "APDUI",
   "srcDir": "src/components/ui",
-  "cssEntry": "dist/assets/index-CPDZIm0W.css",
-  "tokensGlob": "dist/assets/index-CPDZIm0W.css",
+  "componentSrcMap": {
+    "Container": null
+  },
+  "cssEntry": "dist/assets/index-BR6UTBEG.css",
+  "tokensGlob": "dist/assets/index-BR6UTBEG.css",
   "buildCmd": "npm run build",
-  "readmeHeader": ".design-sync/conventions.md"
+  "readmeHeader": ".design-sync/conventions.md",
+  "extraEntries": ["react-router-dom"],
+  "provider": { "component": "MemoryRouter" },
+  "overrides": {
+    "StatsRow": { "cardMode": "column" }
+  }
 }
