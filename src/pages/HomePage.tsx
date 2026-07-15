@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import {
   BeerBottleIcon, PackageIcon, RecycleIcon, CheckIcon,
-  SealCheckIcon, ShieldCheckIcon, VideoIcon, CameraIcon, EyeIcon, QuotesIcon,
+  SealCheckIcon,   ShieldCheckIcon, VideoIcon, CameraIcon, EyeIcon,
 } from '@phosphor-icons/react'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { Button } from '../components/ui/Button'
@@ -10,6 +10,7 @@ import { Container } from '../components/ui/Container'
 import { SectionHead } from '../components/ui/SectionHead'
 import { TextLink } from '../components/ui/TextLink'
 import { CtaBand } from '../components/layout/CtaBand'
+import { TestimonialsCarousel } from '../components/ui/TestimonialsCarousel'
 import { SERVICES as ALL_SERVICES } from '../data/services'
 
 import logoSvg from '../assets/logo-apd.svg'
@@ -278,18 +279,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Testimonial placeholder ────────────────────────────────────────────── */}
-      <section id="testimonial" style={{ background: 'var(--apd-surface-panel)' }}>
-        <Container style={{ padding: '72px var(--container-pad)', textAlign: 'center' }}>
-          <QuotesIcon size={30} color="var(--apd-clay-red)" weight="fill" className="testimonial-quote-icon" />
-          <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 2.8vw, 30px)', lineHeight: 1.34, letterSpacing: '-0.3px', color: 'var(--apd-heading)', margin: '20px auto 0', maxWidth: 760 }}>
-            "Placeholder testimonial — a client pull-quote about working with APD directly will go here once final copy is approved."
-          </p>
-          <div style={{ fontFamily: 'var(--font-ui)', fontSize: 14, fontWeight: 600, color: 'var(--apd-text-muted)', marginTop: 20 }}>
-            — Client name, Title · Company <span style={{ color: 'var(--apd-text-sage)', fontWeight: 500 }}>(placeholder)</span>
-          </div>
-        </Container>
-      </section>
+      <TestimonialsCarousel />
 
       <CtaBand />
     </>

@@ -73,10 +73,10 @@ Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, 
 - TypeScript + TSX throughout — no plain JS files
 - Tailwind v4 utility-first inline classes — no CSS modules or styled-components
 - Theme colors and fonts live in `src/index.css` — see **Dual token system** under Brand Tokens
-- Page copy is co-located in each page file, except structured/repeated data (e.g. the 10 service entries), which lives in `src/data/` as typed arrays with a `getXBySlug` lookup
+- Page copy is co-located in each page file, except structured/repeated data (e.g. the 10 service entries, testimonials), which lives in `src/data/` as typed arrays
 - One file per route in `src/pages/`
 - Shared layout in `src/components/layout/` (Nav, Footer, CtaBand — full page sections with their own background/Container)
-- Shared UI primitives go in `src/components/ui/` (Button, Eyebrow, Badge, StatsRow, ContactForm, PageHero, ServiceCard, Container, SectionHead, TextLink)
+- Shared UI primitives go in `src/components/ui/` (Button, Eyebrow, Badge, StatsRow, ContactForm, PageHero, ServiceCard, TestimonialsCarousel, Container, SectionHead, TextLink)
 - Internal secondary pages use `PageHero` (solid-color eyebrow/title/intro block) rather than the homepage's full-bleed photo hero. Service detail pages pass an optional `image`/`imageAlt` into `PageHero` for a right-side photo (`service.heroImage`).
 - Every top-level `<section>` on a page gets a unique kebab-case `id` (e.g. `id="hero"`, `id="why-apd"`) so sections can be targeted directly when making edits
 - **Reusable templates:** When a layout appears in more than one place (e.g. `StatsRow`, `PageHero`, `ServiceCard`), edit the shared component or its CSS class — not a single page instance. To request a sitewide change, say "update the `StatsRow` template" (or whichever component) so the change applies to all instances.
@@ -90,7 +90,7 @@ src/
 ├── components/
 │   ├── layout/   — full-page section components (Nav, Footer, CtaBand)
 │   └── ui/       — shared UI primitives (Button, PageHero, StatsRow, ServiceCard, etc.)
-├── data/         — typed content arrays (e.g. services.ts + getServiceBySlug)
+├── data/         — typed content arrays (e.g. services.ts, testimonials.ts)
 ├── pages/        — one file per route
 ├── App.tsx       — router config + Layout wrapper
 ├── main.tsx      — entry point
@@ -229,9 +229,24 @@ Reusable olive-green closing section on the homepage and every service detail pa
 - **Cloudflare Turnstile:** loaded in explicit render mode; submit is disabled until a valid token is received. Site key from `VITE_TURNSTILE_SITE_KEY` in `.env`; falls back to test key `1x00000000000000000000AA` for local dev (always passes).
 - Inline success/error states — no redirect.
 
-### Testimonial quote icon
+### Homepage testimonials (`#testimonial`)
 
-`QuotesIcon` from Phosphor with `weight="fill"` and `className="testimonial-quote-icon"`. Responsive sizing via CSS: `30px` default, `48px` at `min-width: 1024px`, centered with `display: block; margin: 0 auto`.
+Client quotes on the homepage — data in `src/data/testimonials.ts`, rendered by `TestimonialsCarousel` (`src/components/ui/TestimonialsCarousel.tsx`). Edit the data file to add or change quotes; edit the carousel component (or its CSS in `src/index.css`) for sitewide layout/behavior changes — not `HomePage.tsx` instances.
+
+**Data (`Testimonial` in `testimonials.ts`):**
+
+- **`quote`** — only required field
+- Optional: `firstName`, `lastName`, `jobTitle`, `company` (omit or leave blank when unknown)
+- **`TESTIMONIALS`** array — hard cap of 9 entries (enforced in the carousel)
+- Attribution formatting lives in `formatTestimonialName` / `formatTestimonialMeta` in the same file — meta line order is Name, Title · Company; missing parts and stray punctuation are omitted; quote-only entries hide the footer entirely
+
+**Carousel behavior (`TestimonialsCarousel`):**
+
+- Accepts optional `testimonials` prop; defaults to `TESTIMONIALS`
+- Page size is responsive: 3 cards at `min-width: 1024px`, 2 at `min-width: 600px`, 1 below
+- Auto-advances to the next page every 20 seconds; disabled when `prefers-reduced-motion: reduce` is set, or after the user clicks prev/next (stays off until page reload)
+- Prev/next controls below the track; hidden when all items fit on one page
+- Layout/styling: `.testimonials-*` and `.testimonial-*` classes in `src/index.css`; quote mark uses `QuotesIcon` (`weight="fill"`) with `className="testimonial-quote-icon"`
 
 ## Key Messaging (copy direction)
 
