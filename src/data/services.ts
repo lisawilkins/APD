@@ -82,8 +82,8 @@ export const SERVICES: Service[] = [
     teaser: 'Retail returns, overstock and damaged goods, destroyed to spec and documented.',
     heroIntro: 'Retail returns, overstock, and damaged goods destroyed to spec — no resale, no gray market.',
     description: [
-      "Liquidation pallets — retail returns, shelf-pulls, overstock, and damaged goods — carry brand risk if they end up resold through secondary channels. We destroy the product itself, not just the packaging, so there's no path back to a shelf.",
-      'Each pallet is logged on arrival, destroyed on our floor, and closed out with photo or video documentation depending on what your compliance team requires.',
+      'Liquidation pallets include retail returns, failed shipments, shelf-pulls, overstock, and damaged goods. These products carry brand risk if they end up resold through secondary channels. We destroy the product itself, not just the packaging, so there\'s no path back to a shelf. ',
+      'Each pallet is logged on arrival, destroyed on our floor, and closed out with photo or video documentation depending on what your compliance team requires. Alternatively, with approval of our customers, we can often find second uses for these products through community donations and keep them out of landfill.',
     ],
     stats: [
       { v: '+180', l: 'loads diverted to approved waste-to-energy facilities (placeholder)' },
@@ -100,8 +100,10 @@ export const SERVICES: Service[] = [
     teaser: 'Apparel, footwear samples and branded soft goods destroyed with tags, labels and trims removed from resale.',
     heroIntro: 'Branded apparel and soft goods destroyed so labels and trims never re-enter the resale market.',
     description: [
-      "Apparel presents a specific brand-protection problem: garments themselves can be reworked and resold even after being marked as destroyed goods. We shred or cut textiles to a point where the material has no resale value, with particular attention to labels, tags, and branded trim.",
-      "This work is well suited to clients managing seasonal overstock, damaged inventory, or samples that can't legally re-enter the market.",
+      'Apparel presents a specific brand-protection problem: garments themselves can be reworked and resold even after being marked as destroyed goods. We partner with trusted fabric and textile destruction companies located in the Southwest. Those companies share our goal of zero landfill use. After shredding fabrics to a point where the material has no resale value (with particular attention to labels, tags, and branded trim) we coordinate alternative downstream solutions.',
+      'Additionally we offer solutions for those customers who prefer to redirect unsold, usable inventory to secondary markets or resale platforms.',
+      'Our process is well suited to clients managing seasonal overstock, damaged inventory, or samples that can\'t legally re-enter the market.'
+
     ],
     stats: [
       { v: '+72%', l: 'of materials received have a downstream second use' },
