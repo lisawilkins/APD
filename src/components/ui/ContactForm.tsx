@@ -127,17 +127,9 @@ export function ContactForm() {
   const set = (f: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFields(prev => ({ ...prev, [f]: e.target.value }))
 
-  // The button reflects whether the required fields are filled — not whether
-  // the Turnstile widget has loaded. Turnstile is anti-spam; if it's blocked
-  // or slow, we still let a completed form submit (the honeypot guards bots).
-  const isFormValid =
-    fields.name.trim() !== '' &&
-    /\S+@\S+\.\S+/.test(fields.email) &&
-    fields.message.trim() !== ''
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!isFormValid || status === 'submitting') return
+    if (!turnstileToken || status === 'submitting') return
     setStatus('submitting')
     try {
       const body = new URLSearchParams({
@@ -214,7 +206,7 @@ export function ContactForm() {
             type="submit"
             variant="accent"
             size="sm"
-            disabled={!isFormValid || status === 'submitting'}
+            disabled={!turnstileToken || status === 'submitting'}
           >
             {status === 'submitting' ? 'Sending…' : 'Send message'}
           </Button>
