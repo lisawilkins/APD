@@ -287,6 +287,22 @@ body {
   }
 }
 
+/* Brand-protection split — quote rail (33%) + copy (66%), 1 col below 600px */
+.brand-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+@media (max-width: 599px) {
+  .brand-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Stacked: quote sits above copy — halve the bottom gap.
+     !important because the inline `padding` shorthand outranks a class rule. */
+  .brand-quote {
+    padding-bottom: 36px !important;
+  }
+}
+
 /* Photo mosaic — 1 col below 600px, 3 cols at and above */
 .photo-mosaic-grid {
   display: grid;
@@ -416,8 +432,9 @@ body {
 }
 
 .testimonial-quote {
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-prose);
+  font-weight: 400;
+  font-style: italic;
   font-size: clamp(18px, 2.2vw, 24px);
   line-height: 1.34;
   letter-spacing: -0.3px;

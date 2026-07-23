@@ -20,6 +20,7 @@ import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
 import baledCardboardAltImg from '../assets/baled-cardboard.jpg'
 import warehouseExteriorImg from '../assets/warehouse-exterior.jpg'
 import forkliftImg from '../assets/forklift-real.png'
+import transportFleetImg from '../assets/transport-fleet.jpg'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -150,6 +151,45 @@ export default function HomePage() {
           >
             <source src={bundledVideo} type="video/mp4" />
           </video>
+        </div>
+      </section>
+
+      {/* Brand Protection ───────────────────────────────────────────────────── */}
+      <section id="brand-protection" className="brand-grid" aria-labelledby="brand-protection-heading">
+        <div className="brand-quote" style={{ background: 'var(--apd-ink)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 48px)', borderRight: '1px solid rgba(255,255,255,0.12)' }}>
+          <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(20px, 2.2vw, 26px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: '#fff' }}>
+            <span aria-hidden="true" style={{ display: 'block', fontSize: '2.4em', lineHeight: 0.6, marginBottom: 8, color: 'var(--apd-green-mid)', opacity: 0.6 }}>&ldquo;</span>
+            Arizona Product Destruction gives luxury and premium manufacturers full control over their product's life cycle.
+          </blockquote>
+        </div>
+        <div style={{ background: 'var(--apd-ink)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Eyebrow color="var(--apd-green-mid)">Premium Quality Assurance</Eyebrow>
+          <h2 id="brand-protection-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
+            Luxury Brand Protection
+          </h2>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 520 }}>
+          Don't let your brand's value be chipped away in a secondary market. Arizona Product Destruction gives premium manufacturers full control over their product's life cycle: not resold, not repurposed, not surfacing on a discount marketplace under your name. Because APD destroys product in-house rather than brokering it out, your inventory never changes hands beyond the people directly accountable to you. Every job is documented with video or photo proof, or witnessed live at our Phoenix facility. Your standards determine the outcome.
+          </p>
+        </div>
+      </section>
+
+      {/* Shipping & Logistics ───────────────────────────────────────────────── */}
+      <section id="shipping-logistics" className="why-grid" aria-labelledby="shipping-heading">
+        <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
+          <img
+            src={transportFleetImg}
+            alt="APD's dedicated trucking fleet ready for pickup and delivery"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+        <div style={{ background: 'var(--apd-green-deep)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Eyebrow color="var(--apd-green-mid)">Logistics</Eyebrow>
+          <h2 id="shipping-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
+            Shipping &amp; Delivery
+          </h2>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 520 }}>
+            Our services extend beyond on-site destruction to full logistics coordination. We handle pickup, shipping, and delivery, wherever your product originates in the lower 48. Within Arizona, transportation runs through our own dedicated trucking fleet. For interstate shipments, we coordinate with trusted, long-standing carrier partners, so you have one point of contact from pickup to destruction.
+          </p>
         </div>
       </section>
 
