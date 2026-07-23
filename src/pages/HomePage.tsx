@@ -156,8 +156,8 @@ export default function HomePage() {
 
       {/* Brand Protection ───────────────────────────────────────────────────── */}
       <section id="brand-protection" className="brand-grid" aria-labelledby="brand-protection-heading">
-        <div className="brand-quote" style={{ background: 'var(--apd-ink)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 48px)', borderRight: '1px solid rgba(255,255,255,0.12)' }}>
-          <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(20px, 2.2vw, 26px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: '#fff' }}>
+        <div className="brand-quote" style={{ background: 'var(--apd-ink)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 72px)', borderRight: '1px solid rgba(255,255,255,0.12)' }}>
+          <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(24px, 2.9vw, 32px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: 'var(--apd-green-mid)' }}>
             <span aria-hidden="true" style={{ display: 'block', fontSize: '2.4em', lineHeight: 0.6, marginBottom: 8, color: 'var(--apd-green-mid)', opacity: 0.6 }}>&ldquo;</span>
             Arizona Product Destruction gives luxury and premium manufacturers full control over their product's life cycle.
           </blockquote>
@@ -167,7 +167,7 @@ export default function HomePage() {
           <h2 id="brand-protection-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
             Luxury Brand Protection
           </h2>
-          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 520 }}>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', width: '100%', maxWidth: 650 }}>
           Don't let your brand's value be chipped away in a secondary market. Arizona Product Destruction gives premium manufacturers full control over their product's life cycle: not resold, not repurposed, not surfacing on a discount marketplace under your name. Because APD destroys product in-house rather than brokering it out, your inventory never changes hands beyond the people directly accountable to you. Every job is documented with video or photo proof, or witnessed live at our Phoenix facility. Your standards determine the outcome.
           </p>
         </div>

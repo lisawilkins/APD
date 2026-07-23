@@ -287,10 +287,10 @@ body {
   }
 }
 
-/* Brand-protection split — quote rail (33%) + copy (66%), 1 col below 600px */
+/* Brand-protection split — quote (50%) + copy (50%), 1 col below 600px */
 .brand-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
 }
 @media (max-width: 599px) {
   .brand-grid {
