@@ -88,11 +88,14 @@ export function ContactForm() {
 
   // Render Turnstile widget once the script is ready
   useEffect(() => {
+    const getTurnstile = () => (window as unknown as Record<string, unknown>).turnstile as {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string
+      remove: (id: string) => void
+    } | undefined
+
     const render = () => {
       if (!widgetContainerRef.current || widgetIdRef.current != null) return
-      const ts = (window as unknown as Record<string, unknown>).turnstile as {
-        render: (el: HTMLElement, opts: Record<string, unknown>) => string
-      } | undefined
+      const ts = getTurnstile()
       if (!ts) return
       widgetIdRef.current = ts.render(widgetContainerRef.current, {
         sitekey: SITEKEY,
@@ -103,21 +106,38 @@ export function ContactForm() {
       })
     }
 
-    if ((window as unknown as Record<string, unknown>).turnstile) {
-      render()
-    } else {
-      const script = document.getElementById('cf-turnstile-script')
-      script?.addEventListener('load', render)
-      return () => script?.removeEventListener('load', render)
+    const script = document.getElementById('cf-turnstile-script')
+    if (getTurnstile()) render()
+    else script?.addEventListener('load', render)
+
+    // Cleanup runs on every unmount — including StrictMode's dev remount.
+    // Remove the widget and clear the ref so the next mount can render a
+    // fresh widget into its own live container (otherwise the widget renders
+    // into a discarded node and never appears in dev).
+    return () => {
+      script?.removeEventListener('load', render)
+      const ts = getTurnstile()
+      if (ts && widgetIdRef.current != null) {
+        try { ts.remove(widgetIdRef.current) } catch { /* already gone */ }
+      }
+      widgetIdRef.current = null
     }
   }, [])
 
   const set = (f: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setFields(prev => ({ ...prev, [f]: e.target.value }))
 
+  // The button reflects whether the required fields are filled — not whether
+  // the Turnstile widget has loaded. Turnstile is anti-spam; if it's blocked
+  // or slow, we still let a completed form submit (the honeypot guards bots).
+  const isFormValid =
+    fields.name.trim() !== '' &&
+    /\S+@\S+\.\S+/.test(fields.email) &&
+    fields.message.trim() !== ''
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!turnstileToken || status === 'submitting') return
+    if (!isFormValid || status === 'submitting') return
     setStatus('submitting')
     try {
       const body = new URLSearchParams({
@@ -194,7 +214,7 @@ export function ContactForm() {
             type="submit"
             variant="accent"
             size="sm"
-            disabled={!turnstileToken || status === 'submitting'}
+            disabled={!isFormValid || status === 'submitting'}
           >
             {status === 'submitting' ? 'Sending…' : 'Send message'}
           </Button>
