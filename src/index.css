@@ -511,13 +511,13 @@ body {
   }
 }
 
-/* Service detail hero image — shrink to fit under copy on mobile */
+/* Full-bleed page hero (with photo) — image fills the section, copy overlaid */
+.page-hero-media {
+  height: clamp(380px, 42vw, 480px);
+}
 @media (max-width: 599px) {
-  .page-hero-image {
-    max-width: 100% !important;
-  }
-  .page-hero-image img {
-    height: 200px !important;
+  .page-hero-media {
+    height: clamp(340px, 70vw, 420px);
   }
 }
 
