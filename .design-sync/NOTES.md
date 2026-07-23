@@ -24,3 +24,10 @@
 - `guidelinesGlob`/`docsDir` are both unset (no `docs/`/`guides/` in this repo) — if brand guideline pages (color/spacing/type reference cards) are wanted again, they'd need to be authored as `docs/guides/*.md` in-repo, or added back by hand in the Claude Design app (outside design-sync's scope either way).
 - `.design-sync/previews/assets/*.jpg` (small resized copies for `PageHero`/`ServiceCard` previews) are a NEW durable asset this run added — commit them alongside the previews that reference them, or those two previews break on a fresh clone.
 - If `src/components/ui/` grows a new component that also needs `MemoryRouter` (anything importing `Link`/`NavLink`/`useNavigate` etc.), no config change needed — the existing `cfg.provider` already covers it.
+
+## Sync 2026-07-23 (TestimonialsCarousel added)
+
+- **`TestimonialsCarousel` added** — 10 components now. It's a full homepage section (like `StatsRow`/`PageHero`): imports `Container` (bundled, still card-excluded), the `TESTIMONIALS` data, and Phosphor icons (`@phosphor-icons/react`, auto-bundled). Styled with CSS **classes** (`testimonial-card`, `testimonials-track`, …) defined in `src/index.css`, not the inline-style idiom the older primitives use — those classes ship in `_ds_bundle.css`, so it renders correctly. Doesn't actually need `MemoryRouter`, but the provider wraps it harmlessly.
+- **Authored preview `.design-sync/previews/TestimonialsCarousel.tsx`** uses a curated 3-quote subset (the data file's placeholder entries are omitted) — a NEW durable asset; commit it or the card falls back to a generated preview on a fresh clone.
+- **`cfg.cssEntry`/`tokensGlob` bumped** `index-BR6UTBEG.css` → `index-DbcLtU7g.css` (the per-build hash — re-verify before every sync, still the #1 silent breaker).
+- `ContactForm`/`StatsRow` `.tsx` edits since the last sync did **not** change their emitted DS artifacts (diff showed them `unchanged`); only tokens/CSS (`styleChanged`) and the new component moved. Bundle + styling re-uploaded regardless.

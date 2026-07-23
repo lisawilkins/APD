@@ -7,8 +7,8 @@
   "componentSrcMap": {
     "Container": null
   },
-  "cssEntry": "dist/assets/index-BR6UTBEG.css",
-  "tokensGlob": "dist/assets/index-BR6UTBEG.css",
+  "cssEntry": "dist/assets/index-DbcLtU7g.css",
+  "tokensGlob": "dist/assets/index-DbcLtU7g.css",
   "buildCmd": "npm run build",
   "readmeHeader": ".design-sync/conventions.md",
   "extraEntries": ["react-router-dom"],
