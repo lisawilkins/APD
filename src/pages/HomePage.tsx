@@ -154,25 +154,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand Protection ───────────────────────────────────────────────────── */}
-      <section id="brand-protection" className="brand-grid" aria-labelledby="brand-protection-heading">
-        <div className="brand-quote" style={{ background: 'var(--apd-ink)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 72px)', borderRight: '1px solid rgba(255,255,255,0.12)' }}>
-          <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(24px, 2.9vw, 32px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: 'var(--apd-green-mid)' }}>
-            <span aria-hidden="true" style={{ display: 'block', fontSize: '2.4em', lineHeight: 0.6, marginBottom: 8, color: 'var(--apd-green-mid)', opacity: 0.6 }}>&ldquo;</span>
-            Arizona Product Destruction gives luxury and premium manufacturers full control over their product's life cycle.
-          </blockquote>
-        </div>
-        <div style={{ background: 'var(--apd-ink)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <Eyebrow color="var(--apd-green-mid)">Premium Quality Assurance</Eyebrow>
-          <h2 id="brand-protection-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
-            Luxury Brand Protection
-          </h2>
-          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', width: '100%', maxWidth: 650 }}>
-          Don't let your brand's value be chipped away in a secondary market. Arizona Product Destruction gives premium manufacturers full control over their product's life cycle: not resold, not repurposed, not surfacing on a discount marketplace under your name. Because APD destroys product in-house rather than brokering it out, your inventory never changes hands beyond the people directly accountable to you. Every job is documented with video or photo proof, or witnessed live at our Phoenix facility. Your standards determine the outcome.
-          </p>
-        </div>
-      </section>
-
       {/* Shipping & Logistics ───────────────────────────────────────────────── */}
       <section id="shipping-logistics" className="why-grid" aria-labelledby="shipping-heading">
         <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
@@ -222,7 +203,7 @@ export default function HomePage() {
             )
           })}
         </div>
-        <Container style={{ padding: '36px var(--container-pad) 8px' }}>
+        <Container style={{ padding: '36px var(--container-pad) 48px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
             {MATERIALS.map((m) => (
               <Link
@@ -256,6 +237,25 @@ export default function HomePage() {
             ))}
           </div>
         </Container>
+      </section>
+
+      {/* Brand Protection ───────────────────────────────────────────────────── */}
+      <section id="brand-protection" className="brand-grid" aria-labelledby="brand-protection-heading">
+        <div className="brand-quote" style={{ background: 'var(--apd-surface)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 72px)', borderRight: '1px solid var(--apd-border-strong)' }}>
+          <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(24px, 2.9vw, 32px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: 'var(--apd-heading)' }}>
+            <span aria-hidden="true" style={{ display: 'block', fontSize: '2.4em', lineHeight: 0.6, marginBottom: 8, color: 'var(--apd-clay-red)', opacity: 0.85 }}>&ldquo;</span>
+            Arizona Product Destruction gives luxury and premium manufacturers full control over their product's life cycle.
+          </blockquote>
+        </div>
+        <div style={{ background: 'var(--apd-surface)', color: 'var(--apd-body)', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Eyebrow color="var(--apd-clay-red)">Premium Quality Assurance</Eyebrow>
+          <h2 id="brand-protection-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: 'var(--apd-heading)', margin: '12px 0 0' }}>
+            Luxury Brand Protection
+          </h2>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'var(--apd-text-muted)', margin: '16px 0 0', width: '100%', maxWidth: 650 }}>
+          Don't let your brand's value be chipped away in a secondary market. Arizona Product Destruction gives premium manufacturers full control over their product's life cycle: not resold, not repurposed, not surfacing on a discount marketplace under your name. Because APD destroys product in-house rather than brokering it out, your inventory never changes hands beyond the people directly accountable to you. Every job is documented with video or photo proof, or witnessed live at our Phoenix facility. Your standards determine the outcome.
+          </p>
+        </div>
       </section>
 
       {/* Photo mosaic ──────────────────────────────────────────────────────── */}

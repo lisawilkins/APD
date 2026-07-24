@@ -237,12 +237,12 @@ body {
   }
 }
 
-/* Services teaser — 1 col below 600px, 3 cols at and above */
+/* Services teaser — 1 col below 800px, 3 cols at and above */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .services-grid {
     grid-template-columns: 1fr;
   }
@@ -276,23 +276,33 @@ body {
   }
 }
 
-/* Why-APD split (text + photo) — 1 col below 600px, 2 cols at and above */
+/* Why-APD split (text + photo) — 1 col below 800px, 2 cols at and above */
 .why-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .why-grid {
     grid-template-columns: 1fr;
   }
+  /* #why-apd's media panel is the second grid item (copy comes first in the
+     markup, for the desktop text-left/video-right layout) — flip the order
+     when stacked so the video leads. #shipping-logistics shares .why-grid
+     but already has its media panel first, so it's left untouched. */
+  #why-apd > *:first-child {
+    order: 2;
+  }
+  #why-apd > *:last-child {
+    order: 1;
+  }
 }
 
-/* Brand-protection split — quote (50%) + copy (50%), 1 col below 600px */
+/* Brand-protection split — quote (50%) + copy (50%), 1 col below 800px */
 .brand-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .brand-grid {
     grid-template-columns: 1fr;
   }
@@ -319,14 +329,14 @@ body {
   }
 }
 
-/* Certificate of Destruction split (copy + proof tiles) — 1 col below 600px, 2 cols at and above */
+/* Certificate of Destruction split (copy + proof tiles) — 1 col below 800px, 2 cols at and above */
 .cert-grid {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 48px;
   align-items: center;
 }
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .cert-grid {
     grid-template-columns: 1fr;
   }
