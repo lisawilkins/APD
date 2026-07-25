@@ -38,7 +38,7 @@ function FooterCol({ title, items }: { title: string; items: { label: string; to
       }}>
         {title}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div className="footer-links" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {items.map(({ label, to }) => (
           <Link
             key={to}

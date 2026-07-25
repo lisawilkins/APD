@@ -176,15 +176,6 @@ body {
   min-height: 100svh;
 }
 
-/* Textured placeholder for image/video slots */
-.img-texture-dark {
-  background-color: #2B2F24;
-  background-image:
-    linear-gradient(rgba(255 255 255 / 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255 255 255 / 0.045) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
 .img-texture-steel {
   background-color: #748292;
   background-image:
@@ -296,11 +287,11 @@ body {
     order: 1;
   }
 }
-
 /* Brand-protection split — quote (50%) + copy (50%), 1 col below 800px */
 .brand-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-bottom: 36px;
 }
 @media (max-width: 799px) {
   .brand-grid {
@@ -310,6 +301,10 @@ body {
      !important because the inline `padding` shorthand outranks a class rule. */
   .brand-quote {
     padding-bottom: 36px !important;
+  }
+  /* Copy panel sits directly below the quote — halve its top gap too. */
+  .brand-copy {
+    padding-top: 36px !important;
   }
 }
 
@@ -545,16 +540,23 @@ body {
   outline-offset: 2px;
 }
 
-/* Footer main grid — 1 col below 600px, 4 cols at and above */
+/* Footer main grid — 1 col below 800px, 4 cols at and above */
 .footer-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: 40px;
 }
-@media (max-width: 599px) {
+@media (max-width: 799px) {
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+  /* Stacked footer columns — lay each subsection's links out horizontally
+     instead of one per line. */
+  .footer-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px !important;
   }
 }
 

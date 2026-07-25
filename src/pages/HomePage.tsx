@@ -18,8 +18,8 @@ import heroBuildingImg from '../assets/hero-building.jpg'
 import bundledVideo from '../assets/APD-bundled-02.mp4'
 import baledCardboardImg from '../assets/baled-cardboard-real.jpg'
 import baledCardboardAltImg from '../assets/baled-cardboard.jpg'
-import warehouseExteriorImg from '../assets/warehouse-exterior.jpg'
-import forkliftImg from '../assets/forklift-real.png'
+import forkliftImg from '../assets/forklift-containers.jpg'
+import glassBottlesImg from '../assets/glass-bottles.jpg'
 import transportFleetImg from '../assets/transport-fleet.jpg'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
@@ -154,26 +154,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Shipping & Logistics ───────────────────────────────────────────────── */}
-      <section id="shipping-logistics" className="why-grid" aria-labelledby="shipping-heading">
-        <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
-          <img
-            src={transportFleetImg}
-            alt="APD's dedicated trucking fleet ready for pickup and delivery"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        </div>
-        <div style={{ background: 'var(--apd-green-deep)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <Eyebrow color="var(--apd-green-mid)">Logistics</Eyebrow>
-          <h2 id="shipping-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
-            Shipping &amp; Delivery
-          </h2>
-          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 520 }}>
-            Our services extend beyond on-site destruction to full logistics coordination. We handle pickup, shipping, and delivery, wherever your product originates in the lower 48. Within Arizona, transportation runs through our own dedicated trucking fleet. For interstate shipments, we coordinate with trusted, long-standing carrier partners, so you have one point of contact from pickup to destruction.
-          </p>
-        </div>
-      </section>
-
       {/* Services teaser ────────────────────────────────────────────────────── */}
       <section id="services-teaser">
         <Container style={{ padding: '72px var(--container-pad) 36px' }}>
@@ -241,13 +221,13 @@ export default function HomePage() {
 
       {/* Brand Protection ───────────────────────────────────────────────────── */}
       <section id="brand-protection" className="brand-grid" aria-labelledby="brand-protection-heading">
-        <div className="brand-quote" style={{ background: 'var(--apd-surface)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '72px clamp(28px, 5vw, 72px)', borderRight: '1px solid var(--apd-border-strong)' }}>
+        <div className="brand-quote" style={{ background: 'var(--apd-surface)', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 28, paddingBottom: 28, paddingLeft: 'clamp(28px, 5vw, 72px)', paddingRight: 'clamp(28px, 5vw, 72px)', borderRight: '1px solid var(--apd-border-strong)' }}>
           <blockquote style={{ margin: 0, fontFamily: 'var(--font-prose)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(24px, 2.9vw, 32px)', lineHeight: 1.28, letterSpacing: '-0.4px', color: 'var(--apd-heading)' }}>
             <span aria-hidden="true" style={{ display: 'block', fontSize: '2.4em', lineHeight: 0.6, marginBottom: 8, color: 'var(--apd-clay-red)', opacity: 0.85 }}>&ldquo;</span>
             Arizona Product Destruction gives luxury and premium manufacturers full control over their product's life cycle.
           </blockquote>
         </div>
-        <div style={{ background: 'var(--apd-surface)', color: 'var(--apd-body)', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className="brand-copy" style={{ background: 'var(--apd-surface)', color: 'var(--apd-body)', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Eyebrow color="var(--apd-clay-red)">Premium Quality Assurance</Eyebrow>
           <h2 id="brand-protection-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: 'var(--apd-heading)', margin: '12px 0 0' }}>
             Luxury Brand Protection
@@ -258,17 +238,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Shipping & Logistics ───────────────────────────────────────────────── */}
+      <section id="shipping-logistics" className="why-grid" aria-labelledby="shipping-heading">
+        <div style={{ minHeight: 460, position: 'relative', overflow: 'hidden' }}>
+          <img
+            src={transportFleetImg}
+            alt="APD's dedicated trucking fleet ready for pickup and delivery"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
+        <div style={{ background: 'var(--apd-green-deep)', color: '#fff', padding: '72px clamp(28px, 5vw, 72px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Eyebrow color="var(--apd-green-mid)">Logistics</Eyebrow>
+          <h2 id="shipping-heading" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(26px, 3.4vw, 36px)', lineHeight: 1.12, letterSpacing: '-0.5px', color: '#fff', margin: '12px 0 0' }}>
+            Shipping &amp; Delivery
+          </h2>
+          <p style={{ fontFamily: 'var(--font-prose)', fontSize: 17, lineHeight: 1.65, color: 'rgba(255,255,255,0.88)', margin: '16px 0 0', maxWidth: 520 }}>
+            Our services extend beyond on-site destruction to full logistics coordination. We handle pickup, shipping, and delivery, wherever your product originates in the lower 48. Within Arizona, transportation runs through our own dedicated trucking fleet. For interstate shipments, we coordinate with trusted, long-standing carrier partners, so you have one point of contact from pickup to destruction.
+          </p>
+        </div>
+      </section>
+
       {/* Photo mosaic ──────────────────────────────────────────────────────── */}
       <section id="photo-mosaic" className="photo-mosaic-grid" style={{ marginTop: 36 }}>
         {[
           { src: baledCardboardAltImg, alt: 'Baled cardboard ready for processing' },
+          { src: glassBottlesImg,   alt: 'Glass bottles ready for processing' },
           { src: forkliftImg,       alt: 'Forklift at loading dock' },
-          { src: warehouseExteriorImg, alt: 'Facility exterior' },
         ].map(({ src, alt }) => (
           <div key={alt} style={{ position: 'relative', overflow: 'hidden' }}>
-            <div className="img-texture-dark" style={{ position: 'absolute', inset: 0 }} />
             <img src={src} alt={alt} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,24,30,0.3)' }} />
           </div>
         ))}
       </section>
