@@ -120,7 +120,7 @@ export const SERVICES: Service[] = [
     teaser: 'Shoes, bags and accessories destroyed to prevent resale of counterfeit-risk or recalled product.',
     heroIntro: 'Footwear and accessories destroyed to prevent counterfeit-risk or recalled product from reaching resellers.',
     description: [
-      'Footwear and accessories are high-value, easily resold goods, which makes proof of destruction especially important to brand owners. We break down soles, uppers, and hardware so the product cannot be reconstructed or passed off as sellable.',
+      'Footwear and accessories are high-value, easily resold goods, which makes proof of destruction especially important to brand owners. For this category, APD partners with a specialist in footwear destruction and materials reclamation, breaking down soles, uppers, and hardware to recover the maximum amount of reusable material while ensuring the product cannot be reconstructed or passed off as sellable.',
       'This category often overlaps with recall work, where speed and documentation matter as much as the destruction itself.',
     ],
     stats: [

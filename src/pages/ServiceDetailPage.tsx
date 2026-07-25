@@ -39,9 +39,13 @@ export default function ServiceDetailPage() {
           ))}
         </Container>
       </section>
-      <section id="service-stats" style={{ background: 'var(--apd-blue-deep)' }} aria-label={`${service.title} statistics`}>
+      <section
+        id="service-stats"
+        style={{ borderTop: '1px solid var(--apd-border)' }}
+        aria-label={`${service.title} statistics`}
+      >
         <Container style={{ padding: '48px var(--container-pad)' }}>
-          <StatsRow stats={service.stats} variant="dark" />
+          <StatsRow stats={service.stats} variant="light" />
         </Container>
       </section>
       <CtaBand />

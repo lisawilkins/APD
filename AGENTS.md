@@ -109,12 +109,13 @@ Shared action button for marketing surfaces. Edit this component — not individ
 
 ### StatsRow (`src/components/ui/StatsRow.tsx`)
 
-Shared animated stat grid used on the homepage stats bar, sustainability section, and every service detail page. Keeps typography, spacing, and divider treatment consistent — only the color theme changes.
+Shared animated stat grid used on the homepage stats bar (dark), sustainability section (light), and every service detail page (light). Keeps typography, spacing, and divider treatment consistent — only the color theme changes.
 
 - **`variant`:** `'dark'` (white numbers, for `apd-blue-deep` bands) or `'light'` (olive numbers, for light backgrounds)
 - **Horizontal inset:** controlled by the `--stats-row-inset-x` token in `src/index.css` via `StatsRow`'s default `paddingX`. Override per instance with the `paddingX` prop only when needed — don't hand-tune padding elsewhere.
 - **Layout CSS:** `.stats-grid` in `src/index.css` — 2×2 on mobile, 4 columns at `min-width: 1024px`
 - **Data shape:** `Stat[]` with `{ v, l }` — defined in `StatsRow.tsx`, reused by `services.ts`
+- **Service detail pages (`#service-stats`):** `variant="light"` on a light background, with `border-top: 1px solid var(--apd-border)` separating stats from the description above — same visual treatment as `#sustainability`
 
 ### Stats bar + certification row (`#stats-bar`)
 
