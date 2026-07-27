@@ -172,7 +172,7 @@ export const SERVICES: Service[] = [
     teaser: 'Aluminum, steel and mixed metals separated and diverted to recyclers instead of landfill.',
     heroIntro: 'Aluminum, steel, and mixed metals separated out of destruction loads and diverted to recyclers.',
     description: [
-      'Metal recovered from beverage cans, packaging, and general destruction work is one of our clearest sustainability wins — it has a ready downstream market, so keeping it out of the landfill is both an environmental and an economic decision. We separate metals on-site as part of our normal destruction workflow rather than as a separate service, so clients get the recovery benefit without added logistics or cost.',
+      'Metal recovered from beverage cans, packaging, and general destruction work is one of our clearest sustainability wins. It has a ready downstream market, so keeping it out of the landfill is both an environmental and an economic decision. We separate metals on-site as part of our normal destruction workflow rather than as a separate service, so clients get the recovery benefit without added logistics or cost.',
     ],
     stats: [
       { v: '+800', l: 'tons of metals diverted in 2025 (placeholder)' },
@@ -187,13 +187,13 @@ export const SERVICES: Service[] = [
     image: plasticContainersImg,
     heroImage: plasticContainersImg,
     teaser: 'Health, beauty, home goods and mixed consumer product destroyed and documented, regardless of category.',
-    heroIntro: 'Health, beauty, home goods, and other mixed consumer product — destroyed and documented regardless of category.',
+    heroIntro: 'Health, beauty, home goods, and other mixed consumer product, destroyed and documented regardless of category.',
     description: [
       "Not every product fits neatly into a single category, and that's the point of this service: general consumer goods — health and beauty items, home goods, seasonal product, mixed-category overstock — get the same direct handling and documentation as our named service lines.",
       "If your product doesn't fit the other nine categories, it almost certainly fits here.",
     ],
     stats: [
-      { v: '10', l: 'material categories handled under one roof (placeholder)' },
+      { v: '10+', l: 'material categories handled under one roof (placeholder)' },
       { v: '100%', l: 'loads closed with a Certificate of Destruction' },
       { v: '24hr', l: 'reply time on new inquiries' },
     ],
@@ -204,8 +204,8 @@ export const SERVICES: Service[] = [
     icon: ArchiveIcon,
     image: cardboardTextureImg,
     heroImage: packagingMaterialsHeroImg,
-    teaser: 'Boxes, shrink wrap, film and mixed packaging recovered alongside the product destruction workflow.',
-    heroIntro: 'Boxes, shrink wrap, film, and mixed packaging recovered and diverted as part of a destruction job.',
+    teaser: 'The catch-all category for products that don\'t fit elsewhere, handled with the same rigor as every named service line.',
+    heroIntro: 'General consumer goods destroyed or donated with the same direct handling and documentation as every other category.',
     description: [
       "Packaging is frequently the largest volume component of a load by weight, even when it's not the material being destroyed — arriving from beverage loads, liquidation pallets, and general destruction work alike. We separate and recover packaging alongside the destruction work itself: mixed film, shrink wrap, corrugated, and rigid plastics, rather than sending it out with general trash. This runs in parallel with our OCC/cardboard recovery line for clients whose loads combine both.",
     ],
