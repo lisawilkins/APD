@@ -27,7 +27,7 @@ import transportFleetImg from '../assets/transport-fleet.jpg'
 const SERVICES = [
   { icon: BeerBottleIcon, title: 'Beverage Destruction', desc: "Cans and bottles destroyed on proprietary equipment with a zero-sewer commitment — roughly 80% of Arizona's beverage market." },
   { icon: PackageIcon,    title: 'Liquidation Pallets',  desc: 'Retail returns, overstock and damaged goods, destroyed to spec and documented.' },
-  { icon: RecycleIcon,    title: 'OCC & Packaging',      desc: 'Baled or loose corrugated cardboard, shrink wrap, film and mixed packaging — recovered at scale.' },
+  { icon: RecycleIcon,    title: 'Psyllium', desc: 'Fiber-supplement product destroyed on machinery built specifically for it, then given a new life through proprietary repurposing.' },
 ]
 
 const MATERIALS = ALL_SERVICES.map(({ title, slug }) => ({ label: title, slug }))
