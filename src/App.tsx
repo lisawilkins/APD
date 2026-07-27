@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
+import ProofOfDestructionPage from './pages/ProofOfDestructionPage'
 import NotFoundPage from './pages/NotFoundPage'
 import PaletteSamplePage from './pages/PaletteSamplePage'
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/services', element: <ServicesPage /> },
       { path: '/services/:slug', element: <ServiceDetailPage /> },
+      { path: '/proof-of-destruction', element: <ProofOfDestructionPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

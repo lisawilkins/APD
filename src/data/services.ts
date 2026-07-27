@@ -56,6 +56,23 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    slug: 'psyllium',
+    title: 'Psyllium',
+    icon: PlantIcon,
+    image: baledPlasticImg,
+    heroImage: psylliumHeroImg,
+    teaser: 'A cornerstone material for APD, destroyed on proprietary machinery and downstreamed into an entirely new secondary use.',
+    heroIntro: 'Fiber-supplement product destroyed on machinery built specifically for it, then given a new life through proprietary repurposing.',
+    description: [
+      "Psyllium and beverage destruction are the cornerstones of APD's services, and psyllium in particular gets handled with an eye toward what comes next: fine particulate, packaging variety, and batch/lot tracking requirements common to supplement manufacturers all shape how it's processed. We destroy it on proprietary machinery built specifically for this product, engineered to handle its particular characteristics in a way general-purpose equipment can't. From there, every unit is downstreamed into a new, secondary use rather than landfilled. Our repurposing methods are proprietary as well, developed over years of working with this material, but the result is that psyllium destined for destruction gets a genuinely new life instead of ending up in a landfill. Every job is documented to the same standard as our other lines.",
+    ],
+    stats: [
+      { v: '100%', l: 'loads closed with a Certificate of Destruction' },
+      { v: '+23', l: 'years of service in product destruction (placeholder)' },
+      { v: '24hr', l: 'reply time on new inquiries' },
+    ],
+  },
+  {
     slug: 'occ-cardboard',
     title: 'OCC / Cardboard',
     icon: RecycleIcon,
@@ -138,8 +155,7 @@ export const SERVICES: Service[] = [
     teaser: 'Devices and components destroyed with data-bearing materials handled separately from general e-waste recycling.',
     heroIntro: 'Devices, components, and data-bearing hardware destroyed and routed to responsible e-waste recovery.',
     description: [
-      'Electronic waste is processed with an eye toward both data security and materials recovery: data-bearing components are handled separately from general electronics, and recoverable metals and materials are routed to downstream partners rather than landfilled.',
-      "This is placeholder copy pending final process detail from the operations team — confirm data-destruction protocol language before publishing.",
+      'Electronic waste is processed with an eye toward both data security and materials recovery. Data-bearing components are handled separately from general electronics, and APD works with specialists in electronics materials recovery to reclaim every viable metal and reusable resource, rather than routing product to a landfill. Every step is handled with brand protection in mind, so recovered materials can never be traced back to a sellable, brand-identifiable product.',
     ],
     stats: [
       { v: '+800', l: 'tons of metals diverted in 2025 (placeholder)' },
@@ -156,8 +172,7 @@ export const SERVICES: Service[] = [
     teaser: 'Aluminum, steel and mixed metals separated and diverted to recyclers instead of landfill.',
     heroIntro: 'Aluminum, steel, and mixed metals separated out of destruction loads and diverted to recyclers.',
     description: [
-      "Metal recovered from beverage cans, packaging, and general destruction work is one of our clearest sustainability wins: it has a ready downstream market, so keeping it out of landfill is both an environmental and an economic decision.",
-      'We separate metals on-site as part of our normal destruction workflow rather than as a separate service, so clients get the recovery benefit without added logistics.',
+      'Metal recovered from beverage cans, packaging, and general destruction work is one of our clearest sustainability wins — it has a ready downstream market, so keeping it out of the landfill is both an environmental and an economic decision. We separate metals on-site as part of our normal destruction workflow rather than as a separate service, so clients get the recovery benefit without added logistics or cost.',
     ],
     stats: [
       { v: '+800', l: 'tons of metals diverted in 2025 (placeholder)' },
@@ -192,31 +207,12 @@ export const SERVICES: Service[] = [
     teaser: 'Boxes, shrink wrap, film and mixed packaging recovered alongside the product destruction workflow.',
     heroIntro: 'Boxes, shrink wrap, film, and mixed packaging recovered and diverted as part of a destruction job.',
     description: [
-      "Packaging is frequently the largest volume component of a load by weight, even when it's not the material being destroyed. We separate and recover packaging alongside the destruction work itself — mixed film, shrink wrap, corrugated, and rigid plastics — rather than sending it out with general trash.",
-      'This runs in parallel with our OCC/cardboard recovery line for clients whose loads combine both.',
+      "Packaging is frequently the largest volume component of a load by weight, even when it's not the material being destroyed — arriving from beverage loads, liquidation pallets, and general destruction work alike. We separate and recover packaging alongside the destruction work itself: mixed film, shrink wrap, corrugated, and rigid plastics, rather than sending it out with general trash. This runs in parallel with our OCC/cardboard recovery line for clients whose loads combine both.",
     ],
     stats: [
       { v: '26,000', l: 'tons of OCC recycled in 2025 (placeholder)' },
       { v: '+72%', l: 'of materials received have a downstream second use' },
       { v: '0', l: 'separate pickups needed for mixed product + packaging loads' },
-    ],
-  },
-  {
-    slug: 'psyllium',
-    title: 'Psyllium',
-    icon: PlantIcon,
-    image: baledPlasticImg,
-    heroImage: psylliumHeroImg,
-    teaser: 'A niche fiber-supplement material handled with the same destruction and documentation standard as every other category.',
-    heroIntro: 'Fiber-supplement product destroyed to the same standard as every other material we handle.',
-    description: [
-      "Psyllium and related fiber-supplement products present unique handling considerations — fine particulate, packaging variety, and batch/lot tracking requirements common to supplement manufacturers. We destroy it on the same equipment and to the same documentation standard as our other lines.",
-      "This is placeholder copy — confirm specific handling detail with the client base that drives this line before publishing.",
-    ],
-    stats: [
-      { v: '100%', l: 'loads closed with a Certificate of Destruction' },
-      { v: '+23', l: 'years of service in product destruction (placeholder)' },
-      { v: '24hr', l: 'reply time on new inquiries' },
     ],
   },
 ]
