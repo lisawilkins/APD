@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
 import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import ProofOfDestructionPage from './pages/ProofOfDestructionPage'
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: '/', element: <HomePage /> },
+      { path: '/about', element: <AboutPage /> },
       { path: '/services', element: <ServicesPage /> },
       { path: '/services/:slug', element: <ServiceDetailPage /> },
       { path: '/proof-of-destruction', element: <ProofOfDestructionPage /> },

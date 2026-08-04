@@ -9,7 +9,7 @@
 - `/services/:slug` — Service detail, 10 categories (built; placeholder copy pending review)
 - `/how-it-works` — Process walkthrough (not started)
 - `/proof-of-destruction` — Certificate of Destruction / documentation options (built)
-- `/about` — Company, team, sister companies (not started)
+- `/about` — Company, team, sister companies (built; copy ready for client review)
 - `/contact` — Lead gen form, Cloudflare Turnstile (not started)
 - `/sustainability` — Environmental commitment, linked from homepage (not built)
 - `/privacy` — Privacy policy (not started)
