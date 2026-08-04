@@ -14,9 +14,9 @@ const ORIGIN_STORY = [
 
 const TEAM_STATS: Stat[] = [
   { v: '+40', l: 'employees across two Phoenix warehouses.' },
-  { v: '52%', l: 'of our team has been with APD for 3+ years.' },
-  { v: '+23', l: 'years of service in product destruction.' },
-  { v: '2021', l: 'APD begins its expansion under new ownership.' },
+  { v: '52%', l: 'of our team has been with APD for 5+ years.' },
+  { v: '+23', l: 'years of product destruction experience.' },
+  { v: '10+', l: 'product categories, and counting.' },
 ]
 
 const CERTIFICATIONS = [
@@ -30,7 +30,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About APD"
         title="Direct destruction, run by people who know the industry"
-        intro="Arizona Product Destruction is a woman-owned, direct destruction company based in Phoenix focused on sustainabilty and brand protection."
+        intro="Arizona Product Destruction is a woman-owned, direct destruction company based in Phoenix focused on sustainability and brand protection."
       />
 
       {/* Origin story ──────────────────────────────────────────────────────── */}
@@ -86,7 +86,7 @@ export default function AboutPage() {
           <SectionHead
             eyebrow="Beyond Arizona"
             title="Regional reach, local hands-on service"
-            intro="APD operates two warehouses in Phoenix and works alongside sister companies in throughout the South and Westernern U.S. It's dedicated local fleet plus interstate trucking options extends service across the entire country."
+            intro="APD operates two warehouses in Phoenix and works alongside sister companies throughout the South and Western U.S. Its dedicated local fleet plus interstate trucking options extend service across the entire country."
           />
         </Container>
       </section>
