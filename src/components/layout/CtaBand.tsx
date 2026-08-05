@@ -1,6 +1,7 @@
 import { CheckIcon } from '@phosphor-icons/react'
 import { Container } from '../ui/Container'
 import { ContactForm } from '../ui/ContactForm'
+import { SITE } from '../../data/site'
 
 const DEFAULT_BULLETS = [
   'Direct contact — no broker in the middle',
@@ -40,9 +41,18 @@ export function CtaBand({
                 </div>
               ))}
             </div>
-            <p style={{ fontFamily: 'var(--font-ui)', fontSize: 13, color: 'rgba(255,255,255,0.55)', margin: '28px 0 0' }}>
-              South Phoenix, AZ · info@azproductdestruction.com
-            </p>
+            {/* Phone first — for a lead-gen page it's the highest-intent
+                action, and it gives the CTA band a real NAP alongside the form. */}
+            <address style={{ fontFamily: 'var(--font-ui)', fontSize: 14, color: 'rgba(255,255,255,0.75)', margin: '28px 0 0', fontStyle: 'normal', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <a href={`tel:${SITE.phone}`} className="cta-contact-link" style={{ fontSize: 20, fontWeight: 700 }}>
+                {SITE.phoneDisplay}
+              </a>
+              <span>
+                <a href={`mailto:${SITE.email}`} className="cta-contact-link">{SITE.email}</a>
+                {' · '}
+                {SITE.locality}, {SITE.region}
+              </span>
+            </address>
           </div>
 
           {/* Right — contact form */}
