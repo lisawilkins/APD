@@ -47,7 +47,7 @@ export function formatTestimonialMeta({ firstName, lastName, jobTitle, company }
 /** Up to 9 entries. Add or edit quotes here. */
 export const TESTIMONIALS: Testimonial[] = [
   {
-    quote: 'Finding a reliable, trusted partner for recycling and destruction in the Southwest is extremely difficult, fortunately we came across AZPD years ago and haven’t looked back”',
+    quote: 'Finding a reliable, trusted partner for recycling and destruction in the Southwest is extremely difficult, fortunately we came across AZPD years ago and haven’t looked back.',
     jobTitle: 'Chief Operations Officer, Managing Partner',
     firstName: 'Brian',
     lastName: 'U.',
@@ -71,18 +71,5 @@ export const TESTIMONIALS: Testimonial[] = [
     firstName: 'Mark',
     lastName: 'Lao',
     company: '',
-  },
-  {
-    quote: 'This is placeholder copy: After years of using brokers, switching to APD was a no-brainer. Lower cost, faster communication, and proof we could actually verify.',
-    jobTitle: 'Warehouse Manager',
-    firstName: 'James',
-    lastName: 'Torres',
-  },
-  {
-    quote: 'This is placeholder copy: Their zero-sewer commitment for beverage destruction was the deciding factor for us. APD understands what regulators and brand owners both care about.',
-    jobTitle: 'Environmental Compliance Officer',
-    firstName: 'Emily',
-    lastName: 'Park',
-    company: 'Southwest Distributor',
   },
 ]
