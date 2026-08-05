@@ -9,17 +9,48 @@ Marketing and lead-generation site for **Arizona Product Destruction**, a light-
 - Processes recalled, expired, damaged, faulty, discontinued, or unsellable products
 - Products: beverages, food, nutritional supplements, apparel/fabrics, home goods, appliances, cosmetics, industrial
 - Processes ~80% of Arizona's beverages
-- Sister companies in California and Utah; also serves Texas and Southwest manufacturers
+- Partner processing companies in California and Utah; also serves Texas and Southwest manufacturers. Say "partner companies" / "we partner with" — never "sister companies"
 - Proof of destruction: video, photos, or live on-site viewing
 - Zero tolerance for mishandling; confidentiality is paramount
 
 ## Tech Stack
 
 - **Framework:** React 19 + Vite (TSX, TypeScript)
-- **Routing:** React Router v7, `createBrowserRouter` pattern
+- **Routing:** React Router v7 **framework mode** (`@react-router/dev`) with `ssr: false` + `prerender` — every route is rendered to static HTML at build time
 - **Styling:** Tailwind CSS v4 (CSS-first, `@tailwindcss/vite` plugin)
 - **Icons:** [@phosphor-icons/react](https://phosphoricons.com) — do not use Lucide. Import named icons (e.g. `CheckIcon`, `QuotesIcon`). Use the `weight` prop (`"regular"`, `"bold"`, `"fill"`, etc.) instead of Lucide's `strokeWidth`.
+- **Hosting:** Netlify. Publish directory is **`build/client`**, not `dist` (set in `netlify.toml`).
 - **Domain:** azproductdestruction.com
+
+### Rendering & prerendering
+
+The site is prerendered, not a client-side SPA. This is load-bearing for SEO and especially for AEO/GEO: GPTBot, ClaudeBot and PerplexityBot do not execute JavaScript, so a client-rendered page is invisible to them.
+
+| File | Role |
+|---|---|
+| `react-router.config.ts` | `appDirectory: 'src'`, `ssr: false`, `prerender` list |
+| `src/routes.ts` | Route config (`@react-router/dev/routes`) |
+| `src/root.tsx` | Document shell — replaces the old `index.html`. Font `<link>`s, sitewide `LocalBusiness` schema, `ErrorBoundary` |
+| `src/entry.client.tsx` | Hydration entry — replaces `src/main.tsx` |
+| `src/components/layout/SiteLayout.tsx` | Nav + `<Outlet/>` + Footer wrapper |
+
+**Rules:**
+
+- **`src/data/routes.ts` is the single source of truth for URLs.** It drives both the prerender list and `scripts/generate-sitemap.ts`. It must stay import-free — it is loaded in a plain Node context that cannot resolve image or icon imports. `Service['slug']` is typed as `ServiceSlug` from this file, so adding a service without adding its slug here is a compile error.
+- **No browser APIs during render.** `window`, `document` and `matchMedia` are fine inside `useEffect` and event handlers, but touching them at module scope or in a render body crashes the prerender.
+- **Adding a route** means: add the page to `src/routes.ts`, add the URL to `src/data/routes.ts`, and export a `meta` from the page.
+- **Netlify Forms** detects forms by crawling deployed HTML. Since there is no static `index.html` any more, the hidden mirror form lives in `public/__forms.html` — keep its fields in sync with `ContactForm.tsx`.
+- **`public/_redirects` has no SPA rewrite.** Unmatched paths serve the prerendered `/404` page with a real 404 status. Do not reintroduce `/* /index.html 200` — it makes every bad URL a soft 404.
+
+### SEO / AEO / GEO
+
+- **`src/data/site.ts`** — `SITE` (NAP, canonical URL, OG defaults), `SERVICE_AREA` (metros, counties, states), `KEY_FACTS`. Everything else derives from these; never hardcode a phone number, city list, or the canonical origin.
+- **`src/lib/meta.ts`** — `buildMeta()` returns the complete descriptor list (title, description, canonical, OG, Twitter). React Router *replaces* parent meta rather than merging, so **every route exports its own `meta`** built with this helper.
+- **`src/lib/schema.ts`** — JSON-LD builders. Rendered via `SchemaScript`. `LocalBusiness` is sitewide (in `root.tsx`); pages add `Service`, `BreadcrumbList`, `WebSite`, `FAQPage`.
+- **`src/data/faqs.ts`** — `GENERAL_FAQS` plus `SERVICE_FAQS` keyed by slug. The same objects render the `<details>` blocks and generate `FAQPage` schema, so visible text and structured data cannot diverge. Answers open with a direct response and run ~40–60 words.
+- **Crawl files:** `public/robots.txt`, `public/llms.txt`, `public/_headers`; `sitemap.xml` is generated at build time into `build/client/`.
+- **Titles:** `[Page Topic] | Arizona Product Destruction`. Canonical host is the **apex** domain (no `www`).
+- **Images:** every `<img>` needs `width`, `height` and either `loading="lazy"` (below the fold) or `fetchPriority="high"` (LCP). Run `node scripts/optimize-assets.ts` after adding photography — source files routinely arrive at 3–8 MB.
 
 ## Brand Tokens
 
@@ -66,7 +97,7 @@ Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, 
 
 ### Palette sample page (`/palette-sample`)
 
-`PaletteSamplePage.tsx` is the **only** place alternate palettes (Soft Eco, Sonoran Desert, etc.) may be previewed. It sits outside the main `Layout` wrapper in `App.tsx` and uses its own inline CSS-var overrides. Never wire palette-switching into the production site.
+`PaletteSamplePage.tsx` is the **only** place alternate palettes (Soft Eco, Sonoran Desert, etc.) may be previewed. It sits outside the `SiteLayout` wrapper in `src/routes.ts` and uses its own inline CSS-var overrides. Never wire palette-switching into the production site. It is `noindex`, disallowed in `robots.txt`, and excluded from the sitemap via `NOINDEX_ROUTES`.
 
 ## Project Conventions
 
@@ -76,7 +107,8 @@ Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, 
 - Page copy is co-located in each page file, except structured/repeated data (e.g. the 10 service entries, testimonials), which lives in `src/data/` as typed arrays
 - One file per route in `src/pages/`
 - Shared layout in `src/components/layout/` (Nav, Footer, CtaBand — full page sections with their own background/Container)
-- Shared UI primitives go in `src/components/ui/` (Button, Eyebrow, Badge, StatsRow, ContactForm, PageHero, ServiceCard, TestimonialsCarousel, Container, SectionHead, TextLink)
+- Shared UI primitives go in `src/components/ui/` (Button, Eyebrow, Badge, StatsRow, ContactForm, PageHero, ServiceCard, TestimonialsCarousel, Container, SectionHead, TextLink, FaqSection, QuickFacts, SchemaScript)
+- `Button` accepts an `as` prop — use `as={Link} to="…"` or `as="a" href="…"` for anything that navigates, so it renders a real anchor rather than a `<button>` with an onClick
 - Internal secondary pages use `PageHero` (solid-color eyebrow/title/intro block) rather than the homepage's full-bleed photo hero. Service detail pages pass an optional `image`/`imageAlt` into `PageHero` for a right-side photo (`service.heroImage`).
 - Every top-level `<section>` on a page gets a unique kebab-case `id` (e.g. `id="hero"`, `id="why-apd"`) so sections can be targeted directly when making edits
 - **Reusable templates:** When a layout appears in more than one place (e.g. `StatsRow`, `PageHero`, `ServiceCard`), edit the shared component or its CSS class — not a single page instance. To request a sitewide change, say "update the `StatsRow` template" (or whichever component) so the change applies to all instances.
@@ -86,14 +118,22 @@ Legacy aliases (`apd-olive`, `apd-forest`, `apd-steel`, `apd-clay`, `apd-sage`, 
 High-level map only — check the actual file system for current contents rather than treating this as a manifest.
 
 ```
+react-router.config.ts  — appDirectory, ssr:false, prerender list
+netlify.toml            — publish dir (build/client), www → apex redirect
+scripts/
+├── generate-sitemap.ts — postbuild, reads src/data/routes.ts
+└── optimize-assets.ts  — one-off image compression (sips)
+public/                 — robots.txt, llms.txt, _headers, _redirects, __forms.html, favicon
 src/
 ├── components/
-│   ├── layout/   — full-page section components (Nav, Footer, CtaBand)
-│   └── ui/       — shared UI primitives (Button, PageHero, StatsRow, ServiceCard, etc.)
-├── data/         — typed content arrays (e.g. services.ts, testimonials.ts)
-├── pages/        — one file per route
-├── App.tsx       — router config + Layout wrapper
-├── main.tsx      — entry point
+│   ├── layout/   — full-page section components (Nav, Footer, CtaBand, SiteLayout)
+│   └── ui/       — shared UI primitives (Button, PageHero, StatsRow, ServiceCard, FaqSection, QuickFacts, SchemaScript, etc.)
+├── data/         — typed content (services.ts, testimonials.ts, faqs.ts, site.ts, routes.ts)
+├── lib/          — meta.ts (buildMeta), schema.ts (JSON-LD builders)
+├── pages/        — one file per route, each exporting `meta`
+├── root.tsx      — document shell (replaces index.html)
+├── routes.ts     — route config
+├── entry.client.tsx — hydration entry (replaces main.tsx)
 └── index.css     — Tailwind import + brand tokens
 ```
 
@@ -245,7 +285,7 @@ Client quotes on the homepage — data in `src/data/testimonials.ts`, rendered b
 
 - Accepts optional `testimonials` prop; defaults to `TESTIMONIALS`
 - Page size is responsive: 3 cards at `min-width: 1024px`, 2 at `min-width: 600px`, 1 below
-- Auto-advances to the next page every 20 seconds; disabled when `prefers-reduced-motion: reduce` is set, or after the user clicks prev/next (stays off until page reload)
+- **No auto-advance.** Paging is entirely user-driven via the prev/next controls — do not reintroduce a timer. `prefers-reduced-motion: reduce` still suppresses the slide transition.
 - Prev/next controls below the track; hidden when all items fit on one page
 - Layout/styling: `.testimonials-*` and `.testimonial-*` classes in `src/index.css`; quote mark uses `QuotesIcon` (`weight="fill"`) with `className="testimonial-quote-icon"`
 
