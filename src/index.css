@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@1,800&display=swap");
+/* Google Fonts are loaded via <link rel="preconnect"> + stylesheet in
+   src/root.tsx, not a CSS @import — an @import here blocks rendering until the
+   font CSS resolves and can't be preconnected. Keep font changes in sync with
+   the `links` export in root.tsx. */
 @import "tailwindcss";
 
 /* ── Tailwind v4 design tokens ──────────────────────────────────────────────
@@ -558,6 +561,253 @@ body {
     flex-wrap: wrap;
     gap: 16px !important;
   }
+}
+
+/* Label above the proof-options grid on the homepage Certificate of
+   Destruction section. Montserrat italic is the one display italic in the
+   type system (loaded at weight 800 — see the links export in root.tsx).
+   Deliberately not breakpoint-gated: shows on mobile and desktop alike. */
+.proof-label {
+  margin: 0 0 14px;
+  font-family: var(--font-logo);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--apd-warm-paper);
+}
+
+@media (max-width: 599px) {
+  .proof-label {
+    font-size: 13.5px;
+    letter-spacing: 1.8px;
+  }
+}
+
+/* ── Broker vs direct comparison table ────────────────────────────────────
+   Wide content scrolls inside its own container so the page body never
+   scrolls horizontally on mobile.                                           */
+.comparison-scroll {
+  margin-top: 40px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.comparison-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px 20px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--apd-border);
+  font-family: var(--font-prose);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--apd-body);
+}
+
+.comparison-table thead th {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--apd-eyebrow);
+  border-bottom: 2px solid var(--apd-border-strong);
+}
+
+.comparison-table tbody th {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--apd-heading);
+  width: 22%;
+}
+
+/* The APD column is the answer — tint it so the contrast reads at a glance.
+   It is the second column (first after the row label), so it stays on screen
+   when the table scrolls horizontally on mobile. */
+.comparison-table .comparison-apd {
+  background: rgba(90, 108, 58, 0.08);
+  color: var(--apd-heading);
+  font-weight: 500;
+}
+.comparison-table thead th:nth-child(2) {
+  background: rgba(90, 108, 58, 0.08);
+  color: var(--apd-olive-green);
+}
+
+/* Dark variant, for the table on the apd-ink band. Same technique as
+   .proof-grid: hairlines become semi-transparent white so they stay visible
+   against the dark background instead of using the light-mode border token. */
+.comparison-table.is-dark th,
+.comparison-table.is-dark td {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.comparison-table.is-dark thead th {
+  color: var(--apd-green-mid);
+  border-bottom-color: rgba(255, 255, 255, 0.32);
+}
+
+.comparison-table.is-dark tbody th {
+  color: #fff;
+}
+
+/* The olive tint has to carry more weight on dark than the 8% used on light. */
+.comparison-table.is-dark .comparison-apd,
+.comparison-table.is-dark thead th:nth-child(2) {
+  background: rgba(122, 138, 95, 0.18);
+}
+.comparison-table.is-dark .comparison-apd {
+  color: #fff;
+}
+
+/* ── FAQ disclosure list ──────────────────────────────────────────────────
+   Native <details>/<summary>. Answers stay in the DOM while collapsed so
+   crawlers read them regardless of open state.                              */
+.faq-list {
+  margin-top: 40px;
+  border-top: 1px solid var(--apd-border);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--apd-border);
+}
+
+.faq-question {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--apd-heading);
+}
+/* Suppress the default disclosure triangle in favour of the caret icon. */
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question:hover {
+  color: var(--apd-steel-blue);
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--apd-steel-blue);
+  outline-offset: 3px;
+}
+
+.faq-caret {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--apd-steel-blue);
+  transition: transform 180ms ease-out;
+}
+.faq-item[open] .faq-caret {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 40px 22px 0;
+  font-family: var(--font-prose);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--apd-text-muted);
+  max-width: 68ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-caret {
+    transition: none;
+  }
+}
+
+/* ── Quick facts (service detail pages) ─────────────────────────────────── */
+.quick-facts {
+  margin: 0 0 40px;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--apd-border);
+}
+
+.quick-fact {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--apd-border);
+}
+
+@media (max-width: 639px) {
+  .quick-fact {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+.quick-fact-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--apd-eyebrow);
+  margin: 0;
+  padding-top: 2px;
+}
+
+.quick-fact-value {
+  margin: 0;
+  font-family: var(--font-prose);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--apd-body);
+}
+
+/* Phone and email in the CTA band NAP block (olive background). */
+.cta-contact-link {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 150ms ease-out;
+}
+.cta-contact-link:hover {
+  text-decoration: underline;
+}
+.cta-contact-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Phone and email in the footer NAP block. */
+.footer-contact-link {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-family: var(--font-prose);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+.footer-contact-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.footer-contact-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 @layer base {

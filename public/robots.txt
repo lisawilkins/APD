@@ -1,0 +1,41 @@
+# Arizona Product Destruction — azproductdestruction.com
+
+User-agent: *
+Allow: /
+Disallow: /palette-sample
+Disallow: /404
+
+# Answer-engine crawlers are allowed explicitly. Allow-all is already the
+# default, but naming them here documents the intent and guards against a
+# future blanket disallow quietly cutting the site out of AI answers.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://azproductdestruction.com/sitemap.xml

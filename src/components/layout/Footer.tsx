@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { LeafIcon } from '@phosphor-icons/react'
 import logoSvg from '../../assets/logo-apd.svg'
+import { KEY_FACTS, REACH, SITE } from '../../data/site'
 
 const SERVICES = [
   { label: 'Beverages',            to: '/services/beverages' },
@@ -11,18 +12,22 @@ const SERVICES = [
   { label: 'View all services →', to: '/services' },
 ]
 
+// Sustainability and Giving Back point at sections rather than standalone
+// pages — neither page exists yet (see STATUS.md), and linking to a 404 costs
+// crawl budget and drops visitors on a dead end.
 const COMPANY = [
   { label: 'About APD',                  to: '/about' },
   { label: 'Certificate of Destruction', to: '/proof-of-destruction' },
-  { label: 'Sustainability',             to: '/sustainability' },
-  { label: 'Giving Back',                to: '/giving-back' },
+  { label: 'FAQ',                        to: '/faq' },
+  { label: 'Sustainability',             to: '/#sustainability' },
+  { label: 'Giving Back',                to: '/about#giving-back' },
 ]
 
-const CONTACT = [
-  'South Phoenix, AZ (address TBD)',
-  'Serving AZ · CA · UT · NV · NM · TX + lower-48',
-  'info@azproductdestruction.com (TBD)',
-]
+const contactLineStyle = {
+  color: 'rgba(255,255,255,0.8)',
+  fontSize: 14,
+  fontFamily: 'var(--font-prose)',
+} as const
 
 function FooterCol({ title, items }: { title: string; items: { label: string; to: string }[] }) {
   return (
@@ -79,32 +84,55 @@ export default function Footer() {
               <img src={logoSvg} alt="Arizona Product Destruction" style={{ height: 38, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ fontFamily: 'var(--font-prose)', fontSize: 14, lineHeight: 1.65, color: 'rgba(255,255,255,0.78)', maxWidth: 280, marginTop: 18 }}>
-              Light-industrial product destruction in Phoenix, AZ. We don't broker it out — we destroy your product ourselves, and prove it.
+              Light-industrial product destruction in Phoenix, AZ, serving manufacturers, distributors and retailers across Arizona and the Southwest. We don't broker it out — we destroy your product ourselves, and prove it.
             </p>
           </div>
 
           <FooterCol title="Services" items={SERVICES} />
           <FooterCol title="Company" items={COMPANY} />
 
-          {/* Contact column */}
+          {/* Contact column — the site's NAP block. Marked up as <address> so
+              crawlers and screen readers recognise it as contact information,
+              and sourced from SITE so it matches the LocalBusiness schema. */}
           <div>
             <div style={{ fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.3px', color: 'var(--apd-green-mid)', marginBottom: 14 }}>
               Contact
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {CONTACT.map((line) => (
-                <span key={line} style={{ color: 'rgba(255,255,255,0.8)', fontSize: 14, fontFamily: 'var(--font-prose)' }}>
-                  {line}
-                </span>
-              ))}
-            </div>
+            <address style={{ display: 'flex', flexDirection: 'column', gap: 10, fontStyle: 'normal' }}>
+              <a href={`tel:${SITE.phone}`} className="footer-contact-link">
+                {SITE.phoneDisplay}
+              </a>
+              <a href={`mailto:${SITE.email}`} className="footer-contact-link">
+                {SITE.email}
+              </a>
+              <span style={contactLineStyle}>
+                {SITE.locality}, {SITE.region}
+              </span>
+              {/* The full reach statement lives in the Service Area block
+                  below — this stays short to avoid saying it twice. */}
+              <span style={contactLineStyle}>
+                Serving Arizona and the lower 48
+              </span>
+            </address>
           </div>
+        </div>
+
+        {/* Service-area line. Expresses span rather than listing metros — the
+            metro list feeds the LocalBusiness schema instead (see REACH in
+            src/data/site.ts). */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', marginTop: 32, paddingTop: 20 }}>
+          <div style={{ fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.3px', color: 'var(--apd-green-mid)', marginBottom: 10 }}>
+            Service Area
+          </div>
+          <p style={{ ...contactLineStyle, lineHeight: 1.7, maxWidth: '70ch' }}>
+            {REACH.statewide} {REACH.national}
+          </p>
         </div>
 
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', marginTop: 40, paddingTop: 20, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, fontSize: 13, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-ui)' }}>
           <span>© {new Date().getFullYear()} Arizona Product Destruction. All rights reserved.</span>
-          <span>SBA-Certified Woman-Owned Business · 20+ years</span>
+          <span>SBA-Certified Woman-Owned Business · {KEY_FACTS.yearsInBusiness}+ years</span>
         </div>
       </div>
     </footer>

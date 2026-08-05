@@ -1,1 +1,5 @@
-/* /index.html 200
+# Every real route is prerendered to its own HTML file, so there is no SPA
+# rewrite here. Anything that doesn't match a file is genuinely missing and is
+# served the prerendered 404 page with a real 404 status — the previous
+# `/* /index.html 200` catch-all turned every bad URL into a soft 404.
+/*  /404/index.html  404

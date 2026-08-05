@@ -1,4 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+
+/**
+ * `useLayoutEffect` doesn't run during prerendering and warns if called there,
+ * so fall back to `useEffect` in that environment. On the client the layout
+ * variant is what matters — it runs before paint, so resetting the counter to
+ * zero never flashes the real number first.
+ */
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
 export interface Stat {
   v: string
@@ -38,7 +46,20 @@ function formatStatValue(n: number, { prefix, suffix, hasComma }: ParsedStat) {
 function AnimatedStatValue({ value, delay, isDark }: { value: string; delay: number; isDark: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const parsed = useMemo(() => parseStatValue(value), [value])
-  const [display, setDisplay] = useState(() => (parsed ? formatStatValue(0, parsed) : value))
+
+  // Start at the real value, not zero. Every route is prerendered, so whatever
+  // is rendered here is what a crawler that doesn't run JavaScript reads — and
+  // these numbers are the most quotable content on the site. Initialising to
+  // zero shipped "0", "+0%" and "+0" into the static HTML of every page.
+  const [display, setDisplay] = useState(value)
+
+  // Client-only: drop back to zero before the first paint so the count-up
+  // animation still has somewhere to start from.
+  useIsomorphicLayoutEffect(() => {
+    if (!parsed) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    setDisplay(formatStatValue(0, parsed))
+  }, [parsed])
 
   useEffect(() => {
     if (!parsed) return

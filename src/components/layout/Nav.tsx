@@ -4,13 +4,15 @@ import { CaretDownIcon } from '@phosphor-icons/react'
 import logoSvg from '../../assets/logo-apd.svg'
 import { SERVICES } from '../../data/services'
 
+// Sustainability and Giving Back are reachable from the footer, not here —
+// neither has its own page yet (see STATUS.md), and section anchors don't earn
+// a global nav slot. Add them back as real routes once those pages are built.
 const NAV_LINKS = [
   { label: 'Home',                 to: '/' },
   { label: 'About',                to: '/about' },
   { label: 'Services',             to: '/services' },
   { label: 'Cert of Destruction',  to: '/proof-of-destruction' },
-  { label: 'Sustainability',       to: '/sustainability' },
-  { label: 'Giving Back',          to: '/giving-back' },
+  { label: 'FAQ',                  to: '/faq' },
 ]
 
 const SERVICE_LINKS = SERVICES.map(({ slug, title }) => ({ label: title, to: `/services/${slug}` }))
@@ -294,7 +296,9 @@ export default function Nav() {
             ))}
             <div style={{ marginLeft: 14 }}>
               <Link
-                to="/contact"
+                // No /contact page yet — scroll to the contact form on the
+                // current page instead of 404ing.
+                to="#cta-band"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -443,7 +447,9 @@ export default function Nav() {
             ))}
             <div style={{ paddingTop: 10, marginTop: 8, borderTop: '1px solid var(--apd-border)' }}>
               <Link
-                to="/contact"
+                // No /contact page yet — scroll to the contact form on the
+                // current page instead of 404ing.
+                to="#cta-band"
                 style={{
                   display: 'block',
                   padding: '12px 16px',
