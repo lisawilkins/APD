@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  # React Router framework mode emits static output to build/client, not dist.
+  publish = "build/client"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Canonical host is the apex domain, matching the canonical tags emitted by
+# src/lib/meta.ts. Collapse the www variant so the two don't compete.
+[[redirects]]
+  from = "https://www.azproductdestruction.com/*"
+  to = "https://azproductdestruction.com/:splat"
+  status = 301
+  force = true

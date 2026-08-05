@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { reactRouter } from '@react-router/dev/vite'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  // reactRouter() supplies the React transform, so @vitejs/plugin-react is not
+  // needed alongside it. Tailwind must come first.
+  plugins: [tailwindcss(), reactRouter()],
   server: {
     port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
     strictPort: !!process.env.PORT,

@@ -4,7 +4,7 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "@react-router/node"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -15,11 +15,15 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* React Router generates per-route types into .react-router/types. This
+       rootDirs mapping is what lets routes import them as './+types/<route>'. */
+    "rootDirs": [".", "./.react-router/types"],
+
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", ".react-router/types/**/*"]
 }

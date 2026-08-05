@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Netlify form detection</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <!--
+      Static mirror of the React contact form in src/components/ui/ContactForm.tsx.
+      Netlify detects forms by crawling deployed HTML at build time, and the app
+      no longer ships a static index.html for it to find, so this file carries
+      the field list instead. Keep the fields in sync with ContactForm.tsx or
+      submissions will be rejected.
+    -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input name="name" type="text" />
+      <input name="company" type="text" />
+      <input name="email" type="email" />
+      <input name="tel" type="tel" />
+      <textarea name="message"></textarea>
+      <input name="cf-turnstile-response" type="hidden" />
+    </form>
+  </body>
+</html>
