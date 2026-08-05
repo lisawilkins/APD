@@ -43,9 +43,14 @@ export function PageHero({ eyebrow, title, intro, background = 'var(--apd-steel-
   return (
     <section style={{ position: 'relative' }} aria-labelledby="page-hero-heading">
       <div className="page-hero-media" style={{ position: 'relative' }}>
+        {/* Above the fold and almost always the LCP element on internal pages. */}
         <img
           src={image}
           alt={imageAlt}
+          fetchPriority="high"
+          decoding="async"
+          width={1600}
+          height={480}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Scrim — keeps the copy readable over any photo */}
