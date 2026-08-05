@@ -42,8 +42,9 @@ export function TestimonialsCarousel({ testimonials = TESTIMONIALS }: Testimonia
     typeof window !== 'undefined' ? visibleCountForWidth(window.innerWidth) : 3,
   )
   const [pageIndex, setPageIndex] = useState(0)
+  // Kept only to disable the slide transition for reduced-motion users — the
+  // carousel no longer advances on its own, so paging is user-driven.
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
 
   const pages = useMemo(() => chunk(items, visibleCount), [items, visibleCount])
   const totalPages = pages.length
@@ -69,7 +70,6 @@ export function TestimonialsCarousel({ testimonials = TESTIMONIALS }: Testimonia
   }, [totalPages])
 
   const goToPage = useCallback((next: number | ((current: number) => number)) => {
-    setAutoScrollEnabled(false)
     setPageIndex((current) => {
       const resolved = typeof next === 'function' ? next(current) : next
       if (totalPages === 0) return 0
@@ -77,26 +77,27 @@ export function TestimonialsCarousel({ testimonials = TESTIMONIALS }: Testimonia
     })
   }, [totalPages])
 
-  useEffect(() => {
-    if (!autoScrollEnabled || prefersReducedMotion || totalPages <= 1) return
-
-    const id = window.setInterval(() => {
-      setPageIndex((current) => (current + 1) % totalPages)
-    }, 20_000)
-
-    return () => window.clearInterval(id)
-  }, [autoScrollEnabled, prefersReducedMotion, totalPages])
-
   if (items.length === 0) return null
 
   const showControls = totalPages > 1
 
   return (
-    <section id="testimonial" style={{ background: 'var(--apd-surface-panel)' }} aria-label="Client testimonials">
+    <section id="testimonial" style={{ background: 'var(--apd-surface-panel)' }} aria-labelledby="testimonials-heading">
       <Container style={{ padding: '72px var(--container-pad)' }}>
+        {/* The section previously had only an aria-label, leaving a visible
+            block of content with no heading in the document outline. */}
+        <h2
+          id="testimonials-heading"
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(24px, 3vw, 32px)', lineHeight: 1.15, letterSpacing: '-0.5px', color: 'var(--apd-heading)', margin: '0 0 40px', textAlign: 'center' }}
+        >
+          What our clients say
+        </h2>
+        {/* aria-live is off because paging is user-initiated — the reader knows
+            they pressed the button. The nav-status element below carries the
+            "page X of Y" announcement. */}
         <div
           className="testimonials-viewport"
-          aria-live={prefersReducedMotion ? 'polite' : 'off'}
+          aria-live="off"
         >
           <div
             className={`testimonials-track${prefersReducedMotion ? ' testimonials-track--reduced-motion' : ''}`}
