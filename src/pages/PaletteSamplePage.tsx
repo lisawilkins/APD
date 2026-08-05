@@ -1,5 +1,19 @@
 import { useState } from 'react'
 import type { IconWeight } from '@phosphor-icons/react'
+import { buildMeta } from '../lib/meta'
+
+// Internal design tool. It duplicates the homepage h1 and most of its sections,
+// so it must stay out of the index — also disallowed in public/robots.txt and
+// excluded from the sitemap via NOINDEX_ROUTES in src/data/routes.ts.
+export function meta() {
+  return buildMeta({
+    title: 'Palette sample (internal)',
+    description: 'Internal design-system palette preview. Not part of the public site.',
+    path: '/palette-sample',
+    noindex: true,
+  })
+}
+
 import {
   BeerBottleIcon, PackageIcon, RecycleIcon, ClipboardTextIcon, HammerIcon,
   SealCheckIcon, CheckIcon, ArrowRightIcon, ImageIcon,
